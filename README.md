@@ -41,6 +41,34 @@ Open http://localhost:3000.
 - The proxy only forwards whitelisted routes and query params — the browser
   can't use your key to call arbitrary UW endpoints.
 
+## Unusual Whales MCP server (for Claude Code)
+
+The repo ships a project-scoped `.mcp.json` that connects Claude Code to the
+official Unusual Whales MCP server (115 tools: options flow, screeners, dark
+pool, short data, insiders, institutions, congress, crypto whales, custom
+alerts). It reads the key from the `UW_API_KEY` environment variable, so no
+secret lives in the repo:
+
+```bash
+export UW_API_KEY=your-key-here   # must be in the shell env; .env is not read by Claude Code
+claude                            # approve the project MCP server when prompted
+```
+
+Alternatively, register it user-wide (works from any directory):
+
+```bash
+# HTTP transport (recommended — no local process)
+claude mcp add --scope user --transport http unusual-whales \
+  https://api.unusualwhales.com/api/mcp \
+  --header "Authorization: Bearer your-key-here"
+
+# or the npx stdio package
+claude mcp add --scope user unusual-whales -e UW_API_KEY=your-key-here -- npx -y @unusualwhales/mcp
+```
+
+The MCP server is for interactive research in Claude Code; the dashboard uses
+the REST proxy in `server.js`. Both use the same key.
+
 ## Extending
 
 Add a new panel in three steps:
