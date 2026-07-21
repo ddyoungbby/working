@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Whale Screener</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Whale Screener</h1>
+        <div class="sub">Options flow, dark pool &amp; screener signals — powered by Unusual Whales</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span id="last-updated">Loading…</span>
+        <button id="refresh-btn" type="button">Refresh</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Market sentiment stat tiles -->
+      <div class="card tile span-3">
+        <h2>Net call premium</h2>
+        <div class="tile-value" id="tile-call-prem">—</div>
+        <div class="tile-delta" id="tile-call-delta"></div>
+      </div>
+      <div class="card tile span-3">
+        <h2>Net put premium</h2>
+        <div class="tile-value" id="tile-put-prem">—</div>
+        <div class="tile-delta" id="tile-put-delta"></div>
+      </div>
+      <div class="card tile span-3">
+        <h2>Market sentiment</h2>
+        <div class="tile-value" id="tile-sentiment">—</div>
+        <div class="tile-delta" id="tile-sentiment-note"></div>
+      </div>
+      <div class="card tile span-3">
+        <h2>Options net volume</h2>
+        <div class="tile-value" id="tile-net-vol">—</div>
+        <div class="tile-delta">latest market-tide tick</div>
+      </div>
+
+      <!-- Market tide chart -->
+      <div class="card span-8">
+        <h2>Market tide — net options premium (intraday)</h2>
+        <p class="card-sub">Cumulative view of market-wide net call vs net put premium, 5-minute ticks</p>
+        <div class="legend">
+          <span class="key"><span class="swatch" style="background:var(--series-call)"></span>Net call premium</span>
+          <span class="key"><span class="swatch" style="background:var(--series-put)"></span>Net put premium</span>
+        </div>
+        <div class="chart-box" id="tide-chart"></div>
+      </div>
+
+      <!-- Top net impact -->
+      <div class="card span-4">
+        <h2>Top net premium impact</h2>
+        <p class="card-sub">Tickers moving today's options tape (net premium)</p>
+        <div id="impact-list"></div>
+      </div>
+
+      <!-- Screener -->
+      <div class="card span-12">
+        <h2>Stock screener</h2>
+        <p class="card-sub">Ranked by unusual options positioning — filters apply to this table</p>
+        <form class="filters" id="screener-filters">
+          <label>Sort by
+            <select name="order">
+              <option value="net_premium" selected>Net premium</option>
+              <option value="put_call_ratio">Put/call ratio</option>
+              <option value="iv_rank">IV rank</option>
+              <option value="call_volume">Call volume</option>
+              <option value="put_volume">Put volume</option>
+              <option value="volume">Stock volume</option>
+              <option value="marketcap">Market cap</option>
+            </select>
+          </label>
+          <label>Direction
+            <select name="order_direction">
+              <option value="desc" selected>Desc</option>
+              <option value="asc">Asc</option>
+            </select>
+          </label>
+          <label>Type
+            <select name="issue_type">
+              <option value="">All</option>
+              <option value="Common Stock" selected>Stocks</option>
+              <option value="ETF">ETFs</option>
+              <option value="ADR">ADRs</option>
+            </select>
+          </label>
+          <label>Sector
+            <select name="sector">
+              <option value="">All sectors</option>
+              <option>Technology</option>
+              <option>Healthcare</option>
+              <option>Financial Services</option>
+              <option>Consumer Cyclical</option>
+              <option>Consumer Defensive</option>
+              <option>Communication Services</option>
+              <option>Industrials</option>
+              <option>Energy</option>
+              <option>Utilities</option>
+              <option>Real Estate</option>
+              <option>Basic Materials</option>
+            </select>
+          </label>
+          <label>Min market cap
+            <select name="min_marketcap">
+              <option value="">Any</option>
+              <option value="300000000">$300M+</option>
+              <option value="2000000000" selected>$2B+</option>
+              <option value="10000000000">$10B+</option>
+              <option value="200000000000">$200B+</option>
+            </select>
+          </label>
+          <label>Min stock volume
+            <select name="min_volume">
+              <option value="">Any</option>
+              <option value="500000" selected>500K+</option>
+              <option value="2000000">2M+</option>
+              <option value="10000000">10M+</option>
+            </select>
+          </label>
+          <label>Min IV rank
+            <input name="min_iv_rank" type="number" min="0" max="100" step="1" placeholder="e.g. 50" />
+          </label>
+          <button type="submit">Apply</button>
+        </form>
+        <div class="table-scroll">
+          <table id="screener-table">
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Name</th>
+                <th>Sector</th>
+                <th class="num">Price</th>
+                <th class="num">Change</th>
+                <th class="num">Net premium</th>
+                <th class="num">Call vol</th>
+                <th class="num">Put vol</th>
+                <th class="num">P/C ratio</th>
+                <th class="num">IV rank</th>
+                <th class="num">IV 30d</th>
+                <th class="num">Rel. volume</th>
+                <th class="num">Market cap</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="empty" id="screener-empty" hidden>No matches for these filters.</div>
+      </div>
+
+      <!-- Flow alerts -->
+      <div class="card span-6">
+        <h2>Options flow alerts</h2>
+        <p class="card-sub">Unusual options trades flagged by UW alert rules ($50K+ premium)</p>
+        <div class="table-scroll">
+          <table id="flow-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Ticker</th>
+                <th>Side</th>
+                <th class="num">Strike</th>
+                <th>Expiry</th>
+                <th class="num">Premium</th>
+                <th class="num">Vol/OI</th>
+                <th>Rule</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Dark pool -->
+      <div class="card span-6">
+        <h2>Dark pool prints</h2>
+        <p class="card-sub">Largest recent off-exchange block trades ($1M+ notional)</p>
+        <div class="table-scroll">
+          <table id="darkpool-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Ticker</th>
+                <th class="num">Price</th>
+                <th class="num">Size</th>
+                <th class="num">Notional</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Congress trades -->
+      <div class="card span-12">
+        <h2>Congress trades</h2>
+        <p class="card-sub">Recent disclosures from members of Congress</p>
+        <div class="table-scroll">
+          <table id="congress-table">
+            <thead>
+              <tr>
+                <th>Filed</th>
+                <th>Trade date</th>
+                <th>Politician</th>
+                <th>Ticker</th>
+                <th>Type</th>
+                <th class="num">Amount</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Data via the Unusual Whales API, proxied and cached locally. Auto-refreshes every 60s.
+      Not investment advice.
+    </footer>
+  </div>
+
+  <div class="viz-tooltip" id="tooltip"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

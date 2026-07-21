@@ -1,0 +1,12 @@
+{
+  "name": "whale-screener",
+  "version": "1.0.0",
+  "description": "Stock screener dashboard powered by the Unusual Whales API",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
