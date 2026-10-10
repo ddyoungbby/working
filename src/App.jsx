@@ -93,23 +93,20 @@ function evaluateSignal(setup, q, acct, safety, activeTickers, rth){
   return { pass: reasons.length===0, reasons, qty, notional };
 }
 
-/* ---------- Claude catalyst classification ---------- */
+/* ---------- Claude catalyst classification ----------
+   Calls the server-side /api/classify endpoint (see server/classify.mjs),
+   which holds the Anthropic API key and runs Claude + web search. The key
+   is never exposed to the browser. */
 async function classifyCatalysts(tickers){
-  const prompt = `You are the news-catalyst classifier for a rules-based AI/tech equity strategy. For each ticker in ${JSON.stringify(tickers)}, search the web for the most significant catalyst from the last 5 trading days (earnings, guidance, analyst action, product/AI news, regulatory).
-Respond with ONLY a JSON array, no markdown fences, no prose. Each element:
-{"ticker":"NVDA","headline":"<=90 chars","classification":"bullish|bearish|neutral","confidence":0-100,"rationale":"<=140 chars"}
-If nothing material found for a ticker, use classification "neutral", confidence 20, headline "No material catalyst found".`;
-  const res = await fetch("https://api.anthropic.com/v1/messages",{
+  const res = await fetch("/api/classify",{
     method:"POST", headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:1000,
-      messages:[{role:"user",content:prompt}],
-      tools:[{type:"web_search_20250305",name:"web_search"}] })
+    body: JSON.stringify({ tickers })
   });
-  const data = await res.json();
-  const text = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
-  const clean = text.replace(/```json|```/g,"").trim();
-  const start = clean.indexOf("["), end = clean.lastIndexOf("]");
-  return JSON.parse(clean.slice(start, end+1));
+  let data={};
+  try{ data=await res.json(); }catch{ /* non-JSON error body */ }
+  if(!res.ok) throw new Error(data.error || `Classifier request failed (HTTP ${res.status}).`);
+  if(!Array.isArray(data.rows)) throw new Error("Classifier returned an unexpected response shape.");
+  return data.rows;
 }
 
 /* ---------- Alpaca ---------- */
