@@ -1,0 +1,392 @@
+{
+  "date": "2026-10-09",
+  "market_status": "BULLISH",
+  "market_detail": "SPY/QQQ constructive above rising 20 EMA structure.",
+  "research": [
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corp.",
+      "sector": "AI/Tech",
+      "entry": 237.08,
+      "stop": 227.18,
+      "target": 256.88,
+      "star_rating": 5,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 230.48,
+      "ema20": 228.62,
+      "rsi14": 54.5,
+      "atr14": 5.75
+    },
+    {
+      "ticker": "NET",
+      "name": "Cloudflare Inc.",
+      "sector": "Software/Cloud",
+      "entry": 349.79,
+      "stop": 335.9,
+      "target": 377.57,
+      "star_rating": 5,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 341.89,
+      "ema20": 339.82,
+      "rsi14": 54.2,
+      "atr14": 15.69
+    },
+    {
+      "ticker": "MSTR",
+      "name": "Strategy Inc.",
+      "sector": "Crypto/Mining",
+      "entry": 153.64,
+      "stop": 147.37,
+      "target": 166.18,
+      "star_rating": 5,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 151.47,
+      "ema20": 151.47,
+      "rsi14": 53.4,
+      "atr14": 8.88
+    },
+    {
+      "ticker": "BB",
+      "name": "BlackBerry Ltd.",
+      "sector": "AI/Tech",
+      "entry": 9.06,
+      "stop": 8.5,
+      "target": 10.18,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": false,
+      "rel_strength_pass": true,
+      "prior_close": 8.63,
+      "ema20": 8.66,
+      "rsi14": 50.5,
+      "atr14": 0.53
+    },
+    {
+      "ticker": "TSM",
+      "name": "Taiwan Semiconductor",
+      "sector": "Semiconductors",
+      "entry": 471.2,
+      "stop": 451.09,
+      "target": 511.42,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 457.99,
+      "ema20": 453.87,
+      "rsi14": 55.1,
+      "atr14": 11.12
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla Inc.",
+      "sector": "EV/Auto",
+      "entry": 375.97,
+      "stop": 364.86,
+      "target": 398.19,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 375.0,
+      "ema20": 367.79,
+      "rsi14": 55.8,
+      "atr14": 11.73
+    },
+    {
+      "ticker": "DDOG",
+      "name": "Datadog Inc.",
+      "sector": "Software/Cloud",
+      "entry": 278.91,
+      "stop": 257.35,
+      "target": 322.03,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 273.8,
+      "ema20": 260.14,
+      "rsi14": 64.8,
+      "atr14": 11.15
+    },
+    {
+      "ticker": "NOW",
+      "name": "ServiceNow Inc.",
+      "sector": "Software/Cloud",
+      "entry": 142.52,
+      "stop": 134.69,
+      "target": 158.18,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 139.75,
+      "ema20": 136.11,
+      "rsi14": 56.4,
+      "atr14": 5.7
+    },
+    {
+      "ticker": "SNOW",
+      "name": "Snowflake Inc.",
+      "sector": "Software/Cloud",
+      "entry": 344.67,
+      "stop": 331.58,
+      "target": 370.85,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 343.4,
+      "ema20": 334.95,
+      "rsi14": 57.7,
+      "atr14": 13.48
+    },
+    {
+      "ticker": "SMCI",
+      "name": "Super Micro Computer",
+      "sector": "Semiconductors",
+      "entry": 44.34,
+      "stop": 40.82,
+      "target": 51.38,
+      "star_rating": 3,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 42.77,
+      "ema20": 41.4,
+      "rsi14": 57.0,
+      "atr14": 2.32
+    },
+    {
+      "ticker": "CRWD",
+      "name": "CrowdStrike Holdings",
+      "sector": "Software/Cloud",
+      "entry": 272.51,
+      "stop": 251.21,
+      "target": 315.11,
+      "star_rating": 3,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 263.01,
+      "ema20": 254.07,
+      "rsi14": 59.6,
+      "atr14": 11.46
+    }
+  ],
+  "locked_field": [
+    {
+      "rank": 1,
+      "role": "front_runner",
+      "ticker": "NVDA",
+      "score": 62
+    },
+    {
+      "rank": 2,
+      "role": "runner_up",
+      "ticker": "NET",
+      "score": 62
+    },
+    {
+      "rank": 3,
+      "role": "field",
+      "ticker": "MSTR",
+      "score": 62
+    },
+    {
+      "rank": 4,
+      "role": "field",
+      "ticker": "BB",
+      "score": 50
+    },
+    {
+      "rank": 5,
+      "role": "field",
+      "ticker": "TSM",
+      "score": 49
+    },
+    {
+      "rank": 6,
+      "role": "field",
+      "ticker": "TSLA",
+      "score": 45
+    },
+    {
+      "rank": 7,
+      "role": "field",
+      "ticker": "DDOG",
+      "score": 45
+    },
+    {
+      "rank": 8,
+      "role": "field",
+      "ticker": "NOW",
+      "score": 45
+    },
+    {
+      "rank": 9,
+      "role": "field",
+      "ticker": "SNOW",
+      "score": 45
+    },
+    {
+      "rank": 10,
+      "role": "field",
+      "ticker": "SMCI",
+      "score": 35
+    },
+    {
+      "rank": 11,
+      "role": "field",
+      "ticker": "CRWD",
+      "score": 35
+    }
+  ],
+  "confirmations": [
+    {
+      "ticker": "NVDA",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $237.08 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "NET",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $349.79 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "MSTR",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $153.64 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "BB",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $9.06 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "TSM",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $471.20 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "TSLA",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "930",
+      "detail": "Cleared entry, held above stop, inside the strict entry band.",
+      "execution_price": 382.33
+    },
+    {
+      "ticker": "DDOG",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $278.91 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "NOW",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $142.52 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "SNOW",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "930",
+      "detail": "Cleared entry, held above stop, inside the strict entry band.",
+      "execution_price": 349.11
+    },
+    {
+      "ticker": "SMCI",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $44.34 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "CRWD",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $272.51 entry at the check.",
+      "execution_price": 0.0
+    }
+  ],
+  "results": [
+    {
+      "date": "2026-10-09",
+      "ticker": "TSLA",
+      "name": "Tesla Inc.",
+      "confirmation_path": "930",
+      "entry": 375.97,
+      "stop": 364.86,
+      "target": 398.19,
+      "execution_price": 382.33,
+      "shares": 9,
+      "exit_price": 384.95,
+      "exit_time": "2026-10-09T10:05:00-04:00",
+      "status": "moved_in_favor",
+      "pl": 23.58,
+      "r_multiple": 0.24,
+      "high_since_signal": 388.56,
+      "low_since_signal": 381.61,
+      "star_rating": 4
+    },
+    {
+      "date": "2026-10-09",
+      "ticker": "SNOW",
+      "name": "Snowflake Inc.",
+      "confirmation_path": "930",
+      "entry": 344.67,
+      "stop": 331.58,
+      "target": 370.85,
+      "execution_price": 349.11,
+      "shares": 7,
+      "exit_price": 353.35,
+      "exit_time": "2026-10-09T10:05:00-04:00",
+      "status": "moved_in_favor",
+      "pl": 29.68,
+      "r_multiple": 0.32,
+      "high_since_signal": 354.79,
+      "low_since_signal": 345.75,
+      "star_rating": 4
+    }
+  ]
+}
