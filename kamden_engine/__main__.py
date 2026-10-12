@@ -123,7 +123,7 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     # -- 10:05 quick exit --------------------------------------------------------
     if officials and args.live:
-        _wait_until(dtime(10, 6), "10:05 quick-exit result")
+        _wait_until(dtime(10, 7), "10:05 quick-exit result")
     print("\n=== 10:05 QUICK-EXIT RESULTS ===")
     for c in officials:
         shares = position_size(c.locked.setup, account, risk_pct)

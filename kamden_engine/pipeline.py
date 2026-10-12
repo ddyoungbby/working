@@ -19,7 +19,8 @@ Timeline (all times US/Eastern, regular session):
 
 from __future__ import annotations
 
-from datetime import date, datetime, time as dtime
+from datetime import date, datetime, time as dtime, timedelta
+import time as time_mod
 
 from .data import Bar, DataError, minute_bars, ET
 from .models import Confirmation, DayRun, LockedName, SignalResult, Setup
@@ -43,6 +44,29 @@ def _bar_at(bars: list[Bar], t: dtime) -> Bar | None:
         if b.ts.time() == t:
             return b
     return None
+
+
+def _fetch_bar(symbol: str, day: date, t: dtime) -> Bar | None:
+    """Fetch the 1-minute candle at time `t`, retrying while running live.
+
+    Yahoo's free 1-minute feed publishes a just-closed candle with up to a
+    couple minutes of delay. When the requested candle is for the current
+    session and only just closed, poll for up to ~3 minutes before giving
+    up. For past days (replay) the candle either exists or never will, so
+    no waiting happens.
+    """
+    deadline = datetime.combine(day, t, tzinfo=ET) + timedelta(minutes=4)
+    while True:
+        try:
+            bar = _bar_at(minute_bars(symbol, day), t)
+        except DataError:
+            bar = None
+        if bar is not None:
+            return bar
+        now = datetime.now(tz=ET)
+        if now.date() != day or now > deadline:
+            return None
+        time_mod.sleep(15)
 
 
 def _check_open(locked: LockedName, candle: Bar, spy_open_move: float) -> Confirmation:
@@ -106,18 +130,14 @@ def confirm_signals(
         spy_minutes = []
 
     def spy_move(t: dtime) -> float:
-        b = _bar_at(spy_minutes, t)
+        b = _bar_at(spy_minutes, t) or _fetch_bar("SPY", day, t)
         return (b.close - b.open) / b.open if b and b.open else 0.0
 
     results: list[Confirmation] = []
     reclaim_watch: list[LockedName] = []
 
     for locked in locked_field:
-        try:
-            minutes = minute_bars(locked.setup.ticker, day)
-        except DataError:
-            minutes = []
-        candle = _bar_at(minutes, dtime(9, 30))
+        candle = _fetch_bar(locked.setup.ticker, day, dtime(9, 30))
         if candle is None:
             results.append(
                 Confirmation(
@@ -126,6 +146,8 @@ def confirm_signals(
                     detail="No 9:30 candle was available for the opening check.",
                 )
             )
+            # give data-latency victims the 9:35 follow-up look
+            reclaim_watch.append(locked)
             continue
         conf = _check_open(locked, candle, spy_move(dtime(9, 30)))
         conf.path = "930" if conf.status == "confirmed_buy" else ""
@@ -138,11 +160,7 @@ def confirm_signals(
     # 9:35 follow-up only if the official slate is not yet full
     if len(confirmed) < OFFICIAL_COUNT and reclaim_watch:
         for locked in reclaim_watch:
-            try:
-                minutes = minute_bars(locked.setup.ticker, day)
-            except DataError:
-                continue
-            candle = _bar_at(minutes, dtime(9, 35))
+            candle = _fetch_bar(locked.setup.ticker, day, dtime(9, 35))
             if candle is None:
                 continue
             conf = _check_open(locked, candle, spy_move(dtime(9, 35)))

@@ -1,0 +1,361 @@
+{
+  "date": "2026-10-12",
+  "market_status": "BULLISH",
+  "market_detail": "SPY/QQQ constructive above rising 20 EMA structure.",
+  "research": [
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corp.",
+      "sector": "AI/Tech",
+      "entry": 233.93,
+      "stop": 227.26,
+      "target": 247.27,
+      "star_rating": 5,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 229.28,
+      "ema20": 228.68,
+      "rsi14": 53.0,
+      "atr14": 5.69
+    },
+    {
+      "ticker": "SMCI",
+      "name": "Super Micro Computer",
+      "sector": "Semiconductors",
+      "entry": 43.46,
+      "stop": 40.63,
+      "target": 49.12,
+      "star_rating": 5,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 41.86,
+      "ema20": 41.44,
+      "rsi14": 53.9,
+      "atr14": 2.35
+    },
+    {
+      "ticker": "TSM",
+      "name": "Taiwan Semiconductor",
+      "sector": "Semiconductors",
+      "entry": 464.84,
+      "stop": 449.75,
+      "target": 495.02,
+      "star_rating": 5,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 453.31,
+      "ema20": 453.81,
+      "rsi14": 52.4,
+      "atr14": 11.4
+    },
+    {
+      "ticker": "BB",
+      "name": "BlackBerry Ltd.",
+      "sector": "AI/Tech",
+      "entry": 8.93,
+      "stop": 8.5,
+      "target": 9.79,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": false,
+      "rel_strength_pass": true,
+      "prior_close": 8.91,
+      "ema20": 8.69,
+      "rsi14": 54.0,
+      "atr14": 0.51
+    },
+    {
+      "ticker": "MSTR",
+      "name": "Strategy Inc.",
+      "sector": "Crypto/Mining",
+      "entry": 158.12,
+      "stop": 147.37,
+      "target": 179.62,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 154.34,
+      "ema20": 151.75,
+      "rsi14": 55.4,
+      "atr14": 8.79
+    },
+    {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "sector": "Large Cap Tech",
+      "entry": 338.62,
+      "stop": 330.7,
+      "target": 354.46,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": false,
+      "prior_close": 336.64,
+      "ema20": 333.29,
+      "rsi14": 56.1,
+      "atr14": 6.75
+    },
+    {
+      "ticker": "DOCU",
+      "name": "DocuSign Inc.",
+      "sector": "Fintech",
+      "entry": 72.26,
+      "stop": 67.8,
+      "target": 81.18,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 71.08,
+      "ema20": 68.44,
+      "rsi14": 60.4,
+      "atr14": 2.57
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla Inc.",
+      "sector": "EV/Auto",
+      "entry": 388.57,
+      "stop": 366.24,
+      "target": 433.23,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 382.7,
+      "ema20": 369.21,
+      "rsi14": 59.7,
+      "atr14": 11.86
+    },
+    {
+      "ticker": "CRWD",
+      "name": "CrowdStrike Holdings",
+      "sector": "Software/Cloud",
+      "entry": 275.13,
+      "stop": 253.18,
+      "target": 319.03,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 275.04,
+      "ema20": 256.07,
+      "rsi14": 64.9,
+      "atr14": 11.55
+    },
+    {
+      "ticker": "NET",
+      "name": "Cloudflare Inc.",
+      "sector": "Software/Cloud",
+      "entry": 363.22,
+      "stop": 337.0,
+      "target": 415.66,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 360.93,
+      "ema20": 341.83,
+      "rsi14": 61.7,
+      "atr14": 16.1
+    }
+  ],
+  "locked_field": [
+    {
+      "rank": 1,
+      "role": "front_runner",
+      "ticker": "NVDA",
+      "score": 62
+    },
+    {
+      "rank": 2,
+      "role": "runner_up",
+      "ticker": "SMCI",
+      "score": 62
+    },
+    {
+      "rank": 3,
+      "role": "field",
+      "ticker": "TSM",
+      "score": 62
+    },
+    {
+      "rank": 4,
+      "role": "field",
+      "ticker": "BB",
+      "score": 50
+    },
+    {
+      "rank": 5,
+      "role": "field",
+      "ticker": "MSTR",
+      "score": 49
+    },
+    {
+      "rank": 6,
+      "role": "field",
+      "ticker": "AAPL",
+      "score": 46
+    },
+    {
+      "rank": 7,
+      "role": "field",
+      "ticker": "DOCU",
+      "score": 45
+    },
+    {
+      "rank": 8,
+      "role": "field",
+      "ticker": "TSLA",
+      "score": 45
+    },
+    {
+      "rank": 9,
+      "role": "field",
+      "ticker": "CRWD",
+      "score": 45
+    },
+    {
+      "rank": 10,
+      "role": "field",
+      "ticker": "NET",
+      "score": 45
+    }
+  ],
+  "confirmations": [
+    {
+      "ticker": "NVDA",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $233.93 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "SMCI",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $43.46 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "TSM",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $464.84 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "BB",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $8.93 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "MSTR",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $158.12 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "AAPL",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "930",
+      "detail": "Cleared entry, held above stop, inside the strict entry band.",
+      "execution_price": 340.8
+    },
+    {
+      "ticker": "DOCU",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "935_only",
+      "detail": "Reclaimed entry on the 9:35 follow-up check.",
+      "execution_price": 72.58
+    },
+    {
+      "ticker": "TSLA",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $388.57 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "CRWD",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $275.13 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "NET",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $363.22 entry at the check.",
+      "execution_price": 0.0
+    }
+  ],
+  "results": [
+    {
+      "date": "2026-10-12",
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "confirmation_path": "930",
+      "entry": 338.62,
+      "stop": 330.7,
+      "target": 354.46,
+      "execution_price": 340.8,
+      "shares": 12,
+      "exit_price": 341.33,
+      "exit_time": "2026-10-12T09:36:19-04:00",
+      "status": "no_follow_through",
+      "pl": 6.36,
+      "r_multiple": 0.07,
+      "high_since_signal": 342.32,
+      "low_since_signal": 339.76,
+      "star_rating": 4
+    },
+    {
+      "date": "2026-10-12",
+      "ticker": "DOCU",
+      "name": "DocuSign Inc.",
+      "confirmation_path": "935_only",
+      "entry": 72.26,
+      "stop": 67.8,
+      "target": 81.18,
+      "execution_price": 72.58,
+      "shares": 22,
+      "exit_price": 72.64,
+      "exit_time": "2026-10-12T09:36:09-04:00",
+      "status": "no_follow_through",
+      "pl": 1.32,
+      "r_multiple": 0.01,
+      "high_since_signal": 72.64,
+      "low_since_signal": 72.58,
+      "star_rating": 4
+    }
+  ]
+}
