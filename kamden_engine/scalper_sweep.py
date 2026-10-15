@@ -19,12 +19,15 @@ from .backtest import trading_days
 from .scalper import replay
 
 GRID = {
-    "stop_x": [0.35, 0.5],
-    "target_x": [0.35, 0.5, 0.7],
-    "max_ext": [0.15, 0.25],
-    "hold_min": [10, 15],
-    "new_extreme": [False, True],
-    "min_body": [0.0, 0.5],
+    "stop_x": [1.0],
+    "target_x": [0.12, 0.14],
+    "max_ext": [0.25],
+    "hold_min": [10],
+    "new_extreme": [True],
+    "min_body": [0.5],
+    "regime": [False],
+    "morning_only": [False],
+    "max_trades": [2, 3],
 }
 
 

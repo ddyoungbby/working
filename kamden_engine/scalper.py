@@ -46,14 +46,32 @@ SYMBOLS = ("SPY", "QQQ")
 
 # Tunable decision knobs. DEFAULT_CFG is what the live lane runs; the sweep
 # in --sweep mode searches over variations of these.
+# Tuned 2026-10-15 over 21 days / 196 configs: 58 scalps, 79.3% win,
+# +0.049R avg, ~+$240/contract estimated. In-sample; see backtest/.
 DEFAULT_CFG = {
-    "stop_x": 0.35,        # stop distance, fraction of the 30-min range
-    "target_x": 0.70,      # target distance, fraction of the range
+    "stop_x": 1.0,         # stop distance, fraction of the 30-min range
+    "target_x": 0.12,      # target distance, fraction of the range
     "max_ext": 0.25,       # max extension past the broken level
-    "hold_min": 15,        # time stop, minutes
-    "new_extreme": False,  # also require a new SESSION high/low
-    "min_body": 0.0,       # trigger candle body as fraction of its range
+    "hold_min": 10,        # time stop, minutes
+    "new_extreme": True,   # also require a new SESSION high/low
+    "min_body": 0.5,       # trigger candle body as fraction of its range
+    "regime": False,       # daily tape gate: calls only on BULLISH days,
+                           # puts only on BEARISH, both on NEUTRAL
+    "morning_only": False, # no entries after 11:00 ET
+    "max_trades": 3,       # entries per day across both symbols
 }
+
+
+def allowed_sides(day: date, cfg: dict) -> set[str]:
+    if not cfg.get("regime"):
+        return {"call", "put"}
+    from .research import market_permission
+    status, _ = market_permission(day)
+    if status == "BULLISH":
+        return {"call"}
+    if status == "BEARISH":
+        return {"put"}
+    return {"call", "put"}
 LOOKBACK = 30            # minutes in the rolling range
 STOP_X = 0.35            # stop distance as a fraction of the range
 TARGET_X = 0.70          # target distance as a fraction of the range
@@ -209,6 +227,8 @@ def log_row(row: dict) -> None:
 
 def run_live(until: dtime = dtime(16, 0), poll_s: int = 60) -> int:
     day = datetime.now(tz=ET).date()
+    sides = allowed_sides(day, DEFAULT_CFG)
+    entry_until = dtime(11, 0) if DEFAULT_CFG.get("morning_only") else ENTRY_CUTOFF
     open_trade: OpenTrade | None = None
     trades_done = 0
     cooldown_until: datetime | None = None
@@ -255,8 +275,8 @@ def run_live(until: dtime = dtime(16, 0), poll_s: int = 60) -> int:
         # ---- hunt for a new entry ----------------------------------------
         if (
             open_trade is None
-            and trades_done < MAX_TRADES
-            and now.time() < ENTRY_CUTOFF
+            and trades_done < DEFAULT_CFG.get("max_trades", MAX_TRADES)
+            and now.time() < entry_until
             and (cooldown_until is None or now >= cooldown_until)
         ):
             for symbol in SYMBOLS:
@@ -265,7 +285,7 @@ def run_live(until: dtime = dtime(16, 0), poll_s: int = 60) -> int:
                 except DataError:
                     continue
                 sig = check_setup(bars, DEFAULT_CFG)
-                if sig is None:
+                if sig is None or sig.side not in sides:
                     continue
                 sig.symbol = symbol
                 try:
@@ -305,6 +325,8 @@ def replay(day: date, cfg: dict = DEFAULT_CFG) -> list[dict]:
     ESTIMATED (0.5 delta on the underlying move) - historical chains are not
     available on the free feed - so underlying R is the exact number here."""
     rows: list[dict] = []
+    sides = allowed_sides(day, cfg)
+    entry_until = dtime(11, 0) if cfg.get("morning_only") else ENTRY_CUTOFF
     all_bars = {s: minute_bars(s, day) for s in SYMBOLS}
     open_t: dict | None = None
     done = 0
@@ -335,13 +357,13 @@ def replay(day: date, cfg: dict = DEFAULT_CFG) -> list[dict]:
                     })
                     cooldown = ts + timedelta(minutes=COOLDOWN_MIN)
                     open_t = None
-        if open_t is None and done < MAX_TRADES and now_t < ENTRY_CUTOFF and (
+        if open_t is None and done < cfg.get("max_trades", MAX_TRADES) and now_t < entry_until and (
             cooldown is None or ts >= cooldown
         ):
             for symbol in SYMBOLS:
                 bars = [b for b in all_bars[symbol] if b.ts <= ts]
                 sig = check_setup(bars, cfg)
-                if sig:
+                if sig and sig.side in sides:
                     sig.symbol = symbol
                     open_t = {"symbol": symbol, "sig": sig, "opened": ts,
                               "deadline": ts + timedelta(minutes=cfg["hold_min"])}
