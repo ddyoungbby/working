@@ -21,6 +21,7 @@ from datetime import date, datetime, time as dtime
 from .data import ET
 from .ledger import save_day, stats
 from .models import DayRun
+from .options import OptionsError, format_play, suggest_play
 from .pipeline import confirm_signals, lock_field, quick_exit
 from .research import market_permission, research_scan
 from .risk import position_size
@@ -121,6 +122,19 @@ def cmd_run(args: argparse.Namespace) -> int:
         px = f" @ ${c.execution_price:.2f}" if c.execution_price else ""
         print(f"  {c.locked.setup.ticker:<7}{mark:<22}{px:<12}{c.detail}")
 
+    # -- option play of the day --------------------------------------------------
+    if officials and not args.no_options:
+        top = officials[0]
+        print(f"\n=== OPTION PLAY OF THE DAY ({top.locked.setup.ticker}) ===")
+        try:
+            play = suggest_play(top, account, risk_pct, day=day)
+            print(format_play(play))
+            if day != datetime.now(tz=ET).date():
+                print("  NOTE: replayed day - premiums shown are from the "
+                      "CURRENT chain (no free historical options data).")
+        except OptionsError as exc:
+            print(f"  No qualifying play: {exc}")
+
     # -- 10:05 quick exit --------------------------------------------------------
     if officials and args.live:
         _wait_until(dtime(10, 7), "10:05 quick-exit result")
@@ -173,6 +187,8 @@ def main() -> int:
     p_run.add_argument("--risk-pct", type=float, default=2.0)
     p_run.add_argument("--live", action="store_true",
                        help="wait for each ET checkpoint instead of replaying")
+    p_run.add_argument("--no-options", action="store_true",
+                       help="skip the option-play suggestion")
     p_run.set_defaults(fn=cmd_run)
 
     p_res = sub.add_parser("research", help="print the 9:15 research board only")

@@ -106,6 +106,21 @@ Every finalized signal lands in the ledger with entry, stop, target,
 execution price, exit, shares, P/L, R multiple, and the high/low since
 signal — the same fields their Signal Results table shows.
 
+### 7. One option play a day
+
+When at least one signal confirms, the engine translates the strongest one
+into a single defined-risk **call debit play** from the real Yahoo option
+chain (`kamden_engine/options.py`): nearest weekly expiry 2–8 DTE, a strike
+walked from slightly-ITM outward until the risk fits the budget (open
+interest ≥ 100, spread ≤ 12% of mid), delta estimated model-free from the
+chain's own premium slope. Sizing uses the same 2% budget: risk per
+contract is `delta × (entry − stop) × 100` when the stock-stop maps
+affordably, otherwise a −50% premium stop; outlay is capped at 25% of the
+account. Exits mirror the stock plan: cut on the stock stop (or premium
+stop), take profit at the stock's 2R target, close by 10:05 either way.
+Replays of past days quote the *current* chain — there is no free
+historical options data — and say so in the output.
+
 ## Usage
 
 ```bash
