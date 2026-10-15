@@ -43,6 +43,17 @@ from .data import ET, Bar, DataError, minute_bars
 from .options import OptionsError, _chain, _mid
 
 SYMBOLS = ("SPY", "QQQ")
+
+# Tunable decision knobs. DEFAULT_CFG is what the live lane runs; the sweep
+# in --sweep mode searches over variations of these.
+DEFAULT_CFG = {
+    "stop_x": 0.35,        # stop distance, fraction of the 30-min range
+    "target_x": 0.70,      # target distance, fraction of the range
+    "max_ext": 0.25,       # max extension past the broken level
+    "hold_min": 15,        # time stop, minutes
+    "new_extreme": False,  # also require a new SESSION high/low
+    "min_body": 0.0,       # trigger candle body as fraction of its range
+}
 LOOKBACK = 30            # minutes in the rolling range
 STOP_X = 0.35            # stop distance as a fraction of the range
 TARGET_X = 0.70          # target distance as a fraction of the range
@@ -91,8 +102,8 @@ class Signal:
     rng: float
 
 
-def check_setup(bars: list[Bar]) -> Signal | None:
-    """Apply the five chart gates to the latest completed 1-minute bar."""
+def check_setup(bars: list[Bar], cfg: dict = DEFAULT_CFG) -> Signal | None:
+    """Apply the chart gates to the latest completed 1-minute bar."""
     session = [b for b in bars if dtime(9, 30) <= b.ts.time() < dtime(16, 0)]
     if len(session) < LOOKBACK + 2:
         return None
@@ -104,28 +115,37 @@ def check_setup(bars: list[Bar]) -> Signal | None:
     closes = [b.close for b in session]
     e9, e20 = ema_series(closes, 9)[-1], ema_series(closes, 20)[-1]
     vwap = session_vwap(session)
+    body = abs(last.close - last.open) / max(last.high - last.low, 0.01)
+    sess_hi = max(b.high for b in session[:-1])
+    sess_lo = min(b.low for b in session[:-1])
 
     if (
         last.close > hi
         and e9 > e20
         and last.close > vwap
         and last.close > last.open
-        and (last.close - hi) <= MAX_EXT * rng
+        and (last.close - hi) <= cfg["max_ext"] * rng
+        and body >= cfg["min_body"]
+        and (not cfg["new_extreme"] or last.close > sess_hi)
     ):
         return Signal(
             symbol="", side="call", ts=last.ts, spot=last.close, level=hi,
-            stop=hi - STOP_X * rng, target=last.close + TARGET_X * rng, rng=rng,
+            stop=hi - cfg["stop_x"] * rng,
+            target=last.close + cfg["target_x"] * rng, rng=rng,
         )
     if (
         last.close < lo
         and e9 < e20
         and last.close < vwap
         and last.close < last.open
-        and (lo - last.close) <= MAX_EXT * rng
+        and (lo - last.close) <= cfg["max_ext"] * rng
+        and body >= cfg["min_body"]
+        and (not cfg["new_extreme"] or last.close < sess_lo)
     ):
         return Signal(
             symbol="", side="put", ts=last.ts, spot=last.close, level=lo,
-            stop=lo + STOP_X * rng, target=last.close - TARGET_X * rng, rng=rng,
+            stop=lo + cfg["stop_x"] * rng,
+            target=last.close - cfg["target_x"] * rng, rng=rng,
         )
     return None
 
@@ -244,7 +264,7 @@ def run_live(until: dtime = dtime(16, 0), poll_s: int = 60) -> int:
                     bars = minute_bars(symbol, day)
                 except DataError:
                     continue
-                sig = check_setup(bars)
+                sig = check_setup(bars, DEFAULT_CFG)
                 if sig is None:
                     continue
                 sig.symbol = symbol
@@ -265,7 +285,7 @@ def run_live(until: dtime = dtime(16, 0), poll_s: int = 60) -> int:
                     symbol=symbol, side=sig.side,
                     contract=c["contractSymbol"], strike=c["strike"],
                     entry_mid=mid, contracts=n, signal=sig, opened=now,
-                    deadline=now + timedelta(minutes=HOLD_MIN),
+                    deadline=now + timedelta(minutes=DEFAULT_CFG["hold_min"]),
                 )
                 trades_done += 1
                 print(f"[{now:%H:%M:%S}] ENTER {symbol} {sig.side.upper()} "
@@ -280,7 +300,7 @@ def run_live(until: dtime = dtime(16, 0), poll_s: int = 60) -> int:
     return 0
 
 
-def replay(day: date) -> list[dict]:
+def replay(day: date, cfg: dict = DEFAULT_CFG) -> list[dict]:
     """Bar-by-bar replay of the chart logic on a past day. Option P/L is
     ESTIMATED (0.5 delta on the underlying move) - historical chains are not
     available on the free feed - so underlying R is the exact number here."""
@@ -307,7 +327,7 @@ def replay(day: date) -> list[dict]:
                         "side": sig.side, "entry_spot": round(sig.spot, 2),
                         "exit_spot": round(px, 2),
                         "underlying_move": round(move, 2),
-                        "r": round(move / (STOP_X * sig.rng), 2),
+                        "r": round(move / (cfg["stop_x"] * sig.rng), 2),
                         "est_option_pl_per_contract": round(move * 0.5 * 100, 2),
                         "reason": "underlying_stop" if hit_stop else "target" if hit_target else "time_stop",
                         "opened": open_t["opened"].isoformat(), "closed": ts.isoformat(),
@@ -320,11 +340,11 @@ def replay(day: date) -> list[dict]:
         ):
             for symbol in SYMBOLS:
                 bars = [b for b in all_bars[symbol] if b.ts <= ts]
-                sig = check_setup(bars)
+                sig = check_setup(bars, cfg)
                 if sig:
                     sig.symbol = symbol
                     open_t = {"symbol": symbol, "sig": sig, "opened": ts,
-                              "deadline": ts + timedelta(minutes=HOLD_MIN)}
+                              "deadline": ts + timedelta(minutes=cfg["hold_min"])}
                     done += 1
                     break
     return rows
