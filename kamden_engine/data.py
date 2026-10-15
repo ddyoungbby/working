@@ -150,14 +150,32 @@ def daily_bars(symbol: str, lookback_days: int = 260) -> list[Bar]:
     return bars
 
 
-def minute_bars(symbol: str, day: date) -> list[Bar]:
-    """1-minute regular-session bars for a single trading day, oldest first."""
+# Intraday bars for completed sessions are archived in the repository:
+# Yahoo only serves 1-minute bars for ~30 days (2-minute for ~60), so the
+# archive is what lets the backtest sample keep growing past that window.
+ARCHIVE_DIR = _Path("archive")
+
+
+def _archive_path(symbol: str, day: date, interval: str) -> _Path:
+    return ARCHIVE_DIR / interval / f"{symbol}-{day.isoformat()}.json"
+
+
+def minute_bars(symbol: str, day: date, interval: str = "1m") -> list[Bar]:
+    """Regular-session intraday bars ("1m", "2m" or "5m") for one trading
+    day, oldest first. Completed sessions are read from / written to the
+    archive."""
     is_past = day < datetime.now(tz=ET).date()
-    key = f"minute-{symbol}-{day.isoformat()}"
-    if is_past:
-        cached = _cache_read(key)
-        if cached is not None:
-            return cached
+    path = _archive_path(symbol, day, interval)
+    if is_past and path.exists():
+        try:
+            rows = _json.loads(path.read_text())
+            return [
+                Bar(ts=datetime.fromisoformat(r[0]), open=r[1], high=r[2],
+                    low=r[3], close=r[4], volume=r[5])
+                for r in rows
+            ]
+        except (ValueError, IndexError):
+            pass
     start = datetime(day.year, day.month, day.day, 4, 0, tzinfo=ET)
     end = start + timedelta(hours=18)
     result = _get_chart(
@@ -165,13 +183,16 @@ def minute_bars(symbol: str, day: date) -> list[Bar]:
         {
             "period1": int(start.timestamp()),
             "period2": int(end.timestamp()),
-            "interval": "1m",
+            "interval": interval,
             "includePrePost": "false",
         },
     )
     bars = [b for b in _parse_bars(result) if b.ts.date() == day]
-    if is_past:
-        _cache_write(key, bars)
+    if is_past and bars:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(_json.dumps(
+            [[b.ts.isoformat(), b.open, b.high, b.low, b.close, b.volume] for b in bars]
+        ))
     return bars
 
 

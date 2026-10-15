@@ -59,7 +59,43 @@ DEFAULT_CFG = {
                            # puts only on BEARISH, both on NEUTRAL
     "morning_only": False, # no entries after 11:00 ET
     "max_trades": 3,       # entries per day across both symbols
+    "min_range_pct": 0.0,  # 30-min range must be >= this fraction of price,
+                           # so the target can clear spread + commission
+    "prime_hours": False,  # only enter 10:00-11:30 and 13:30-15:00 ET
+                           # (skips lunch chop and late-day 0DTE gamma risk)
+    "breadth": False,      # the other index must agree: same side of its
+                           # VWAP and same EMA trend direction
 }
+
+
+PRIME_WINDOWS = ((dtime(10, 0), dtime(11, 30)), (dtime(13, 30), dtime(15, 0)))
+
+
+def in_entry_window(t: dtime, cfg: dict) -> bool:
+    if t >= ENTRY_CUTOFF:
+        return False
+    if cfg.get("morning_only") and t >= dtime(11, 0):
+        return False
+    if cfg.get("prime_hours"):
+        return any(a <= t < b for a, b in PRIME_WINDOWS)
+    return True
+
+
+def trend_side(bars: list[Bar], bar_min: int = 1) -> str | None:
+    """'call' if price is above VWAP with fast EMA over slow, 'put' if the
+    mirror image, else None. Used for the breadth (other index) check."""
+    session = [b for b in bars if dtime(9, 30) <= b.ts.time() < dtime(16, 0)]
+    if len(session) < 3:
+        return None
+    closes = [b.close for b in session]
+    ef = ema_series(closes, max(2, round(9 / bar_min)))[-1]
+    es = ema_series(closes, max(3, round(20 / bar_min)))[-1]
+    vw = session_vwap(session)
+    if closes[-1] > vw and ef > es:
+        return "call"
+    if closes[-1] < vw and ef < es:
+        return "put"
+    return None
 
 
 def allowed_sides(day: date, cfg: dict) -> set[str]:
@@ -120,18 +156,24 @@ class Signal:
     rng: float
 
 
-def check_setup(bars: list[Bar], cfg: dict = DEFAULT_CFG) -> Signal | None:
-    """Apply the chart gates to the latest completed 1-minute bar."""
+def check_setup(bars: list[Bar], cfg: dict = DEFAULT_CFG, bar_min: int = 1) -> Signal | None:
+    """Apply the chart gates to the latest completed bar. `bar_min` is the
+    bar size in minutes; lookback and EMA lengths scale so the rules keep
+    the same meaning in clock time (30-minute range, ~9/20-minute EMAs)."""
+    lookback = LOOKBACK // bar_min
     session = [b for b in bars if dtime(9, 30) <= b.ts.time() < dtime(16, 0)]
-    if len(session) < LOOKBACK + 2:
+    if len(session) < lookback + 2:
         return None
     last = session[-1]
-    window = session[-(LOOKBACK + 1):-1]       # prior 30 bars, excluding last
+    window = session[-(lookback + 1):-1]       # prior 30 minutes, excluding last
     hi = max(b.high for b in window)
     lo = min(b.low for b in window)
     rng = max(hi - lo, 0.01)
+    if rng / last.close < cfg.get("min_range_pct", 0.0):
+        return None
     closes = [b.close for b in session]
-    e9, e20 = ema_series(closes, 9)[-1], ema_series(closes, 20)[-1]
+    e9 = ema_series(closes, max(2, round(9 / bar_min)))[-1]
+    e20 = ema_series(closes, max(3, round(20 / bar_min)))[-1]
     vwap = session_vwap(session)
     body = abs(last.close - last.open) / max(last.high - last.low, 0.01)
     sess_hi = max(b.high for b in session[:-1])
