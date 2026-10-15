@@ -394,3 +394,111 @@ def _execute_morning(conf, bars, day, cfg, bm, lat) -> LabTrade | None:
 
 def as_dicts(trades: list[LabTrade]) -> list[dict]:
     return [asdict(t) for t in trades]
+
+
+# --------------------------------------------------------------------------
+# fast path: per-bar features computed once per (symbol, day, interval);
+# gate() must agree exactly with scalper.check_setup (verified in validate)
+# --------------------------------------------------------------------------
+from .scalper import ema_series, LOOKBACK, Signal
+
+_FEATS: dict[tuple, list] = {}
+
+
+def features(symbol: str, day: date, interval: str) -> list:
+    key = (symbol, day, interval)
+    if key in _FEATS:
+        return _FEATS[key]
+    bm = INTERVAL_MIN[interval]
+    bars = _bars(symbol, day, interval)
+    lb = LOOKBACK // bm
+    closes = [b.close for b in bars]
+    ef = ema_series(closes, max(2, round(9 / bm)))
+    es = ema_series(closes, max(3, round(20 / bm)))
+    out = [None] * len(bars)
+    num = den = 0.0
+    sh, sl = float("-inf"), float("inf")
+    for i, b in enumerate(bars):
+        typ = (b.high + b.low + b.close) / 3
+        num += typ * b.volume
+        den += b.volume
+        vwap = num / den if den else b.close
+        if i >= lb + 1:
+            win = bars[i - lb:i]
+            hi = max(x.high for x in win)
+            lo = min(x.low for x in win)
+            out[i] = {
+                "ts": b.ts, "open": b.open, "close": b.close,
+                "hi": hi, "lo": lo, "rng": max(hi - lo, 0.01),
+                "ef": ef[i], "es": es[i], "vwap": vwap,
+                "body": abs(b.close - b.open) / max(b.high - b.low, 0.01),
+                "sess_hi": sh, "sess_lo": sl,
+            }
+        sh, sl = max(sh, b.high), min(sl, b.low)
+    _FEATS[key] = out
+    return out
+
+
+def gate(f: dict | None, cfg: dict) -> Signal | None:
+    if f is None or f["rng"] / f["close"] < cfg.get("min_range_pct", 0.0):
+        return None
+    c, rng = f["close"], f["rng"]
+    if (c > f["hi"] and f["ef"] > f["es"] and c > f["vwap"] and c > f["open"]
+            and (c - f["hi"]) <= cfg["max_ext"] * rng and f["body"] >= cfg["min_body"]
+            and (not cfg["new_extreme"] or c > f["sess_hi"])):
+        return Signal("", "call", f["ts"], c, f["hi"],
+                      f["hi"] - cfg["stop_x"] * rng, c + cfg["target_x"] * rng, rng)
+    if (c < f["lo"] and f["ef"] < f["es"] and c < f["vwap"] and c < f["open"]
+            and (f["lo"] - c) <= cfg["max_ext"] * rng and f["body"] >= cfg["min_body"]
+            and (not cfg["new_extreme"] or c < f["sess_lo"])):
+        return Signal("", "put", f["ts"], c, f["lo"],
+                      f["lo"] + cfg["stop_x"] * rng, c - cfg["target_x"] * rng, rng)
+    return None
+
+
+def _side_of(f: dict | None) -> str | None:
+    if f is None:
+        return None
+    if f["close"] > f["vwap"] and f["ef"] > f["es"]:
+        return "call"
+    if f["close"] < f["vwap"] and f["ef"] < f["es"]:
+        return "put"
+    return None
+
+
+def sim_scalper_fast(day: date, cfg: dict, interval: str = "1m", lat: int = 2) -> list[LabTrade]:
+    bm = INTERVAL_MIN[interval]
+    data = {s: _bars(s, day, interval) for s in SYMBOLS}
+    if not all(data.values()):
+        return []
+    feats = {s: features(s, day, interval) for s in SYMBOLS}
+    idx = {s: {b.ts: i for i, b in enumerate(data[s])} for s in SYMBOLS}
+    trades: list[LabTrade] = []
+    busy_until = None
+    times = sorted({b.ts for s in SYMBOLS for b in data[s]})
+    for ts in times:
+        if len(trades) >= cfg.get("max_trades", 3):
+            break
+        if busy_until is not None and ts < busy_until:
+            continue
+        if not in_entry_window(ts.time(), cfg):
+            continue
+        for sym in SYMBOLS:
+            i = idx[sym].get(ts)
+            if i is None:
+                continue
+            sig = gate(feats[sym][i], cfg)
+            if sig is None:
+                continue
+            if cfg.get("breadth"):
+                other = [s for s in SYMBOLS if s != sym][0]
+                j = idx[other].get(ts)
+                if j is None or _side_of(feats[other][j]) != sig.side:
+                    continue
+            t = _execute_scalp(sym, sig, data[sym], day, cfg, bm, lat)
+            if t is None:
+                continue
+            trades.append(t)
+            busy_until = datetime.fromisoformat(t.exit_time) + timedelta(minutes=COOLDOWN_MIN)
+            break
+    return trades
