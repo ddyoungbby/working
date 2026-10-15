@@ -69,7 +69,8 @@ def _fetch_bar(symbol: str, day: date, t: dtime) -> Bar | None:
         time_mod.sleep(15)
 
 
-def _check_open(locked: LockedName, candle: Bar, spy_open_move: float) -> Confirmation:
+def _check_open(locked: LockedName, candle: Bar, spy_open_move: float,
+                min_dist_r: float = 0.0, require_green: bool = False) -> Confirmation:
     """Evaluate one locked name against an opening 1-minute candle."""
     s = locked.setup
     risk = s.risk_per_share
@@ -88,6 +89,18 @@ def _check_open(locked: LockedName, candle: Bar, spy_open_move: float) -> Confir
             detail=f"Price was below the planned ${s.entry:.2f} entry at the check.",
         )
     entry_distance_r = (price - s.entry) / risk
+    if entry_distance_r < min_dist_r:
+        return Confirmation(
+            locked=locked,
+            status="wait_for_reclaim",
+            detail=f"Barely above entry ({entry_distance_r:.2f}R) - too thin to count as momentum.",
+        )
+    if require_green and candle.close <= candle.open:
+        return Confirmation(
+            locked=locked,
+            status="wait_for_reclaim",
+            detail="Above entry but the confirmation candle was fading (red).",
+        )
     if entry_distance_r > locked.max_chase_r:
         return Confirmation(
             locked=locked,
@@ -120,7 +133,8 @@ def _check_open(locked: LockedName, candle: Bar, spy_open_move: float) -> Confir
 
 
 def confirm_signals(
-    locked_field: list[LockedName], day: date
+    locked_field: list[LockedName], day: date,
+    min_dist_r: float = 0.0, require_green: bool = False
 ) -> list[Confirmation]:
     """9:30 confirmation with the 9:35 follow-up. Returns every locked name's
     outcome; the top-two confirmed carry official=True."""
@@ -149,7 +163,7 @@ def confirm_signals(
             # give data-latency victims the 9:35 follow-up look
             reclaim_watch.append(locked)
             continue
-        conf = _check_open(locked, candle, spy_move(dtime(9, 30)))
+        conf = _check_open(locked, candle, spy_move(dtime(9, 30)), min_dist_r, require_green)
         conf.path = "930" if conf.status == "confirmed_buy" else ""
         if conf.status == "wait_for_reclaim":
             reclaim_watch.append(locked)
@@ -163,7 +177,7 @@ def confirm_signals(
             candle = _fetch_bar(locked.setup.ticker, day, dtime(9, 35))
             if candle is None:
                 continue
-            conf = _check_open(locked, candle, spy_move(dtime(9, 35)))
+            conf = _check_open(locked, candle, spy_move(dtime(9, 35)), min_dist_r, require_green)
             if conf.status == "confirmed_buy":
                 conf.path = "935_only"
                 conf.detail = "Reclaimed entry on the 9:35 follow-up check."
@@ -187,7 +201,8 @@ def confirm_signals(
     return results
 
 
-def quick_exit(conf: Confirmation, shares: int, day: date) -> SignalResult | None:
+def quick_exit(conf: Confirmation, shares: int, day: date,
+               tp_r: float | None = None) -> SignalResult | None:
     """10:05 - grade one official signal from real 1-minute bars."""
     if not conf.official or conf.execution_ts is None:
         return None
@@ -204,6 +219,10 @@ def quick_exit(conf: Confirmation, shares: int, day: date) -> SignalResult | Non
     if not window:
         return None
 
+    risk = s.risk_per_share
+    take_profit = (
+        conf.execution_price + tp_r * risk if tp_r is not None else s.target
+    )
     high_since = conf.execution_price
     low_since = conf.execution_price
     exit_price: float | None = None
@@ -216,8 +235,8 @@ def quick_exit(conf: Confirmation, shares: int, day: date) -> SignalResult | Non
         if b.low <= s.stop:
             exit_price, exit_ts, status = s.stop, b.ts, "stop_hit"
             break
-        if b.high >= s.target:
-            exit_price, exit_ts, status = s.target, b.ts, "target_hit"
+        if b.high >= take_profit:
+            exit_price, exit_ts, status = take_profit, b.ts, "target_hit"
             break
 
     if exit_price is None:

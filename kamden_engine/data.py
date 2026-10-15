@@ -36,6 +36,40 @@ class Bar:
     volume: float
 
 
+
+
+# ---------------------------------------------------------------------------
+# Disk cache. Minute bars for past sessions are immutable, so they are cached
+# forever; daily-bar series are cached for the calendar day they were fetched.
+# ---------------------------------------------------------------------------
+import json as _json
+from pathlib import Path as _Path
+
+CACHE_DIR = _Path("cache")
+
+
+def _cache_read(key: str) -> list[Bar] | None:
+    f = CACHE_DIR / f"{key}.json"
+    if not f.exists():
+        return None
+    try:
+        rows = _json.loads(f.read_text())
+        return [
+            Bar(ts=datetime.fromisoformat(r[0]), open=r[1], high=r[2],
+                low=r[3], close=r[4], volume=r[5])
+            for r in rows
+        ]
+    except (ValueError, IndexError):
+        return None
+
+
+def _cache_write(key: str, bars: list[Bar]) -> None:
+    CACHE_DIR.mkdir(exist_ok=True)
+    (CACHE_DIR / f"{key}.json").write_text(
+        _json.dumps([[b.ts.isoformat(), b.open, b.high, b.low, b.close, b.volume] for b in bars])
+    )
+
+
 class DataError(RuntimeError):
     pass
 
@@ -96,6 +130,10 @@ def _parse_bars(result: dict) -> list[Bar]:
 def daily_bars(symbol: str, lookback_days: int = 260) -> list[Bar]:
     """Daily OHLCV bars, oldest first. `lookback_days` calendar days back."""
     end = datetime.now(tz=ET)
+    key = f"daily-{symbol}-{lookback_days}-{end.date().isoformat()}"
+    cached = _cache_read(key)
+    if cached is not None:
+        return cached
     start = end - timedelta(days=lookback_days)
     result = _get_chart(
         symbol,
@@ -107,11 +145,19 @@ def daily_bars(symbol: str, lookback_days: int = 260) -> list[Bar]:
             "events": "div,splits",
         },
     )
-    return _parse_bars(result)
+    bars = _parse_bars(result)
+    _cache_write(key, bars)
+    return bars
 
 
 def minute_bars(symbol: str, day: date) -> list[Bar]:
     """1-minute regular-session bars for a single trading day, oldest first."""
+    is_past = day < datetime.now(tz=ET).date()
+    key = f"minute-{symbol}-{day.isoformat()}"
+    if is_past:
+        cached = _cache_read(key)
+        if cached is not None:
+            return cached
     start = datetime(day.year, day.month, day.day, 4, 0, tzinfo=ET)
     end = start + timedelta(hours=18)
     result = _get_chart(
@@ -123,7 +169,10 @@ def minute_bars(symbol: str, day: date) -> list[Bar]:
             "includePrePost": "false",
         },
     )
-    return [b for b in _parse_bars(result) if b.ts.date() == day]
+    bars = [b for b in _parse_bars(result) if b.ts.date() == day]
+    if is_past:
+        _cache_write(key, bars)
+    return bars
 
 
 def last_close_before(bars: list[Bar], day: date) -> Bar | None:
