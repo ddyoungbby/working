@@ -2,20 +2,12 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: one centered column; summary tiles -> verdict -> equity curve -> sweep scatter -> trade table -> caveats */
+/* Layout: one column. Verdict first (three lane cards), then the surviving lane's evidence, then what failed and why, then caveats. */
 :root {
-  --bg: #f7f7f5;
-  --surface: #fcfcfb;
-  --border: #e3e2dd;
-  --grid: #ecece8;
-  --ink: #0b0b0b;
-  --ink-2: #52514e;
-  --ink-3: #8a8984;
-  --accent: #2a78d6;
-  --accent-wash: rgba(42,120,214,0.10);
-  --good: #0ca30c;
-  --bad: #d03b3b;
-  --warn: #fab219;
+  --bg: #f7f7f5; --surface: #fcfcfb; --border: #e3e2dd; --grid: #ecece8;
+  --ink: #0b0b0b; --ink-2: #52514e; --ink-3: #8a8984;
+  --accent: #2a78d6; --accent-wash: rgba(42,120,214,0.10);
+  --good: #0ca30c; --bad: #d03b3b; --warn: #c98500;
   --sans: 'Archivo', system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -23,391 +15,278 @@
   :root:not([data-theme="light"]) {
     --bg: #121211; --surface: #1a1a19; --border: #32312e; --grid: #262523;
     --ink: #f0efec; --ink-2: #c3c2b7; --ink-3: #85847c;
-    --accent: #3987e5; --accent-wash: rgba(57,135,229,0.14);
+    --accent: #3987e5; --accent-wash: rgba(57,135,229,0.14); --warn: #fab219;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #121211; --surface: #1a1a19; --border: #32312e; --grid: #262523;
   --ink: #f0efec; --ink-2: #c3c2b7; --ink-3: #85847c;
-  --accent: #3987e5; --accent-wash: rgba(57,135,229,0.14);
+  --accent: #3987e5; --accent-wash: rgba(57,135,229,0.14); --warn: #fab219;
   color-scheme: dark;
 }
 * { box-sizing: border-box; margin: 0; }
-body {
-  background: var(--bg); color: var(--ink);
-  font-family: var(--sans); font-size: 15px; line-height: 1.55;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0 48px;
-}
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px; }
 .wrap { max-width: 920px; margin: 0 auto; }
-header.page { padding-block: 40px 8px; }
+header.page { padding-block: 40px 4px; }
 .eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
 h1 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin-top: 6px; }
-.sub { color: var(--ink-2); max-width: 62ch; margin-top: 8px; }
+.sub { color: var(--ink-2); max-width: 64ch; margin-top: 8px; }
 section { margin-top: 36px; }
-h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
-.sec-note { font-size: 0.85rem; color: var(--ink-3); margin-top: 2px; }
-
+h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+.sec-note { font-size: 0.85rem; color: var(--ink-3); margin-top: 2px; max-width: 70ch; }
+.lanes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+@media (max-width: 720px) { .lanes { grid-template-columns: 1fr; } }
+.lane { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; min-width: 0; display: grid; gap: 6px; align-content: start; }
+.lane.pass { border-color: var(--good); }
+.pill { justify-self: start; display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  border: 1px solid currentColor; border-radius: 999px; padding: 2px 10px; }
+.pill.pass { color: var(--good); } .pill.fail { color: var(--bad); } .pill.watch { color: var(--warn); }
+.lane h3 { font-size: 1rem; font-weight: 700; }
+.lane .big { font-family: var(--mono); font-size: 1.35rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.lane p { font-size: 0.84rem; color: var(--ink-2); }
 .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
 @media (max-width: 640px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
-.tile { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.tile { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; min-width: 0; }
 .tile .k { font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
-.tile .v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.55rem; font-weight: 700; margin-top: 4px; }
+.tile .v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.4rem; font-weight: 700; margin-top: 4px; }
 .tile .d { font-size: 0.78rem; color: var(--ink-2); margin-top: 2px; }
 .v.up { color: var(--good); } .v.down { color: var(--bad); }
-
-.verdict { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: 14px;
-  background: var(--accent-wash); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
-.verdict .mark { font-family: var(--mono); font-weight: 700; color: var(--accent); white-space: nowrap; }
-.verdict p { font-size: 0.9rem; color: var(--ink-2); min-width: 0; flex: 1 1 260px; }
-
-.cfg { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
-@media (max-width: 640px) { .cfg { grid-template-columns: 1fr; } }
-.cfg .rule { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; min-width: 0; }
-.cfg .rule b { font-family: var(--mono); font-size: 0.85rem; }
-.cfg .rule span { display: block; font-size: 0.82rem; color: var(--ink-2); margin-top: 2px; }
-
 .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-top: 14px; position: relative; min-width: 0; }
 svg { display: block; width: 100%; height: auto; }
-.tooltip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 7px 10px; font-family: var(--mono); font-size: 11.5px; line-height: 1.5;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.18); white-space: nowrap; z-index: 5; max-width: 90vw; white-space: normal; }
+.tooltip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 7px 10px; font-family: var(--mono); font-size: 11.5px; line-height: 1.5; box-shadow: 0 6px 24px rgba(0,0,0,0.18); z-index: 5; max-width: 90vw; }
 .tooltip[hidden] { display: none !important; }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-size: 0.8rem; color: var(--ink-2); }
-.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
-
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.rules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+@media (max-width: 640px) { .rules { grid-template-columns: 1fr; } }
+.rule { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+.rule b { font-family: var(--mono); font-size: 0.85rem; }
+.rule span { display: block; font-size: 0.84rem; color: var(--ink-2); margin-top: 2px; }
 .tbl-wrap { overflow-x: auto; margin-top: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.tbl-wrap.tall { max-height: 420px; overflow-y: auto; }
 table { border-collapse: collapse; width: 100%; font-size: 0.85rem; min-width: 560px; }
-th { font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--ink-3); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); }
-td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+th { position: sticky; top: 0; background: var(--surface); font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-3); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+td { padding: 9px 14px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
 tr:last-child td { border-bottom: 0; }
 td.num { font-family: var(--mono); }
-.chip { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 11px; font-weight: 600;
-  border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
-.chip.win { color: var(--good); } .chip.loss { color: var(--bad); }
-
-.caveats { border: 1px solid var(--border); border-left: 3px solid var(--warn); border-radius: 10px;
-  background: var(--surface); padding: 14px 16px; margin-top: 14px; }
-.caveats ul { padding-left: 18px; display: grid; gap: 6px; font-size: 0.88rem; color: var(--ink-2); }
+td.up { color: var(--good); font-weight: 600; } td.down { color: var(--bad); font-weight: 600; }
+.strike { text-decoration: line-through; color: var(--ink-3); }
+.caveats { border: 1px solid var(--border); border-left: 3px solid var(--warn); border-radius: 10px; background: var(--surface); padding: 14px 16px; margin-top: 14px; }
+.caveats ul { padding-left: 18px; display: grid; gap: 7px; font-size: 0.88rem; color: var(--ink-2); }
 footer { margin-top: 40px; font-size: 0.78rem; color: var(--ink-3); }
 </style>
 
 <div class="wrap">
   <header class="page">
-    <div class="eyebrow">KamdenAI-style morning engine &middot; 21 trading days &middot; Sep 16 - Oct 14, 2026</div>
-    <h1>Did the engine reach an 80% win rate?</h1>
-    <p class="sub">Yes, in-sample: one configuration won 6 of 7 trades (85.7%) over the test month.
-    It got there by being pickier - a green confirmation candle, a +0.4R take-profit, and no 9:35 reclaim entries -
-    which also cut the trade count from 19 to 7. Every number below comes from real market data replayed
-    through the engine's actual decision code.</p>
+    <div class="eyebrow">Validated Oct 15, 2026 &middot; realistic costs &middot; untouched hold-out data</div>
+    <h1>One lane survived out-of-sample testing</h1>
+    <p class="sub">Every lane was re-tested with the data delay, slippage, commissions and option time decay it would actually face,
+    then judged on days that no tuning had ever seen. The two intraday lanes failed. The research setups, traded as multi-day
+    swing trades, passed - with a 38% win rate, because the winners are about twice the size of the losers.</p>
   </header>
 
   <section>
+    <div class="lanes">
+      <div class="lane pass">
+        <span class="pill pass">&#10003; DEPLOYED</span>
+        <h3>Swing lane</h3>
+        <div class="big" style="color:var(--good)">+$602</div>
+        <p>2026 hold-out: 50 trades, profit factor 1.27, +0.12R per trade. Runs every market morning at 9:05 ET.</p>
+      </div>
+      <div class="lane">
+        <span class="pill watch">&#9888; WATCH-ONLY</span>
+        <h3>9:30 entry / 10:05 exit</h3>
+        <div class="big" style="color:var(--bad)">&minus;$26</div>
+        <p>The 85.7% configuration, re-graded: 3 of 7 won. Only 4 of 48 variants were positive, with no plateau. Stopped.</p>
+      </div>
+      <div class="lane">
+        <span class="pill fail">&#10005; FAILED</span>
+        <h3>0DTE scalper</h3>
+        <div class="big" style="color:var(--bad)">&minus;$170</div>
+        <p>The 79.3% configuration, re-graded: 51% wins, profit factor 0.51. 0 of 80 variants profitable. Stopped.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Swing lane equity - training years, then the unseen 2026 hold-out</h2>
+    <p class="sec-note">Cumulative net dollars after costs on a $5,000 account risking $100 per trade. Everything right of the divider was never used to make a choice. Hover a point for the trade.</p>
     <div class="tiles" id="tiles"></div>
-    <div class="verdict">
-      <span class="mark">BASELINE 42.1% &rarr; TUNED 85.7%</span>
-      <p>The untuned engine took 19 trades and lost $231.20 over the same month.
-      The tuned rules refused 12 of those trades and turned the rest into +$98.90.</p>
-    </div>
-  </section>
-
-  <section>
-    <h2>The winning rules</h2>
-    <p class="sec-note">What changed from the baseline configuration.</p>
-    <div class="cfg">
-      <div class="rule"><b>require_green = true</b><span>The 9:30 confirmation candle must close green. A red candle above entry is momentum fading into the alert - skip it.</span></div>
-      <div class="rule"><b>tp_r = 0.4</b><span>Take profit at +0.4R from the execution price instead of holding for the 2R plan target. Small wins, banked early.</span></div>
-      <div class="rule"><b>allow_935 = false</b><span>No 9:35 reclaim entries. A name below its trigger at the open stays unbought - late reclaims underperformed.</span></div>
-      <div class="rule"><b>officials = 2, min_stars = 3, any non-bearish tape</b><span>Unchanged from baseline: top two confirmations, 3-star research floor, bearish days stay in cash.</span></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Equity curve - tuned configuration</h2>
-    <p class="sec-note">Cumulative model P/L across all 7 trades, $5,000 account, 2% risk per signal. Hover any point.</p>
-    <div class="panel" id="equity-panel"></div>
-  </section>
-
-  <section>
-    <h2>All 64 tested configurations</h2>
-    <p class="sec-note">Win rate vs. number of trades. The pattern is the honest story: every configuration above 80% took few trades.</p>
-    <div class="panel" id="sweep-panel"></div>
+    <div class="panel" id="eq-panel"></div>
     <div class="legend">
-      <span><i style="background:var(--accent)"></i>Reached 80%+</span>
-      <span><i style="background:var(--ink-3)"></i>Below 80%</span>
-      <span><i style="background:transparent;border:2px solid var(--accent);width:8px;height:8px"></i>Champion (85.7%)</span>
+      <span><i style="background:var(--ink-3)"></i>Training (Apr 2024 - Dec 2025)</span>
+      <span><i style="background:var(--accent)"></i>Hold-out (Jan - Oct 2026)</span>
     </div>
   </section>
 
   <section>
-    <h2>The 7 trades</h2>
-    <div class="tbl-wrap"><table id="trades-tbl"></table></div>
+    <h2>Is the edge robust, or one lucky setting?</h2>
+    <p class="sec-note">Hold-out net dollars for all 18 distinct swing configurations. 11 of 18 made money on data none of them were chosen on; the deployed setting is outlined.</p>
+    <div class="panel" id="grid-panel"></div>
   </section>
 
-
   <section>
-    <h2>The 0DTE scalp lane, tuned</h2>
-    <p class="sec-note">Same month, different machine: 15-minute SPY/QQQ option scalps. 196 configurations tested in 5 rounds; win = underlying moved in the trade's favor. Option P/L is estimated at 0.5 delta per contract - historical chains are not free.</p>
-    <div class="tiles" id="scalp-tiles"></div>
-    <div class="verdict">
-      <span class="mark">CEILING: 79.3%</span>
-      <p>The 80% target was not reached. This setup family tops out at 79.4% on this month, and the
-      79.3% champion is the variant that also makes money. On 58 scalps the difference from 80% is
-      less than half a trade - statistically the same number.</p>
-    </div>
-    <div class="cfg">
-      <div class="rule"><b>stop 1.0&times; / target 0.12&times; range</b><span>Wide stop, tiny target: bank 12% of the 30-minute range fast, give a full range of room. This shape is what buys the win rate - and one full stop erases about eight winners.</span></div>
-      <div class="rule"><b>hold_min = 10, new_extreme = true, min_body = 0.5</b><span>Out in 10 minutes. The break must also be a new session high/low, on a candle whose body is at least half its range - conviction, not drift.</span></div>
+    <h2>The deployed swing plan</h2>
+    <div class="rules">
+      <div class="rule"><b>Setup: 20 EMA pullback, daily chart</b><span>Uptrend (price over a rising 20 EMA, 20 over 50), a controlled 1.5-15% pullback, quality flags, and a market filter that blocks bearish tapes.</span></div>
+      <div class="rule"><b>Entry: buy-stop at the pullback high</b><span>The order only fills if price trades through the trigger. If the stock gaps more than 0.75R past it at the open, skip it.</span></div>
+      <div class="rule"><b>Exit: stop, 2R target, or 10 sessions</b><span>Resting stop under the pullback low, resting limit at 2R, otherwise sell at the close of the 10th session.</span></div>
+      <div class="rule"><b>Size: $100 risk, max 3 positions</b><span>Shares = $100 &divide; (entry &minus; stop), capped at one third of the account per position. One new order per day at most.</span></div>
     </div>
   </section>
 
   <section>
-    <h2>Tuning ladder - win rate vs. what it cost</h2>
-    <p class="sec-note">Each round's best configuration. The middle rounds bought win rate with negative expectancy; the champion kept both.</p>
-    <div class="panel" id="ladder-panel"></div>
+    <h2>Why the earlier 80%+ numbers did not hold</h2>
+    <p class="sec-note">Same trades, graded two ways. The old sweeps assumed perfect fills at the signal price.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Configuration</th><th>Old grading</th><th>Realistic, no delay</th><th>Realistic, 2-min delay</th></tr></thead>
+      <tbody>
+        <tr><td>Morning 9:30 / 10:05</td><td class="num"><span class="strike">85.7% &middot; +$99</span></td><td class="num">71.4% &middot; +$19</td><td class="num down">42.9% &middot; &minus;$26</td></tr>
+        <tr><td>0DTE scalper</td><td class="num"><span class="strike">79.3% &middot; +$240</span></td><td class="num down">72.5% &middot; &minus;$149</td><td class="num down">51.3% &middot; &minus;$170</td></tr>
+      </tbody>
+    </table></div>
+    <p class="sec-note" style="margin-top:10px">The scalper's high win rate came from a tiny target: winners banked $7-20 while each time-stopped loser gave back $40-70 to drift and 0DTE time decay. With a perfect real-time feed it still managed only 5 thin positives out of 80 variants.</p>
   </section>
 
   <section>
-    <h2>Champion scalps - cumulative estimated P/L per contract</h2>
-    <p class="sec-note">All 58 scalps, Sep 16 - Oct 14. Hover any point.</p>
-    <div class="panel" id="scalp-equity-panel"></div>
+    <h2>All 50 hold-out trades</h2>
+    <div class="tbl-wrap tall"><table id="hold-tbl"></table></div>
   </section>
 
   <section>
-    <h2>Read this before believing either number</h2>
+    <h2>Before you trade it</h2>
     <div class="caveats"><ul>
-      <li><b>It is in-sample.</b> These rules were chosen <em>because</em> they won on this month. On 7 trades, the 95% confidence interval around 6 wins runs roughly from 49% to 97% - the true rate could be a coin flip.</li>
-      <li><b>High win rate was bought with small wins.</b> Taking profit at +0.4R means the average winner makes about $30 while the one loser gave back $55. The edge, if real, is thin: +0.144R per trade.</li>
-      <li><b>Fewer trades is the mechanism.</b> Most of the improvement came from refusing trades, not from picking better ones.</li>
-      <li><b>Fill model is optimistic.</b> Executions at the confirmation print, no slippage, no commissions, delayed free data.</li>
-      <li><b>The scalp lane is tuned harder than the morning engine.</b> 196 configurations were tried to reach 79.3%; expect it to test lower forward. Its reward shape (0.12R target, 1R stop) means a single stop-out erases about eight wins.</li>
-      <li><b>The real test is forward.</b> The daily 9:05 ET routine keeps running live; its ledger is the out-of-sample record that will confirm or embarrass this page.</li>
+      <li><b>It roughly matched the index, it did not beat it.</b> Over the hold-out window SPY rose 12.7%; the swing lane made +$602 on $5,000 (12.0%) with a deeper worst drawdown ($781, about 16%). Its value is a rules-based edge that is independent of simply owning SPY, not superior returns.</li>
+      <li><b>Expect long losing streaks.</b> At a 38% win rate, 5-8 losers in a row are normal. The plan only works if every trade is taken at the planned size.</li>
+      <li><b>The universe leans toward survivors.</b> The 81 tickers were picked in 2026, so they skew toward names that are popular now. The 2026 hold-out is the fairer read, and it is weaker than training.</li>
+      <li><b>Costs are modeled, not measured.</b> One basis point of slippage per side, no commissions on stock. The option alternative in the daily report is not backtested.</li>
+      <li><b>The forward record is the real test.</b> The daily report tracks every position from Oct 16, 2026 onward in the same rules.</li>
     </ul></div>
   </section>
 
-  <footer>Educational analysis of a mechanical process - not financial advice. Generated from backtest/sweep.json and backtest/trades-best.json in the working repository.</footer>
+  <footer>Educational analysis of a mechanical process - not financial advice. Source: backtest/swing-validation.json and backtest/validation.json in the working repository.</footer>
 </div>
 
 <script>
-const DATA = {"days": ["2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09", "2026-10-12", "2026-10-13", "2026-10-14"], "sweep": [{"trades": 19, "win_rate": 42.1, "pl": -231.2, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 14, "win_rate": 42.9, "pl": -73.71, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 12, "win_rate": 58.3, "pl": -83.05, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 9, "win_rate": 66.7, "pl": 73.94, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 12, "win_rate": 41.7, "pl": -252.16, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 8, "win_rate": 50.0, "pl": -70.27, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 8, "win_rate": 50.0, "pl": -205.53, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -24.14, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 19, "win_rate": 42.1, "pl": -314.33, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 14, "win_rate": 42.9, "pl": -156.84, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 12, "win_rate": 58.3, "pl": -166.18, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 9, "win_rate": 66.7, "pl": -9.19, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 12, "win_rate": 41.7, "pl": -252.16, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 8, "win_rate": 50.0, "pl": -70.27, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 8, "win_rate": 50.0, "pl": -205.53, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -24.14, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 19, "win_rate": 47.4, "pl": -216.87, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 14, "win_rate": 42.9, "pl": -143.53, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 12, "win_rate": 66.7, "pl": -68.72, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 9, "win_rate": 66.7, "pl": 4.12, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 12, "win_rate": 50.0, "pl": -137.01, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 8, "win_rate": 50.0, "pl": -39.27, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 8, "win_rate": 62.5, "pl": -90.38, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": 6.86, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 19, "win_rate": 47.4, "pl": -259.99, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 14, "win_rate": 42.9, "pl": -176.26, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 12, "win_rate": 66.7, "pl": -117.17, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 9, "win_rate": 66.7, "pl": -28.61, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 12, "win_rate": 50.0, "pl": -151.84, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 8, "win_rate": 50.0, "pl": -45.46, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 8, "win_rate": 62.5, "pl": -110.54, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": 0.67, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 13, "win_rate": 53.8, "pl": -96.24, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 9, "win_rate": 55.6, "pl": -73.39, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 7, "win_rate": 71.4, "pl": -16.25, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 6.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 9, "win_rate": 55.6, "pl": -72.43, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -25.18, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 6, "win_rate": 66.7, "pl": -40.65, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 6.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 13, "win_rate": 53.8, "pl": -51.33, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 9, "win_rate": 55.6, "pl": -28.48, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 7, "win_rate": 71.4, "pl": -16.25, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 6.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 9, "win_rate": 55.6, "pl": -72.43, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -25.18, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 6, "win_rate": 66.7, "pl": -40.65, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 6.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 13, "win_rate": 61.5, "pl": 54.28, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 9, "win_rate": 55.6, "pl": -7.02, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 7, "win_rate": 85.7, "pl": 98.9, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 37.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 9, "win_rate": 66.7, "pl": 42.72, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": 5.82, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 6, "win_rate": 83.3, "pl": 74.5, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 37.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 13, "win_rate": 61.5, "pl": 23.3, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 9, "win_rate": 55.6, "pl": -27.61, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 7, "win_rate": 85.7, "pl": 76.99, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 30.91, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 9, "win_rate": 66.7, "pl": 27.89, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -0.37, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 6, "win_rate": 83.3, "pl": 54.34, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 30.91, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 1, "allow_935": false, "bullish_only": true}}], "best": {"config": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": false}, "summary": {"trades": 7, "wins": 6, "win_rate": 85.7, "total_pl": 98.9, "avg_r": 0.144}, "trades": [{"day": "2026-09-25", "ticker": "TSLA", "path": "930", "stars": 4, "execution_price": 385.1, "exit_price": 371.47, "shares": 4, "pl": -54.52, "r": -0.63, "status": "no_follow_through"}, {"day": "2026-09-28", "ticker": "NVDA", "path": "930", "stars": 3, "execution_price": 230.76, "exit_price": 230.89, "shares": 14, "pl": 1.82, "r": 0.02, "status": "no_follow_through"}, {"day": "2026-10-02", "ticker": "COIN", "path": "930", "stars": 5, "execution_price": 196.75, "exit_price": 200.15, "shares": 11, "pl": 37.4, "r": 0.4, "status": "target_hit"}, {"day": "2026-10-02", "ticker": "ARM", "path": "930", "stars": 4, "execution_price": 307.49, "exit_price": 312.37, "shares": 5, "pl": 24.4, "r": 0.27, "status": "moved_in_favor"}, {"day": "2026-10-08", "ticker": "DOCU", "path": "930", "stars": 5, "execution_price": 69.48, "exit_price": 70.46, "shares": 40, "pl": 39.2, "r": 0.4, "status": "target_hit"}, {"day": "2026-10-09", "ticker": "SNOW", "path": "930", "stars": 4, "execution_price": 349.11, "exit_price": 354.35, "shares": 7, "pl": 36.68, "r": 0.4, "status": "target_hit"}, {"day": "2026-10-12", "ticker": "AAPL", "path": "930", "stars": 4, "execution_price": 340.8, "exit_price": 341.96, "shares": 12, "pl": 13.92, "r": 0.15, "status": "no_follow_through"}], "equity": [-54.52, -52.7, -15.3, 9.1, 48.3, 84.98, 98.9]}, "baseline": {"config": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": false}, "trades": 19, "wins": 8, "win_rate": 42.1, "total_pl": -231.2, "avg_r": -0.104}};
-
+const D = {"train": [{"ticker": "MSFT", "signal_day": "2024-04-04", "exit_day": "2024-04-15", "entry": 424.99, "exit": 417.49, "shares": 3, "reason": "stop", "net": -22.75, "r": -0.228}, {"ticker": "DOCU", "signal_day": "2024-05-10", "exit_day": "2024-05-13", "entry": 57.95, "exit": 59.59, "shares": 28, "reason": "target", "net": 45.36, "r": 0.454}, {"ticker": "DKNG", "signal_day": "2024-05-14", "exit_day": "2024-05-15", "entry": 43.66, "exit": 46.06, "shares": 38, "reason": "target", "net": 90.44, "r": 0.904}, {"ticker": "AMZN", "signal_day": "2024-05-16", "exit_day": "2024-05-21", "entry": 186.73, "exit": 182.3, "shares": 8, "reason": "stop_gap", "net": -35.74, "r": -0.357}, {"ticker": "MU", "signal_day": "2024-06-03", "exit_day": "2024-06-12", "entry": 128.13, "exit": 139.97, "shares": 13, "reason": "target", "net": 153.57, "r": 1.536}, {"ticker": "NFLX", "signal_day": "2024-06-05", "exit_day": "2024-06-06", "entry": 63.53, "exit": 65.69, "shares": 26, "reason": "target", "net": 55.64, "r": 0.556}, {"ticker": "JPM", "signal_day": "2024-06-07", "exit_day": "2024-06-11", "entry": 198.03, "exit": 195.33, "shares": 8, "reason": "stop", "net": -21.91, "r": -0.219}, {"ticker": "RUN", "signal_day": "2024-06-10", "exit_day": "2024-06-12", "entry": 13.91, "exit": 15.79, "shares": 106, "reason": "target", "net": 197.16, "r": 1.972}, {"ticker": "MSTR", "signal_day": "2024-06-12", "exit_day": "2024-06-13", "entry": 162.0, "exit": 148.66, "shares": 10, "reason": "stop", "net": -133.71, "r": -1.337}, {"ticker": "HOOD", "signal_day": "2024-06-21", "exit_day": "2024-06-24", "entry": 22.08, "exit": 21.18, "shares": 75, "reason": "stop", "net": -69.0, "r": -0.69}, {"ticker": "META", "signal_day": "2024-06-24", "exit_day": "2024-07-05", "entry": 503.46, "exit": 530.86, "shares": 3, "reason": "target", "net": 81.89, "r": 0.819}, {"ticker": "AMZN", "signal_day": "2024-06-26", "exit_day": "2024-06-27", "entry": 188.85, "exit": 199.27, "shares": 8, "reason": "target", "net": 83.05, "r": 0.83}, {"ticker": "UBER", "signal_day": "2024-06-28", "exit_day": "2024-07-02", "entry": 71.33, "exit": 68.93, "shares": 23, "reason": "stop", "net": -55.66, "r": -0.557}, {"ticker": "UBER", "signal_day": "2024-07-03", "exit_day": "2024-07-10", "entry": 71.27, "exit": 68.88, "shares": 23, "reason": "stop", "net": -55.43, "r": -0.554}, {"ticker": "PENN", "signal_day": "2024-07-05", "exit_day": "2024-07-19", "entry": 19.46, "exit": 18.08, "shares": 72, "reason": "stop", "net": -100.8, "r": -1.008}, {"ticker": "HOOD", "signal_day": "2024-07-08", "exit_day": "2024-07-17", "entry": 22.75, "exit": 24.81, "shares": 73, "reason": "target", "net": 148.92, "r": 1.489}, {"ticker": "DDOG", "signal_day": "2024-07-11", "exit_day": "2024-07-17", "entry": 128.15, "exit": 123.5, "shares": 13, "reason": "stop_gap", "net": -60.78, "r": -0.608}, {"ticker": "JPM", "signal_day": "2024-08-14", "exit_day": "2024-08-23", "entry": 208.1, "exit": 218.5, "shares": 8, "reason": "target", "net": 82.86, "r": 0.829}, {"ticker": "PYPL", "signal_day": "2024-08-15", "exit_day": "2024-08-29", "entry": 67.16, "exit": 73.16, "shares": 23, "reason": "time", "net": 137.54, "r": 1.375}, {"ticker": "PENN", "signal_day": "2024-08-16", "exit_day": "2024-08-30", "entry": 19.44, "exit": 18.62, "shares": 75, "reason": "time", "net": -63.0, "r": -0.63}, {"ticker": "CHWY", "signal_day": "2024-08-28", "exit_day": "2024-08-29", "entry": 26.25, "exit": 28.72, "shares": 63, "reason": "target_gap", "net": 154.35, "r": 1.543}, {"ticker": "AVGO", "signal_day": "2024-08-30", "exit_day": "2024-09-03", "entry": 163.21, "exit": 155.41, "shares": 10, "reason": "stop", "net": -78.32, "r": -0.783}, {"ticker": "TSLA", "signal_day": "2024-09-12", "exit_day": "2024-09-26", "entry": 228.48, "exit": 260.6, "shares": 6, "reason": "target_gap", "net": 192.43, "r": 1.924}, {"ticker": "NFLX", "signal_day": "2024-09-13", "exit_day": "2024-09-27", "entry": 69.5, "exit": 70.74, "shares": 23, "reason": "time", "net": 27.95, "r": 0.279}, {"ticker": "PYPL", "signal_day": "2024-09-16", "exit_day": "2024-09-19", "entry": 70.63, "exit": 76.37, "shares": 23, "reason": "target", "net": 131.56, "r": 1.316}, {"ticker": "SOUN", "signal_day": "2024-09-25", "exit_day": "2024-09-27", "entry": 4.97, "exit": 4.77, "shares": 335, "reason": "stop", "net": -73.7, "r": -0.737}, {"ticker": "SOFI", "signal_day": "2024-09-27", "exit_day": "2024-10-02", "entry": 7.88, "exit": 7.58, "shares": 211, "reason": "stop", "net": -67.52, "r": -0.675}, {"ticker": "SOFI", "signal_day": "2024-10-03", "exit_day": "2024-10-04", "entry": 7.84, "exit": 8.38, "shares": 212, "reason": "target", "net": 110.24, "r": 1.102}, {"ticker": "UPST", "signal_day": "2024-10-04", "exit_day": "2024-10-08", "entry": 39.9, "exit": 43.08, "shares": 41, "reason": "target", "net": 129.56, "r": 1.296}, {"ticker": "NFLX", "signal_day": "2024-10-08", "exit_day": "2024-10-17", "entry": 71.6, "exit": 69.64, "shares": 23, "reason": "stop", "net": -45.54, "r": -0.455}, {"ticker": "TSLA", "signal_day": "2024-10-09", "exit_day": "2024-10-09", "entry": 246.22, "exit": 240.05, "shares": 6, "reason": "stop", "net": -37.31, "r": -0.373}, {"ticker": "BAC", "signal_day": "2024-10-11", "exit_day": "2024-10-14", "entry": 40.5, "exit": 41.96, "shares": 41, "reason": "target_gap", "net": 59.04, "r": 0.59}, {"ticker": "AVGO", "signal_day": "2024-10-17", "exit_day": "2024-10-23", "entry": 181.37, "exit": 173.31, "shares": 9, "reason": "stop", "net": -72.86, "r": -0.729}, {"ticker": "AMZN", "signal_day": "2024-10-18", "exit_day": "2024-10-23", "entry": 188.95, "exit": 184.58, "shares": 8, "reason": "stop", "net": -35.26, "r": -0.353}, {"ticker": "PENN", "signal_day": "2024-10-21", "exit_day": "2024-10-21", "entry": 19.01, "exit": 18.48, "shares": 87, "reason": "stop", "net": -47.85, "r": -0.479}, {"ticker": "FUBO", "signal_day": "2024-10-24", "exit_day": "2024-10-25", "entry": 19.88, "exit": 18.43, "shares": 68, "reason": "stop", "net": -99.96, "r": -1.0}, {"ticker": "UBER", "signal_day": "2024-10-25", "exit_day": "2024-10-25", "entry": 78.61, "exit": 77.14, "shares": 21, "reason": "stop", "net": -31.29, "r": -0.313}, {"ticker": "FUBO", "signal_day": "2024-10-28", "exit_day": "2024-10-29", "entry": 19.45, "exit": 21.72, "shares": 85, "reason": "target_gap", "net": 191.25, "r": 1.912}, {"ticker": "MU", "signal_day": "2024-10-29", "exit_day": "2024-10-30", "entry": 108.19, "exit": 104.39, "shares": 15, "reason": "stop", "net": -57.32, "r": -0.573}, {"ticker": "TSM", "signal_day": "2024-11-07", "exit_day": "2024-11-08", "entry": 196.31, "exit": 205.81, "shares": 8, "reason": "target", "net": 75.68, "r": 0.757}, {"ticker": "GME", "signal_day": "2024-11-08", "exit_day": "2024-11-11", "entry": 23.67, "exit": 27.23, "shares": 56, "reason": "target", "net": 198.24, "r": 1.982}, {"ticker": "PATH", "signal_day": "2024-11-11", "exit_day": "2024-11-14", "entry": 13.3, "exit": 12.61, "shares": 125, "reason": "stop", "net": -88.75, "r": -0.888}, {"ticker": "PENN", "signal_day": "2024-11-22", "exit_day": "2024-12-02", "entry": 20.32, "exit": 22.02, "shares": 82, "reason": "target", "net": 137.76, "r": 1.378}, {"ticker": "INTC", "signal_day": "2024-11-25", "exit_day": "2024-11-27", "entry": 25.04, "exit": 23.55, "shares": 66, "reason": "stop", "net": -99.66, "r": -0.997}, {"ticker": "F", "signal_day": "2024-11-27", "exit_day": "2024-12-04", "entry": 11.24, "exit": 10.8, "shares": 148, "reason": "stop", "net": -68.08, "r": -0.681}, {"ticker": "INTC", "signal_day": "2024-11-29", "exit_day": "2024-12-03", "entry": 23.94, "exit": 23.06, "shares": 69, "reason": "stop", "net": -62.1, "r": -0.621}, {"ticker": "ABNB", "signal_day": "2024-12-03", "exit_day": "2024-12-04", "entry": 137.61, "exit": 135.25, "shares": 12, "reason": "stop", "net": -28.65, "r": -0.286}, {"ticker": "PYPL", "signal_day": "2024-12-04", "exit_day": "2024-12-09", "entry": 86.41, "exit": 92.25, "shares": 19, "reason": "target_gap", "net": 110.58, "r": 1.106}, {"ticker": "JPM", "signal_day": "2024-12-05", "exit_day": "2024-12-13", "entry": 245.39, "exit": 241.01, "shares": 6, "reason": "stop", "net": -26.57, "r": -0.266}, {"ticker": "CRWD", "signal_day": "2024-12-11", "exit_day": "2024-12-16", "entry": 89.33, "exit": 95.69, "shares": 18, "reason": "target", "net": 114.12, "r": 1.141}, {"ticker": "COIN", "signal_day": "2024-12-16", "exit_day": "2024-12-18", "entry": 317.19, "exit": 297.55, "shares": 5, "reason": "stop", "net": -98.51, "r": -0.985}, {"ticker": "CCL", "signal_day": "2024-12-18", "exit_day": "2024-12-18", "entry": 26.11, "exit": 25.34, "shares": 63, "reason": "stop", "net": -49.77, "r": -0.498}, {"ticker": "ROKU", "signal_day": "2024-12-26", "exit_day": "2024-12-27", "entry": 79.76, "exit": 77.09, "shares": 20, "reason": "stop", "net": -53.8, "r": -0.538}, {"ticker": "DOCU", "signal_day": "2025-01-22", "exit_day": "2025-01-27", "entry": 92.18, "exit": 88.71, "shares": 18, "reason": "stop", "net": -62.82, "r": -0.628}, {"ticker": "PENN", "signal_day": "2025-01-24", "exit_day": "2025-02-07", "entry": 20.43, "exit": 21.45, "shares": 81, "reason": "time", "net": 81.0, "r": 0.81}, {"ticker": "PYPL", "signal_day": "2025-01-27", "exit_day": "2025-01-27", "entry": 90.03, "exit": 87.76, "shares": 18, "reason": "stop", "net": -41.22, "r": -0.412}, {"ticker": "ROKU", "signal_day": "2025-01-28", "exit_day": "2025-02-10", "entry": 81.49, "exit": 88.75, "shares": 20, "reason": "target", "net": 144.8, "r": 1.448}, {"ticker": "COIN", "signal_day": "2025-01-29", "exit_day": "2025-02-12", "entry": 284.85, "exit": 264.39, "shares": 5, "reason": "stop_gap", "net": -102.57, "r": -1.026}, {"ticker": "PATH", "signal_day": "2025-02-12", "exit_day": "2025-02-12", "entry": 14.19, "exit": 13.84, "shares": 117, "reason": "stop", "net": -43.29, "r": -0.433}, {"ticker": "PATH", "signal_day": "2025-02-13", "exit_day": "2025-02-21", "entry": 14.25, "exit": 13.61, "shares": 116, "reason": "stop", "net": -76.56, "r": -0.766}, {"ticker": "F", "signal_day": "2025-05-01", "exit_day": "2025-05-15", "entry": 10.14, "exit": 10.75, "shares": 164, "reason": "time", "net": 96.76, "r": 0.968}, {"ticker": "CHWY", "signal_day": "2025-05-05", "exit_day": "2025-05-14", "entry": 36.99, "exit": 40.83, "shares": 45, "reason": "target", "net": 171.9, "r": 1.719}, {"ticker": "XPEV", "signal_day": "2025-05-08", "exit_day": "2025-05-12", "entry": 19.71, "exit": 21.15, "shares": 84, "reason": "target_gap", "net": 119.28, "r": 1.193}, {"ticker": "NFLX", "signal_day": "2025-05-13", "exit_day": "2025-05-28", "entry": 113.01, "exit": 120.86, "shares": 14, "reason": "time", "net": 109.5, "r": 1.095}, {"ticker": "WMT", "signal_day": "2025-05-16", "exit_day": "2025-06-02", "entry": 96.73, "exit": 99.77, "shares": 17, "reason": "time", "net": 51.34, "r": 0.513}, {"ticker": "XPEV", "signal_day": "2025-05-20", "exit_day": "2025-05-21", "entry": 20.04, "exit": 21.13, "shares": 83, "reason": "target_gap", "net": 88.81, "r": 0.888}, {"ticker": "PYPL", "signal_day": "2025-05-27", "exit_day": "2025-05-28", "entry": 70.75, "exit": 71.85, "shares": 23, "reason": "target", "net": 24.84, "r": 0.248}, {"ticker": "SOFI", "signal_day": "2025-06-02", "exit_day": "2025-06-05", "entry": 13.33, "exit": 14.27, "shares": 125, "reason": "target", "net": 115.0, "r": 1.15}, {"ticker": "DAL", "signal_day": "2025-06-03", "exit_day": "2025-06-09", "entry": 48.87, "exit": 51.63, "shares": 34, "reason": "target", "net": 93.16, "r": 0.932}, {"ticker": "SHOP", "signal_day": "2025-06-06", "exit_day": "2025-06-11", "entry": 106.99, "exit": 114.09, "shares": 15, "reason": "target", "net": 106.15, "r": 1.062}, {"ticker": "NFLX", "signal_day": "2025-06-11", "exit_day": "2025-06-26", "entry": 122.76, "exit": 130.67, "shares": 13, "reason": "time", "net": 102.46, "r": 1.025}, {"ticker": "FUBO", "signal_day": "2025-06-12", "exit_day": "2025-06-13", "entry": 41.05, "exit": 39.24, "shares": 40, "reason": "stop", "net": -73.2, "r": -0.732}, {"ticker": "UPST", "signal_day": "2025-06-18", "exit_day": "2025-06-24", "entry": 55.53, "exit": 62.51, "shares": 27, "reason": "target_gap", "net": 187.92, "r": 1.879}, {"ticker": "SHOP", "signal_day": "2025-06-23", "exit_day": "2025-06-23", "entry": 109.13, "exit": 105.3, "shares": 15, "reason": "stop", "net": -57.77, "r": -0.578}, {"ticker": "QCOM", "signal_day": "2025-06-24", "exit_day": "2025-07-01", "entry": 154.73, "exit": 161.23, "shares": 10, "reason": "target", "net": 64.68, "r": 0.647}, {"ticker": "SMCI", "signal_day": "2025-06-25", "exit_day": "2025-06-26", "entry": 43.34, "exit": 47.92, "shares": 38, "reason": "target", "net": 173.28, "r": 1.733}, {"ticker": "MSTR", "signal_day": "2025-06-27", "exit_day": "2025-07-11", "entry": 392.68, "exit": 436.04, "shares": 4, "reason": "target", "net": 173.11, "r": 1.731}, {"ticker": "PATH", "signal_day": "2025-07-01", "exit_day": "2025-07-14", "entry": 12.88, "exit": 12.25, "shares": 129, "reason": "stop", "net": -83.85, "r": -0.839}, {"ticker": "DAL", "signal_day": "2025-07-02", "exit_day": "2025-07-02", "entry": 49.43, "exit": 48.34, "shares": 33, "reason": "stop", "net": -36.63, "r": -0.366}, {"ticker": "NOW", "signal_day": "2025-07-03", "exit_day": "2025-07-10", "entry": 203.55, "exit": 198.4, "shares": 8, "reason": "stop", "net": -41.49, "r": -0.415}, {"ticker": "AFRM", "signal_day": "2025-07-15", "exit_day": "2025-07-29", "entry": 65.25, "exit": 67.96, "shares": 25, "reason": "time", "net": 67.25, "r": 0.672}, {"ticker": "MRNA", "signal_day": "2025-07-22", "exit_day": "2025-07-31", "entry": 32.08, "exit": 30.23, "shares": 51, "reason": "stop", "net": -95.37, "r": -0.954}, {"ticker": "SMCI", "signal_day": "2025-07-23", "exit_day": "2025-07-28", "entry": 51.87, "exit": 58.33, "shares": 30, "reason": "target", "net": 193.2, "r": 1.932}, {"ticker": "CLSK", "signal_day": "2025-07-30", "exit_day": "2025-07-30", "entry": 12.16, "exit": 11.4, "shares": 131, "reason": "stop", "net": -102.18, "r": -1.022}, {"ticker": "CAVA", "signal_day": "2025-08-05", "exit_day": "2025-08-11", "entry": 88.47, "exit": 83.5, "shares": 18, "reason": "stop", "net": -89.82, "r": -0.898}, {"ticker": "CCL", "signal_day": "2025-08-07", "exit_day": "2025-08-07", "entry": 29.61, "exit": 28.93, "shares": 56, "reason": "stop", "net": -39.2, "r": -0.392}, {"ticker": "UBER", "signal_day": "2025-08-15", "exit_day": "2025-08-29", "entry": 92.33, "exit": 93.75, "shares": 18, "reason": "time", "net": 25.2, "r": 0.252}, {"ticker": "WMT", "signal_day": "2025-08-18", "exit_day": "2025-08-21", "entry": 100.78, "exit": 99.41, "shares": 16, "reason": "stop_gap", "net": -22.24, "r": -0.222}, {"ticker": "FUBO", "signal_day": "2025-08-19", "exit_day": "2025-08-19", "entry": 45.6, "exit": 42.84, "shares": 36, "reason": "stop", "net": -100.08, "r": -1.001}, {"ticker": "SOFI", "signal_day": "2025-08-21", "exit_day": "2025-08-25", "entry": 22.73, "exit": 25.77, "shares": 65, "reason": "target", "net": 196.3, "r": 1.963}, {"ticker": "TSLA", "signal_day": "2025-09-05", "exit_day": "2025-09-11", "entry": 348.0, "exit": 365.5, "shares": 4, "reason": "target", "net": 69.71, "r": 0.697}, {"ticker": "UBER", "signal_day": "2025-09-11", "exit_day": "2025-09-25", "entry": 96.11, "exit": 97.6, "shares": 17, "reason": "time", "net": 24.99, "r": 0.25}, {"ticker": "ROKU", "signal_day": "2025-09-16", "exit_day": "2025-09-19", "entry": 95.75, "exit": 101.59, "shares": 17, "reason": "target", "net": 98.94, "r": 0.989}, {"ticker": "DDOG", "signal_day": "2025-09-17", "exit_day": "2025-09-17", "entry": 136.16, "exit": 132.69, "shares": 12, "reason": "stop", "net": -41.96, "r": -0.42}, {"ticker": "DDOG", "signal_day": "2025-09-18", "exit_day": "2025-09-29", "entry": 136.55, "exit": 145.09, "shares": 12, "reason": "target", "net": 102.14, "r": 1.021}, {"ticker": "XPEV", "signal_day": "2025-09-23", "exit_day": "2025-09-30", "entry": 21.73, "exit": 23.89, "shares": 76, "reason": "target_gap", "net": 162.64, "r": 1.626}, {"ticker": "DOCU", "signal_day": "2025-09-29", "exit_day": "2025-09-30", "entry": 82.22, "exit": 80.33, "shares": 20, "reason": "stop", "net": -38.2, "r": -0.382}, {"ticker": "UBER", "signal_day": "2025-10-03", "exit_day": "2025-10-10", "entry": 97.22, "exit": 94.76, "shares": 17, "reason": "stop", "net": -42.16, "r": -0.422}, {"ticker": "HIMS", "signal_day": "2025-10-07", "exit_day": "2025-10-08", "entry": 54.8, "exit": 59.38, "shares": 30, "reason": "target", "net": 136.8, "r": 1.368}, {"ticker": "TSLA", "signal_day": "2025-10-17", "exit_day": "2025-10-23", "entry": 439.36, "exit": 417.86, "shares": 3, "reason": "stop", "net": -64.76, "r": -0.648}, {"ticker": "SMCI", "signal_day": "2025-10-20", "exit_day": "2025-10-22", "entry": 55.04, "exit": 51.09, "shares": 30, "reason": "stop", "net": -119.1, "r": -1.191}, {"ticker": "BB", "signal_day": "2025-10-21", "exit_day": "2025-11-04", "entry": 4.65, "exit": 4.67, "shares": 358, "reason": "time", "net": 0.0, "r": 0.0}, {"ticker": "DAL", "signal_day": "2025-10-24", "exit_day": "2025-10-28", "entry": 60.72, "exit": 58.26, "shares": 27, "reason": "stop", "net": -66.96, "r": -0.67}, {"ticker": "MRNA", "signal_day": "2025-10-27", "exit_day": "2025-10-28", "entry": 27.01, "exit": 25.57, "shares": 61, "reason": "stop", "net": -89.06, "r": -0.891}, {"ticker": "CELH", "signal_day": "2025-10-29", "exit_day": "2025-10-29", "entry": 62.51, "exit": 60.86, "shares": 26, "reason": "stop", "net": -43.42, "r": -0.434}, {"ticker": "RIOT", "signal_day": "2025-10-31", "exit_day": "2025-10-31", "entry": 21.84, "exit": 20.3, "shares": 64, "reason": "stop", "net": -99.84, "r": -0.998}, {"ticker": "ABNB", "signal_day": "2025-11-03", "exit_day": "2025-11-03", "entry": 127.16, "exit": 124.85, "shares": 13, "reason": "stop", "net": -30.36, "r": -0.304}, {"ticker": "TSLA", "signal_day": "2025-11-05", "exit_day": "2025-11-06", "entry": 460.23, "exit": 438.97, "shares": 3, "reason": "stop", "net": -64.05, "r": -0.64}, {"ticker": "AAL", "signal_day": "2025-11-12", "exit_day": "2025-11-14", "entry": 13.37, "exit": 12.73, "shares": 124, "reason": "stop", "net": -81.84, "r": -0.818}, {"ticker": "F", "signal_day": "2025-11-28", "exit_day": "2025-12-12", "entry": 13.27, "exit": 13.76, "shares": 125, "reason": "time", "net": 58.75, "r": 0.588}, {"ticker": "TSLA", "signal_day": "2025-12-01", "exit_day": "2025-12-15", "entry": 432.94, "exit": 475.31, "shares": 3, "reason": "time", "net": 126.84, "r": 1.268}, {"ticker": "TSM", "signal_day": "2025-12-02", "exit_day": "2025-12-10", "entry": 292.0, "exit": 307.13, "shares": 5, "reason": "target", "net": 75.35, "r": 0.754}, {"ticker": "JPM", "signal_day": "2025-12-11", "exit_day": "2025-12-26", "entry": 311.2, "exit": 327.91, "shares": 5, "reason": "time", "net": 83.23, "r": 0.832}, {"ticker": "AAPL", "signal_day": "2025-12-15", "exit_day": "2025-12-15", "entry": 280.15, "exit": 273.81, "shares": 5, "reason": "stop", "net": -31.98, "r": -0.32}, {"ticker": "QCOM", "signal_day": "2025-12-22", "exit_day": "2025-12-31", "entry": 177.56, "exit": 172.05, "shares": 9, "reason": "stop", "net": -49.9, "r": -0.499}], "hold": [{"ticker": "AFRM", "signal_day": "2026-01-05", "exit_day": "2026-01-06", "entry": 75.47, "exit": 81.63, "shares": 22, "reason": "target_gap", "net": 135.08, "r": 1.351}, {"ticker": "CRM", "signal_day": "2026-01-06", "exit_day": "2026-01-13", "entry": 259.6, "exit": 252.31, "shares": 6, "reason": "stop", "net": -44.05, "r": -0.44}, {"ticker": "RIVN", "signal_day": "2026-01-07", "exit_day": "2026-01-07", "entry": 20.11, "exit": 18.88, "shares": 81, "reason": "stop", "net": -101.25, "r": -1.013}, {"ticker": "ROKU", "signal_day": "2026-01-09", "exit_day": "2026-01-12", "entry": 113.64, "exit": 107.71, "shares": 14, "reason": "stop", "net": -83.33, "r": -0.833}, {"ticker": "NVDA", "signal_day": "2026-01-12", "exit_day": "2026-01-12", "entry": 186.35, "exit": 183.67, "shares": 8, "reason": "stop", "net": -21.74, "r": -0.217}, {"ticker": "NVDA", "signal_day": "2026-01-13", "exit_day": "2026-01-14", "entry": 187.13, "exit": 183.02, "shares": 8, "reason": "stop", "net": -33.18, "r": -0.332}, {"ticker": "WMT", "signal_day": "2026-01-29", "exit_day": "2026-02-02", "entry": 117.47, "exit": 121.45, "shares": 14, "reason": "target", "net": 55.39, "r": 0.554}, {"ticker": "ENPH", "signal_day": "2026-02-03", "exit_day": "2026-02-04", "entry": 36.98, "exit": 48.0, "shares": 45, "reason": "target_gap", "net": 495.0, "r": 4.95}, {"ticker": "PENN", "signal_day": "2026-04-07", "exit_day": "2026-04-15", "entry": 14.77, "exit": 15.99, "shares": 112, "reason": "target", "net": 134.4, "r": 1.344}, {"ticker": "TGT", "signal_day": "2026-04-08", "exit_day": "2026-04-13", "entry": 122.92, "exit": 117.48, "shares": 13, "reason": "stop", "net": -71.03, "r": -0.71}, {"ticker": "NFLX", "signal_day": "2026-04-09", "exit_day": "2026-04-20", "entry": 100.41, "exit": 94.3, "shares": 16, "reason": "stop", "net": -98.08, "r": -0.981}, {"ticker": "TGT", "signal_day": "2026-04-15", "exit_day": "2026-04-17", "entry": 119.73, "exit": 125.23, "shares": 13, "reason": "target", "net": 71.18, "r": 0.712}, {"ticker": "WMT", "signal_day": "2026-04-16", "exit_day": "2026-04-22", "entry": 125.08, "exit": 130.14, "shares": 13, "reason": "target", "net": 65.45, "r": 0.654}, {"ticker": "NET", "signal_day": "2026-04-21", "exit_day": "2026-05-05", "entry": 206.33, "exit": 232.81, "shares": 7, "reason": "target", "net": 185.05, "r": 1.851}, {"ticker": "GOOGL", "signal_day": "2026-04-22", "exit_day": "2026-04-30", "entry": 339.35, "exit": 384.57, "shares": 4, "reason": "target", "net": 180.59, "r": 1.806}, {"ticker": "NIO", "signal_day": "2026-04-27", "exit_day": "2026-04-28", "entry": 6.34, "exit": 6.11, "shares": 262, "reason": "stop", "net": -65.5, "r": -0.655}, {"ticker": "CLSK", "signal_day": "2026-04-30", "exit_day": "2026-05-05", "entry": 11.73, "exit": 13.17, "shares": 138, "reason": "target", "net": 195.96, "r": 1.96}, {"ticker": "OPEN", "signal_day": "2026-05-06", "exit_day": "2026-05-08", "entry": 5.28, "exit": 4.96, "shares": 312, "reason": "stop", "net": -106.08, "r": -1.061}, {"ticker": "COIN", "signal_day": "2026-05-08", "exit_day": "2026-05-08", "entry": 198.16, "exit": 190.2, "shares": 8, "reason": "stop", "net": -63.99, "r": -0.64}, {"ticker": "MSFT", "signal_day": "2026-05-12", "exit_day": "2026-05-13", "entry": 414.48, "exit": 403.2, "shares": 4, "reason": "stop_gap", "net": -45.45, "r": -0.454}, {"ticker": "DAL", "signal_day": "2026-05-13", "exit_day": "2026-05-19", "entry": 71.01, "exit": 69.22, "shares": 23, "reason": "stop_gap", "net": -41.63, "r": -0.416}, {"ticker": "COIN", "signal_day": "2026-05-14", "exit_day": "2026-05-15", "entry": 204.21, "exit": 192.81, "shares": 8, "reason": "stop", "net": -91.52, "r": -0.915}, {"ticker": "MARA", "signal_day": "2026-05-19", "exit_day": "2026-05-19", "entry": 12.27, "exit": 11.62, "shares": 135, "reason": "stop", "net": -90.45, "r": -0.905}, {"ticker": "ROKU", "signal_day": "2026-05-20", "exit_day": "2026-06-03", "entry": 124.41, "exit": 119.59, "shares": 13, "reason": "stop", "net": -62.98, "r": -0.63}, {"ticker": "TSLA", "signal_day": "2026-05-22", "exit_day": "2026-06-05", "entry": 426.96, "exit": 393.63, "shares": 3, "reason": "stop", "net": -100.24, "r": -1.002}, {"ticker": "NVO", "signal_day": "2026-05-27", "exit_day": "2026-06-02", "entry": 45.0, "exit": 43.49, "shares": 37, "reason": "stop_gap", "net": -56.61, "r": -0.566}, {"ticker": "SNAP", "signal_day": "2026-06-04", "exit_day": "2026-06-05", "entry": 5.78, "exit": 6.15, "shares": 288, "reason": "target", "net": 99.36, "r": 0.994}, {"ticker": "TSM", "signal_day": "2026-06-15", "exit_day": "2026-06-22", "entry": 438.68, "exit": 476.09, "shares": 3, "reason": "target_gap", "net": 111.96, "r": 1.12}, {"ticker": "RIVN", "signal_day": "2026-06-17", "exit_day": "2026-06-22", "entry": 16.57, "exit": 15.44, "shares": 88, "reason": "stop", "net": -101.2, "r": -1.012}, {"ticker": "TGT", "signal_day": "2026-06-23", "exit_day": "2026-07-01", "entry": 134.03, "exit": 127.36, "shares": 12, "reason": "stop", "net": -80.35, "r": -0.804}, {"ticker": "CCL", "signal_day": "2026-07-01", "exit_day": "2026-07-02", "entry": 29.13, "exit": 28.13, "shares": 57, "reason": "stop", "net": -58.14, "r": -0.581}, {"ticker": "ETSY", "signal_day": "2026-07-02", "exit_day": "2026-07-15", "entry": 76.58, "exit": 85.78, "shares": 21, "reason": "target", "net": 192.78, "r": 1.928}, {"ticker": "UPST", "signal_day": "2026-07-09", "exit_day": "2026-07-16", "entry": 32.46, "exit": 30.99, "shares": 51, "reason": "stop", "net": -75.99, "r": -0.76}, {"ticker": "DKNG", "signal_day": "2026-07-13", "exit_day": "2026-07-14", "entry": 27.32, "exit": 25.81, "shares": 61, "reason": "stop", "net": -93.33, "r": -0.933}, {"ticker": "CHWY", "signal_day": "2026-08-13", "exit_day": "2026-08-13", "entry": 22.59, "exit": 22.06, "shares": 73, "reason": "stop", "net": -40.15, "r": -0.402}, {"ticker": "CHWY", "signal_day": "2026-08-17", "exit_day": "2026-08-19", "entry": 22.56, "exit": 23.84, "shares": 73, "reason": "target", "net": 91.98, "r": 0.92}, {"ticker": "UBER", "signal_day": "2026-08-19", "exit_day": "2026-09-02", "entry": 77.29, "exit": 76.45, "shares": 21, "reason": "time", "net": -18.06, "r": -0.181}, {"ticker": "SNAP", "signal_day": "2026-08-20", "exit_day": "2026-08-25", "entry": 5.29, "exit": 5.81, "shares": 315, "reason": "target", "net": 157.5, "r": 1.575}, {"ticker": "SOUN", "signal_day": "2026-08-26", "exit_day": "2026-08-26", "entry": 7.11, "exit": 6.9, "shares": 234, "reason": "stop", "net": -53.82, "r": -0.538}, {"ticker": "AFRM", "signal_day": "2026-08-27", "exit_day": "2026-08-28", "entry": 77.44, "exit": 86.0, "shares": 21, "reason": "target_gap", "net": 179.34, "r": 1.793}, {"ticker": "FUBO", "signal_day": "2026-08-28", "exit_day": "2026-09-03", "entry": 10.49, "exit": 12.09, "shares": 151, "reason": "target_gap", "net": 238.58, "r": 2.386}, {"ticker": "CELH", "signal_day": "2026-09-03", "exit_day": "2026-09-04", "entry": 31.68, "exit": 30.5, "shares": 52, "reason": "stop", "net": -62.4, "r": -0.624}, {"ticker": "RXRX", "signal_day": "2026-09-04", "exit_day": "2026-09-09", "entry": 3.46, "exit": 3.28, "shares": 481, "reason": "stop", "net": -96.2, "r": -0.962}, {"ticker": "FUBO", "signal_day": "2026-09-10", "exit_day": "2026-09-17", "entry": 11.2, "exit": 10.37, "shares": 120, "reason": "stop", "net": -102.0, "r": -1.02}, {"ticker": "COIN", "signal_day": "2026-09-14", "exit_day": "2026-09-15", "entry": 182.09, "exit": 170.39, "shares": 8, "reason": "stop", "net": -93.88, "r": -0.939}, {"ticker": "MSFT", "signal_day": "2026-09-25", "exit_day": "2026-09-30", "entry": 499.04, "exit": 514.29, "shares": 3, "reason": "target", "net": 45.45, "r": 0.454}, {"ticker": "DOCU", "signal_day": "2026-09-30", "exit_day": "2026-10-14", "entry": 67.44, "exit": 74.48, "shares": 24, "reason": "target", "net": 168.48, "r": 1.685}, {"ticker": "COIN", "signal_day": "2026-10-02", "exit_day": "2026-10-02", "entry": 194.64, "exit": 183.82, "shares": 8, "reason": "stop", "net": -86.86, "r": -0.869}, {"ticker": "COIN", "signal_day": "2026-10-06", "exit_day": "2026-10-07", "entry": 191.79, "exit": 180.23, "shares": 8, "reason": "stop_gap", "net": -92.78, "r": -0.928}, {"ticker": "AAPL", "signal_day": "2026-10-07", "exit_day": "2026-10-13", "entry": 336.96, "exit": 344.67, "shares": 4, "reason": "target_gap", "net": 30.57, "r": 0.306}], "train_s": {"trades": 115, "wins": 54, "win_rate": 47.0, "net": 2261.04, "avg": 19.66, "pf": 1.6, "max_dd": 701.55, "avg_r": 0.197}, "hold_s": {"trades": 50, "wins": 19, "win_rate": 38.0, "net": 601.83, "avg": 12.04, "pf": 1.27, "max_dd": 780.65, "avg_r": 0.12}, "grid": [{"cfg": {"hold_days": 3, "target_r": 1.5, "min_stars": 3, "top_n": 1}, "train_net": 983.05, "hold_net": 425.0, "hold_pf": 1.23, "hold_n": 54}, {"cfg": {"hold_days": 3, "target_r": 1.5, "min_stars": 3, "top_n": 2}, "train_net": 1528.05, "hold_net": -548.1, "hold_pf": 0.83, "hold_n": 92}, {"cfg": {"hold_days": 3, "target_r": 2.0, "min_stars": 3, "top_n": 1}, "train_net": 888.73, "hold_net": 468.75, "hold_pf": 1.25, "hold_n": 54}, {"cfg": {"hold_days": 3, "target_r": 2.0, "min_stars": 3, "top_n": 2}, "train_net": 2076.7, "hold_net": -501.88, "hold_pf": 0.85, "hold_n": 90}, {"cfg": {"hold_days": 3, "target_r": 3.0, "min_stars": 3, "top_n": 1}, "train_net": 391.34, "hold_net": 434.92, "hold_pf": 1.23, "hold_n": 54}, {"cfg": {"hold_days": 3, "target_r": 3.0, "min_stars": 3, "top_n": 2}, "train_net": 1750.49, "hold_net": -395.25, "hold_pf": 0.88, "hold_n": 89}, {"cfg": {"hold_days": 5, "target_r": 1.5, "min_stars": 3, "top_n": 1}, "train_net": 1526.05, "hold_net": 333.35, "hold_pf": 1.16, "hold_n": 53}, {"cfg": {"hold_days": 5, "target_r": 1.5, "min_stars": 3, "top_n": 2}, "train_net": 857.49, "hold_net": -317.67, "hold_pf": 0.9, "hold_n": 85}, {"cfg": {"hold_days": 5, "target_r": 2.0, "min_stars": 3, "top_n": 1}, "train_net": 1089.75, "hold_net": 386.69, "hold_pf": 1.19, "hold_n": 51}, {"cfg": {"hold_days": 5, "target_r": 2.0, "min_stars": 3, "top_n": 2}, "train_net": 798.77, "hold_net": -503.98, "hold_pf": 0.85, "hold_n": 80}, {"cfg": {"hold_days": 5, "target_r": 3.0, "min_stars": 3, "top_n": 1}, "train_net": 273.63, "hold_net": 347.84, "hold_pf": 1.17, "hold_n": 50}, {"cfg": {"hold_days": 5, "target_r": 3.0, "min_stars": 3, "top_n": 2}, "train_net": 558.28, "hold_net": -649.9, "hold_pf": 0.81, "hold_n": 77}, {"cfg": {"hold_days": 10, "target_r": 1.5, "min_stars": 3, "top_n": 1}, "train_net": 2144.88, "hold_net": 410.26, "hold_pf": 1.19, "hold_n": 50}, {"cfg": {"hold_days": 10, "target_r": 1.5, "min_stars": 3, "top_n": 2}, "train_net": 1062.67, "hold_net": -417.9, "hold_pf": 0.88, "hold_n": 76}, {"cfg": {"hold_days": 10, "target_r": 2.0, "min_stars": 3, "top_n": 1}, "train_net": 2261.04, "hold_net": 601.83, "hold_pf": 1.27, "hold_n": 50}, {"cfg": {"hold_days": 10, "target_r": 2.0, "min_stars": 3, "top_n": 2}, "train_net": 1043.96, "hold_net": 299.14, "hold_pf": 1.1, "hold_n": 68}, {"cfg": {"hold_days": 10, "target_r": 3.0, "min_stars": 3, "top_n": 1}, "train_net": 1135.31, "hold_net": 503.14, "hold_pf": 1.22, "hold_n": 47}, {"cfg": {"hold_days": 10, "target_r": 3.0, "min_stars": 3, "top_n": 2}, "train_net": 632.53, "hold_net": 250.9, "hold_pf": 1.08, "hold_n": 68}], "chosen": {"hold_days": 10, "target_r": 2.0, "min_stars": 3, "top_n": 1}, "spy_hold": 12.65};
 const fmt$ = (v) => (v > 0 ? "+$" : v < 0 ? "-$" : "$") + Math.abs(v).toFixed(2);
+const fmt0 = (v) => (v > 0 ? "+$" : v < 0 ? "-$" : "$") + Math.abs(Math.round(v)).toLocaleString();
 
-// ---- stat tiles -------------------------------------------------------------
-const s = DATA.best.summary;
-document.getElementById("tiles").innerHTML = [
-  { k: "Win rate", v: s.win_rate + "%", d: s.wins + " of " + s.trades + " trades", cls: "" },
-  { k: "Model P/L", v: fmt$(s.total_pl), d: "$5,000 account, 2% risk", cls: s.total_pl >= 0 ? "up" : "down" },
-  { k: "Avg per trade", v: (s.avg_r >= 0 ? "+" : "") + s.avg_r.toFixed(3) + "R", d: "R = planned risk unit", cls: s.avg_r >= 0 ? "up" : "down" },
-  { k: "Sample", v: DATA.days.length + " days", d: s.trades + " trades taken", cls: "" },
-].map(t => `<div class="tile"><div class="k">${t.k}</div><div class="v ${t.cls}">${t.v}</div><div class="d">${t.d}</div></div>`).join("");
+(function tiles() {
+  const h = D.hold_s, t = D.train_s;
+  document.getElementById("tiles").innerHTML = [
+    { k: "Hold-out net", v: fmt0(h.net), d: h.trades + " trades in 2026", cls: h.net >= 0 ? "up" : "down" },
+    { k: "Profit factor", v: h.pf.toFixed(2), d: "training " + t.pf.toFixed(2), cls: "" },
+    { k: "Win rate", v: h.win_rate + "%", d: "training " + t.win_rate + "%", cls: "" },
+    { k: "Worst drawdown", v: "-$" + Math.round(h.max_dd), d: "hold-out, peak to trough", cls: "down" },
+  ].map(x => `<div class="tile"><div class="k">${x.k}</div><div class="v ${x.cls}">${x.v}</div><div class="d">${x.d}</div></div>`).join("");
+})();
 
-// ---- shared tooltip helper ---------------------------------------------------
 function attachTip(panel) {
-  const tip = document.createElement("div");
-  tip.className = "tooltip"; tip.hidden = true;
-  panel.appendChild(tip);
+  const tip = document.createElement("div"); tip.className = "tooltip"; tip.hidden = true; panel.appendChild(tip);
   return {
     show(html, x, y) {
       tip.innerHTML = html; tip.hidden = false;
       const r = panel.getBoundingClientRect(), tr = tip.getBoundingClientRect();
       let left = x + 14, top = y - tr.height - 10;
       if (left + tr.width > r.width - 4) left = x - tr.width - 14;
-      if (left < 4) left = 4;
-      if (top < 4) top = y + 14;
+      if (left < 4) left = 4; if (top < 4) top = y + 14;
       tip.style.left = left + "px"; tip.style.top = top + "px";
     },
     hide() { tip.hidden = true; },
   };
 }
-const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
-// ---- equity curve -----------------------------------------------------------
 (function equity() {
-  const panel = document.getElementById("equity-panel");
-  const eq = [0, ...DATA.best.equity];
-  const trades = DATA.best.trades;
-  const W = 880, H = 300, M = { t: 18, r: 86, b: 30, l: 56 };
-  const lo = Math.min(...eq), hi = Math.max(...eq);
-  const pad = (hi - lo) * 0.12 || 10;
-  const y = (v) => M.t + (H - M.t - M.b) * (1 - (v - (lo - pad)) / ((hi + pad) - (lo - pad)));
-  const x = (i) => M.l + (W - M.l - M.r) * (i / (eq.length - 1));
-  const ticks = [-50, 0, 50, 100].filter(v => v >= lo - pad && v <= hi + pad);
+  const panel = document.getElementById("eq-panel");
+  const all = [...D.train.map(t => ({ ...t, part: "train" })), ...D.hold.map(t => ({ ...t, part: "hold" }))]
+    .sort((a, b) => a.exit_day.localeCompare(b.exit_day));
+  let acc = 0; const eq = [0]; all.forEach(t => { acc += t.net; eq.push(acc); });
+  const W = 880, H = 300, M = { t: 18, r: 78, b: 30, l: 62 };
+  const lo = Math.min(...eq), hi = Math.max(...eq), pad = (hi - lo) * 0.08;
+  const y = v => M.t + (H - M.t - M.b) * (1 - (v - (lo - pad)) / ((hi + pad) - (lo - pad)));
+  const x = i => M.l + (W - M.l - M.r) * (i / (eq.length - 1));
   let g = "";
-  for (const v of ticks)
+  const step = 1000;
+  for (let v = Math.ceil((lo - pad) / step) * step; v <= hi + pad; v += step)
     g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>` +
-         `<text x="${M.l - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v === 0 ? "$0" : (v > 0 ? "+$" : "-$") + Math.abs(v)}</text>`;
-  const pts = eq.map((v, i) => [x(i), y(v)]);
-  const path = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
-  const area = path + ` L ${pts[pts.length-1][0].toFixed(1)} ${y(lo - pad)} L ${pts[0][0].toFixed(1)} ${y(lo - pad)} Z`;
+         `<text x="${M.l - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v === 0 ? "$0" : fmt0(v)}</text>`;
+  const split = D.train.length;
+  const xs = x(split);
+  g += `<line x1="${xs}" x2="${xs}" y1="${M.t}" y2="${H - M.b}" stroke="var(--ink-3)" stroke-width="1"/>` +
+       `<text x="${xs + 6}" y="${M.t + 12}" font-size="11" font-family="var(--mono)" fill="var(--ink-2)">hold-out &rarr;</text>`;
+  const ptsT = eq.slice(0, split + 1).map((v, i) => [x(i), y(v)]);
+  const ptsH = eq.slice(split).map((v, i) => [x(i + split), y(v)]);
+  const line = pts => pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+  const yr = [["2024", all.findIndex(t => t.exit_day >= "2024")], ["2025", all.findIndex(t => t.exit_day >= "2025")], ["2026", all.findIndex(t => t.exit_day >= "2026")]];
+  yr.forEach(([lab, i]) => { if (i >= 0) g += `<text x="${x(i + 1)}" y="${H - 10}" text-anchor="middle" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${lab}</text>`; });
   let dots = "";
-  pts.forEach((p, i) => {
-    if (i === 0) return;
-    dots += `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" data-i="${i-1}" style="cursor:pointer"/>`;
-  });
-  const endLabel = `<text x="${pts[pts.length-1][0] + 10}" y="${pts[pts.length-1][1] + 4}" font-size="12" font-weight="700" font-family="var(--mono)" fill="var(--ink)">${fmt$(eq[eq.length-1])}</text>`;
-  panel.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cumulative profit and loss across seven trades, ending at plus ninety-eight dollars ninety">
+  eq.forEach((v, i) => { if (i === 0) return;
+    dots += `<circle cx="${x(i)}" cy="${y(v)}" r="7" fill="transparent" data-i="${i - 1}" style="cursor:pointer"/>`; });
+  const end = eq[eq.length - 1];
+  panel.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Swing lane cumulative net profit: rises through training to about plus 2,260 dollars, then adds about 600 dollars over the 2026 hold-out.">
     ${g}
-    <path d="${area}" fill="var(--accent)" opacity="0.10"/>
-    <path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    ${dots}${endLabel}
-  </svg>`;
-  const tip = attachTip(panel);
-  panel.querySelectorAll("circle").forEach(c => {
-    c.addEventListener("mouseenter", (e) => {
-      const t = trades[+c.dataset.i];
-      const r = panel.getBoundingClientRect();
-      tip.show(`<b>$${t.ticker}</b> ${t.day}<br>${fmt$(t.pl)} (${t.r >= 0 ? "+" : ""}${t.r}R) &middot; cum ${fmt$(eq[+c.dataset.i + 1])}`,
-        e.clientX - r.left, e.clientY - r.top);
-    });
-    c.addEventListener("mouseleave", () => tip.hide());
-  });
-})();
-
-// ---- sweep scatter ----------------------------------------------------------
-(function sweepChart() {
-  const panel = document.getElementById("sweep-panel");
-  const rows = DATA.sweep;
-  const best = DATA.best.config;
-  const W = 880, H = 320, M = { t: 16, r: 24, b: 42, l: 56 };
-  const xMax = Math.max(...rows.map(r => r.trades)) + 1;
-  const x = (v) => M.l + (W - M.l - M.r) * (v / xMax);
-  const y = (v) => M.t + (H - M.t - M.b) * (1 - v / 100);
-  let g = "";
-  for (const v of [0, 20, 40, 60, 80, 100])
-    g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>` +
-         `<text x="${M.l - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v}%</text>`;
-  for (let v = 0; v <= xMax; v += 5)
-    g += `<text x="${x(v)}" y="${H - M.b + 18}" text-anchor="middle" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v}</text>`;
-  g += `<text x="${(M.l + W - M.r) / 2}" y="${H - 4}" text-anchor="middle" font-size="11" font-family="var(--sans)" fill="var(--ink-3)">trades taken in the month</text>`;
-  g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(80)}" y2="${y(80)}" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>`;
-  // jitter identical (trades, win_rate) pairs so coincident configs stay visible
-  const seen = {};
-  let dots = "";
-  rows.forEach((r, i) => {
-    const key = r.trades + ":" + r.win_rate;
-    const n = (seen[key] = (seen[key] || 0) + 1);
-    const dx = ((n - 1) % 5) * 5 - 10, dy = Math.floor((n - 1) / 5) * 5;
-    const isBest = JSON.stringify(r.cfg) === JSON.stringify(best);
-    const hot = r.win_rate >= 80;
-    dots += `<circle cx="${x(r.trades) + dx}" cy="${y(r.win_rate) + dy}" r="${isBest ? 7 : 5}"
-      fill="${hot ? "var(--accent)" : "var(--ink-3)"}" opacity="${hot ? 0.95 : 0.45}"
-      stroke="var(--surface)" stroke-width="2" data-i="${i}" style="cursor:pointer"/>`;
-    if (isBest)
-      dots += `<circle cx="${x(r.trades) + dx}" cy="${y(r.win_rate) + dy}" r="11" fill="none" stroke="var(--accent)" stroke-width="2"/>` +
-              `<text x="${x(r.trades) + dx + 16}" y="${y(r.win_rate) + dy - 10}" font-size="12" font-weight="700" font-family="var(--mono)" fill="var(--ink)">85.7% &middot; 7 trades</text>`;
-  });
-  panel.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Scatter of 64 configurations: win rate versus trades taken. Configurations above eighty percent all took seven or fewer trades.">${g}${dots}</svg>`;
+    <path d="${line(ptsT)}" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linejoin="round"/>
+    <path d="${line(ptsH)}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="${x(eq.length - 1)}" cy="${y(end)}" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
+    <text x="${x(eq.length - 1) + 9}" y="${y(end) + 4}" font-size="12" font-weight="700" font-family="var(--mono)" fill="var(--ink)">${fmt0(end)}</text>
+    ${dots}</svg>`;
   const tip = attachTip(panel);
   panel.querySelectorAll("circle[data-i]").forEach(c => {
-    c.addEventListener("mouseenter", (e) => {
-      const r0 = rows[+c.dataset.i], cfg = r0.cfg;
-      const r = panel.getBoundingClientRect();
-      tip.show(`<b>${r0.win_rate}% win &middot; ${r0.trades} trades &middot; ${fmt$(r0.pl)}</b><br>` +
-        `green candle: ${cfg.require_green ? "required" : "no"} &middot; TP: ${cfg.tp_r == null ? "2R plan" : "+" + cfg.tp_r + "R"}<br>` +
-        `officials: ${cfg.officials} &middot; 9:35 reclaim: ${cfg.allow_935 ? "yes" : "no"} &middot; ${cfg.bullish_only ? "bullish days only" : "any non-bearish day"}`,
-        e.clientX - r.left, e.clientY - r.top);
+    c.addEventListener("mouseenter", e => {
+      const t = all[+c.dataset.i], r = panel.getBoundingClientRect();
+      tip.show(`<b>$${t.ticker}</b> ${t.signal_day} &rarr; ${t.exit_day}<br>${fmt$(t.net)} &middot; ${t.reason} &middot; cum ${fmt0(eq[+c.dataset.i + 1])}`, e.clientX - r.left, e.clientY - r.top);
     });
     c.addEventListener("mouseleave", () => tip.hide());
   });
 })();
 
-// ---- trades table -----------------------------------------------------------
-(function table() {
-  const label = { target_hit: "Target hit", moved_1r: "Moved 1R+", moved_in_favor: "Moved in favor",
-                  no_follow_through: "No follow-through", stop_hit: "Stop hit" };
-  const rows = DATA.best.trades.map(t => {
-    const win = t.pl > 0;
-    return `<tr>
-      <td class="num">${t.day}</td>
-      <td class="num"><b>$${t.ticker}</b> <span style="color:var(--ink-3)">${"\u2605".repeat(t.stars)}</span></td>
-      <td class="num">$${t.execution_price.toFixed(2)}</td>
-      <td class="num">$${t.exit_price.toFixed(2)}</td>
-      <td class="num">${t.shares}</td>
-      <td class="num" style="color:${win ? "var(--good)" : "var(--bad)"};font-weight:600">${fmt$(t.pl)}</td>
-      <td class="num">${t.r >= 0 ? "+" : ""}${t.r.toFixed(2)}R</td>
-      <td><span class="chip ${win ? "win" : "loss"}">${win ? "\u2713 win" : "\u2715 loss"}</span> <span style="color:var(--ink-3);font-size:0.78rem">${label[t.status]}</span></td>
-    </tr>`;
-  }).join("");
-  document.getElementById("trades-tbl").innerHTML =
-    `<thead><tr><th>Date</th><th>Signal</th><th>In</th><th>Out</th><th>Shares</th><th>P/L</th><th>R</th><th>Result</th></tr></thead><tbody>${rows}</tbody>`;
-})();
-</script>
-
-<script>
-const SCALP = {"summary": {"trades": 58, "wins": 46, "win_rate": 79.3, "avg_r": 0.049, "est_option_pl": 239.56}, "config": {"stop_x": 1.0, "target_x": 0.12, "max_ext": 0.25, "hold_min": 10, "new_extreme": true, "min_body": 0.5, "regime": false, "morning_only": false, "max_trades": 3}, "equity": [8.7, 24.26, 49.94, -6.56, -1.28, 5.22, 18.78, -16.22, -22.46, -13.31, 5.17, 13.81, 22.3, 26.92, 44.86, 72.46, 67.71, 76.95, 88.59, 123.21, 136.83, 151.98, 165.6, 171.84, 179.4, 189.69, 198.93, 212.19, 236.73, 162.73, 176.23, 197.17, 167.92, 188.2, 200.8, 207.58, 212.35, 225.31, 239.2, 247.09, 252.73, 218.23, 228.37, 237.61, 251.71, 271.3, 276.67, 258.67, 264.25, 278.89, 252.39, 249.74, 232.74, 239.22, 244.44, 223.19, 223.69, 239.56], "trades": [{"day": "2026-09-16", "symbol": "SPY", "side": "call", "entry_spot": 760.53, "exit_spot": 760.7, "underlying_move": 0.17, "r": 0.12, "est_option_pl_per_contract": 8.7, "reason": "target", "opened": "2026-09-16T11:00:00-04:00", "closed": "2026-09-16T11:07:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-16", "symbol": "SPY", "side": "put", "entry_spot": 758.1, "exit_spot": 757.79, "underlying_move": 0.31, "r": 0.12, "est_option_pl_per_contract": 15.56, "reason": "target", "opened": "2026-09-16T14:32:00-04:00", "closed": "2026-09-16T14:33:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-16", "symbol": "SPY", "side": "put", "entry_spot": 755.52, "exit_spot": 755.01, "underlying_move": 0.51, "r": 0.12, "est_option_pl_per_contract": 25.68, "reason": "target", "opened": "2026-09-16T14:53:00-04:00", "closed": "2026-09-16T14:56:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-17", "symbol": "SPY", "side": "put", "entry_spot": 760.11, "exit_spot": 761.24, "underlying_move": -1.13, "r": -0.7, "est_option_pl_per_contract": -56.5, "reason": "time_stop", "opened": "2026-09-17T10:07:00-04:00", "closed": "2026-09-17T10:17:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-17", "symbol": "QQQ", "side": "call", "entry_spot": 716.52, "exit_spot": 716.62, "underlying_move": 0.11, "r": 0.05, "est_option_pl_per_contract": 5.28, "reason": "time_stop", "opened": "2026-09-17T10:27:00-04:00", "closed": "2026-09-17T10:37:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-17", "symbol": "QQQ", "side": "call", "entry_spot": 717.02, "exit_spot": 717.15, "underlying_move": 0.13, "r": 0.12, "est_option_pl_per_contract": 6.5, "reason": "target", "opened": "2026-09-17T13:00:00-04:00", "closed": "2026-09-17T13:06:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-18", "symbol": "SPY", "side": "put", "entry_spot": 759.45, "exit_spot": 759.18, "underlying_move": 0.27, "r": 0.12, "est_option_pl_per_contract": 13.56, "reason": "target", "opened": "2026-09-18T10:01:00-04:00", "closed": "2026-09-18T10:02:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-18", "symbol": "QQQ", "side": "put", "entry_spot": 715.96, "exit_spot": 716.66, "underlying_move": -0.7, "r": -0.24, "est_option_pl_per_contract": -35.0, "reason": "time_stop", "opened": "2026-09-18T10:16:00-04:00", "closed": "2026-09-18T10:26:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-21", "symbol": "QQQ", "side": "call", "entry_spot": 732.89, "exit_spot": 732.77, "underlying_move": -0.12, "r": -0.03, "est_option_pl_per_contract": -6.24, "reason": "time_stop", "opened": "2026-09-21T10:01:00-04:00", "closed": "2026-09-21T10:11:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-21", "symbol": "SPY", "side": "call", "entry_spot": 768.84, "exit_spot": 769.02, "underlying_move": 0.18, "r": 0.12, "est_option_pl_per_contract": 9.15, "reason": "target", "opened": "2026-09-21T10:21:00-04:00", "closed": "2026-09-21T10:22:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-21", "symbol": "QQQ", "side": "call", "entry_spot": 735.19, "exit_spot": 735.56, "underlying_move": 0.37, "r": 0.12, "est_option_pl_per_contract": 18.48, "reason": "target", "opened": "2026-09-21T10:32:00-04:00", "closed": "2026-09-21T10:36:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-22", "symbol": "QQQ", "side": "call", "entry_spot": 745.63, "exit_spot": 745.8, "underlying_move": 0.17, "r": 0.12, "est_option_pl_per_contract": 8.64, "reason": "target", "opened": "2026-09-22T10:11:00-04:00", "closed": "2026-09-22T10:12:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-22", "symbol": "SPY", "side": "put", "entry_spot": 773.33, "exit_spot": 773.16, "underlying_move": 0.17, "r": 0.12, "est_option_pl_per_contract": 8.49, "reason": "target", "opened": "2026-09-22T10:35:00-04:00", "closed": "2026-09-22T10:41:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-22", "symbol": "SPY", "side": "put", "entry_spot": 772.94, "exit_spot": 772.84, "underlying_move": 0.09, "r": 0.12, "est_option_pl_per_contract": 4.62, "reason": "target", "opened": "2026-09-22T11:33:00-04:00", "closed": "2026-09-22T11:36:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-23", "symbol": "QQQ", "side": "put", "entry_spot": 742.65, "exit_spot": 742.29, "underlying_move": 0.36, "r": 0.12, "est_option_pl_per_contract": 17.94, "reason": "target", "opened": "2026-09-23T10:02:00-04:00", "closed": "2026-09-23T10:06:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-23", "symbol": "QQQ", "side": "put", "entry_spot": 739.41, "exit_spot": 738.85, "underlying_move": 0.55, "r": 0.12, "est_option_pl_per_contract": 27.6, "reason": "target", "opened": "2026-09-23T10:17:00-04:00", "closed": "2026-09-23T10:20:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-23", "symbol": "SPY", "side": "put", "entry_spot": 768.34, "exit_spot": 768.43, "underlying_move": -0.09, "r": -0.06, "est_option_pl_per_contract": -4.75, "reason": "time_stop", "opened": "2026-09-23T11:51:00-04:00", "closed": "2026-09-23T12:01:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-24", "symbol": "SPY", "side": "call", "entry_spot": 765.72, "exit_spot": 765.9, "underlying_move": 0.18, "r": 0.12, "est_option_pl_per_contract": 9.24, "reason": "target", "opened": "2026-09-24T10:02:00-04:00", "closed": "2026-09-24T10:03:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-24", "symbol": "SPY", "side": "put", "entry_spot": 763.49, "exit_spot": 763.26, "underlying_move": 0.23, "r": 0.12, "est_option_pl_per_contract": 11.64, "reason": "target", "opened": "2026-09-24T11:13:00-04:00", "closed": "2026-09-24T11:14:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-24", "symbol": "QQQ", "side": "call", "entry_spot": 741.48, "exit_spot": 742.17, "underlying_move": 0.69, "r": 0.12, "est_option_pl_per_contract": 34.62, "reason": "target", "opened": "2026-09-24T12:40:00-04:00", "closed": "2026-09-24T12:42:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-25", "symbol": "SPY", "side": "put", "entry_spot": 767.6, "exit_spot": 767.33, "underlying_move": 0.27, "r": 0.12, "est_option_pl_per_contract": 13.62, "reason": "target", "opened": "2026-09-25T10:04:00-04:00", "closed": "2026-09-25T10:05:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-25", "symbol": "SPY", "side": "call", "entry_spot": 770.48, "exit_spot": 770.78, "underlying_move": 0.3, "r": 0.12, "est_option_pl_per_contract": 15.15, "reason": "target", "opened": "2026-09-25T12:00:00-04:00", "closed": "2026-09-25T12:02:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-28", "symbol": "QQQ", "side": "put", "entry_spot": 737.11, "exit_spot": 736.84, "underlying_move": 0.27, "r": 0.12, "est_option_pl_per_contract": 13.62, "reason": "target", "opened": "2026-09-28T10:05:00-04:00", "closed": "2026-09-28T10:08:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-28", "symbol": "SPY", "side": "put", "entry_spot": 766.78, "exit_spot": 766.66, "underlying_move": 0.12, "r": 0.12, "est_option_pl_per_contract": 6.24, "reason": "target", "opened": "2026-09-28T10:37:00-04:00", "closed": "2026-09-28T10:38:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-29", "symbol": "SPY", "side": "put", "entry_spot": 764.41, "exit_spot": 764.26, "underlying_move": 0.15, "r": 0.12, "est_option_pl_per_contract": 7.56, "reason": "target", "opened": "2026-09-29T11:00:00-04:00", "closed": "2026-09-29T11:02:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-29", "symbol": "SPY", "side": "put", "entry_spot": 763.7, "exit_spot": 763.49, "underlying_move": 0.21, "r": 0.12, "est_option_pl_per_contract": 10.29, "reason": "target", "opened": "2026-09-29T11:12:00-04:00", "closed": "2026-09-29T11:18:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-29", "symbol": "QQQ", "side": "put", "entry_spot": 735.67, "exit_spot": 735.49, "underlying_move": 0.18, "r": 0.12, "est_option_pl_per_contract": 9.24, "reason": "target", "opened": "2026-09-29T12:44:00-04:00", "closed": "2026-09-29T12:45:00-04:00", "mode": "replay_estimated"}, {"day": "2026-09-30", "symbol": "SPY", "side": "call", "entry_spot": 768.48, "exit_spot": 768.75, "underlying_move": 0.27, "r": 0.12, "est_option_pl_per_contract": 13.26, "reason": "target", "opened": "2026-09-30T10:01:00-04:00", "closed": "2026-09-30T10:05:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-01", "symbol": "SPY", "side": "put", "entry_spot": 760.44, "exit_spot": 759.95, "underlying_move": 0.49, "r": 0.12, "est_option_pl_per_contract": 24.54, "reason": "target", "opened": "2026-10-01T10:01:00-04:00", "closed": "2026-10-01T10:03:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-01", "symbol": "QQQ", "side": "put", "entry_spot": 737.28, "exit_spot": 738.76, "underlying_move": -1.48, "r": -0.29, "est_option_pl_per_contract": -74.0, "reason": "time_stop", "opened": "2026-10-01T10:22:00-04:00", "closed": "2026-10-01T10:32:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-01", "symbol": "SPY", "side": "put", "entry_spot": 759.63, "exit_spot": 759.36, "underlying_move": 0.27, "r": 0.12, "est_option_pl_per_contract": 13.5, "reason": "target", "opened": "2026-10-01T11:01:00-04:00", "closed": "2026-10-01T11:03:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-02", "symbol": "QQQ", "side": "call", "entry_spot": 752.59, "exit_spot": 753.01, "underlying_move": 0.42, "r": 0.12, "est_option_pl_per_contract": 20.94, "reason": "target", "opened": "2026-10-02T10:01:00-04:00", "closed": "2026-10-02T10:02:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-02", "symbol": "SPY", "side": "call", "entry_spot": 772.35, "exit_spot": 771.77, "underlying_move": -0.58, "r": -0.18, "est_option_pl_per_contract": -29.25, "reason": "time_stop", "opened": "2026-10-02T10:24:00-04:00", "closed": "2026-10-02T10:34:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-02", "symbol": "SPY", "side": "put", "entry_spot": 769.03, "exit_spot": 768.62, "underlying_move": 0.41, "r": 0.12, "est_option_pl_per_contract": 20.28, "reason": "target", "opened": "2026-10-02T11:09:00-04:00", "closed": "2026-10-02T11:10:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-05", "symbol": "SPY", "side": "call", "entry_spot": 772.12, "exit_spot": 772.37, "underlying_move": 0.25, "r": 0.12, "est_option_pl_per_contract": 12.6, "reason": "target", "opened": "2026-10-05T10:13:00-04:00", "closed": "2026-10-05T10:16:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-05", "symbol": "QQQ", "side": "call", "entry_spot": 753.96, "exit_spot": 754.1, "underlying_move": 0.14, "r": 0.12, "est_option_pl_per_contract": 6.78, "reason": "target", "opened": "2026-10-05T10:57:00-04:00", "closed": "2026-10-05T11:00:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-05", "symbol": "SPY", "side": "call", "entry_spot": 773.09, "exit_spot": 773.19, "underlying_move": 0.1, "r": 0.12, "est_option_pl_per_contract": 4.77, "reason": "target", "opened": "2026-10-05T11:32:00-04:00", "closed": "2026-10-05T11:41:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-06", "symbol": "SPY", "side": "call", "entry_spot": 780.24, "exit_spot": 780.5, "underlying_move": 0.26, "r": 0.12, "est_option_pl_per_contract": 12.96, "reason": "target", "opened": "2026-10-06T10:07:00-04:00", "closed": "2026-10-06T10:10:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-06", "symbol": "QQQ", "side": "call", "entry_spot": 762.12, "exit_spot": 762.4, "underlying_move": 0.28, "r": 0.12, "est_option_pl_per_contract": 13.89, "reason": "target", "opened": "2026-10-06T10:53:00-04:00", "closed": "2026-10-06T11:00:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-06", "symbol": "SPY", "side": "call", "entry_spot": 781.06, "exit_spot": 781.22, "underlying_move": 0.16, "r": 0.12, "est_option_pl_per_contract": 7.89, "reason": "target", "opened": "2026-10-06T11:13:00-04:00", "closed": "2026-10-06T11:15:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-07", "symbol": "SPY", "side": "put", "entry_spot": 773.88, "exit_spot": 773.77, "underlying_move": 0.11, "r": 0.12, "est_option_pl_per_contract": 5.64, "reason": "target", "opened": "2026-10-07T10:44:00-04:00", "closed": "2026-10-07T10:45:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-07", "symbol": "QQQ", "side": "call", "entry_spot": 755.61, "exit_spot": 754.92, "underlying_move": -0.69, "r": -0.29, "est_option_pl_per_contract": -34.5, "reason": "time_stop", "opened": "2026-10-07T11:16:00-04:00", "closed": "2026-10-07T11:26:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-07", "symbol": "QQQ", "side": "call", "entry_spot": 756.09, "exit_spot": 756.29, "underlying_move": 0.2, "r": 0.12, "est_option_pl_per_contract": 10.14, "reason": "target", "opened": "2026-10-07T11:37:00-04:00", "closed": "2026-10-07T11:40:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-08", "symbol": "SPY", "side": "call", "entry_spot": 776.02, "exit_spot": 776.2, "underlying_move": 0.18, "r": 0.12, "est_option_pl_per_contract": 9.24, "reason": "target", "opened": "2026-10-08T10:12:00-04:00", "closed": "2026-10-08T10:22:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-08", "symbol": "SPY", "side": "put", "entry_spot": 773.64, "exit_spot": 773.35, "underlying_move": 0.28, "r": 0.12, "est_option_pl_per_contract": 14.1, "reason": "target", "opened": "2026-10-08T12:48:00-04:00", "closed": "2026-10-08T12:49:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-08", "symbol": "SPY", "side": "put", "entry_spot": 772.33, "exit_spot": 771.94, "underlying_move": 0.39, "r": 0.12, "est_option_pl_per_contract": 19.59, "reason": "target", "opened": "2026-10-08T13:00:00-04:00", "closed": "2026-10-08T13:04:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-09", "symbol": "SPY", "side": "call", "entry_spot": 777.0, "exit_spot": 777.11, "underlying_move": 0.11, "r": 0.12, "est_option_pl_per_contract": 5.37, "reason": "target", "opened": "2026-10-09T10:51:00-04:00", "closed": "2026-10-09T10:52:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-09", "symbol": "SPY", "side": "call", "entry_spot": 777.67, "exit_spot": 777.32, "underlying_move": -0.36, "r": -0.28, "est_option_pl_per_contract": -18.0, "reason": "time_stop", "opened": "2026-10-09T11:18:00-04:00", "closed": "2026-10-09T11:28:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-09", "symbol": "SPY", "side": "call", "entry_spot": 777.89, "exit_spot": 778.0, "underlying_move": 0.11, "r": 0.12, "est_option_pl_per_contract": 5.58, "reason": "target", "opened": "2026-10-09T12:16:00-04:00", "closed": "2026-10-09T12:17:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-12", "symbol": "QQQ", "side": "put", "entry_spot": 746.7, "exit_spot": 746.41, "underlying_move": 0.29, "r": 0.12, "est_option_pl_per_contract": 14.64, "reason": "target", "opened": "2026-10-12T10:06:00-04:00", "closed": "2026-10-12T10:07:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-12", "symbol": "QQQ", "side": "put", "entry_spot": 745.24, "exit_spot": 745.77, "underlying_move": -0.53, "r": -0.17, "est_option_pl_per_contract": -26.5, "reason": "time_stop", "opened": "2026-10-12T10:26:00-04:00", "closed": "2026-10-12T10:36:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-12", "symbol": "SPY", "side": "put", "entry_spot": 777.28, "exit_spot": 777.33, "underlying_move": -0.05, "r": -0.08, "est_option_pl_per_contract": -2.65, "reason": "time_stop", "opened": "2026-10-12T14:22:00-04:00", "closed": "2026-10-12T14:32:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-13", "symbol": "QQQ", "side": "call", "entry_spot": 744.04, "exit_spot": 743.71, "underlying_move": -0.34, "r": -0.07, "est_option_pl_per_contract": -17.0, "reason": "time_stop", "opened": "2026-10-13T10:01:00-04:00", "closed": "2026-10-13T10:11:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-13", "symbol": "SPY", "side": "put", "entry_spot": 776.77, "exit_spot": 776.64, "underlying_move": 0.13, "r": 0.12, "est_option_pl_per_contract": 6.48, "reason": "target", "opened": "2026-10-13T11:08:00-04:00", "closed": "2026-10-13T11:11:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-13", "symbol": "SPY", "side": "put", "entry_spot": 776.38, "exit_spot": 776.28, "underlying_move": 0.1, "r": 0.12, "est_option_pl_per_contract": 5.22, "reason": "target", "opened": "2026-10-13T11:26:00-04:00", "closed": "2026-10-13T11:28:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-14", "symbol": "SPY", "side": "put", "entry_spot": 772.71, "exit_spot": 773.13, "underlying_move": -0.42, "r": -0.12, "est_option_pl_per_contract": -21.25, "reason": "time_stop", "opened": "2026-10-14T10:12:00-04:00", "closed": "2026-10-14T10:22:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-14", "symbol": "SPY", "side": "put", "entry_spot": 772.24, "exit_spot": 772.23, "underlying_move": 0.01, "r": 0.01, "est_option_pl_per_contract": 0.5, "reason": "time_stop", "opened": "2026-10-14T10:39:00-04:00", "closed": "2026-10-14T10:49:00-04:00", "mode": "replay_estimated"}, {"day": "2026-10-14", "symbol": "QQQ", "side": "put", "entry_spot": 734.23, "exit_spot": 733.91, "underlying_move": 0.32, "r": 0.12, "est_option_pl_per_contract": 15.87, "reason": "target", "opened": "2026-10-14T11:07:00-04:00", "closed": "2026-10-14T11:09:00-04:00", "mode": "replay_estimated"}], "ladder": [{"label": "Untuned", "win": 54.0, "note": "63 scalps, +$104/ct"}, {"label": "Round 1 best", "win": 60.3, "note": "63 scalps, +$284/ct"}, {"label": "Round 2 best", "win": 73.0, "note": "63 scalps, -$107/ct"}, {"label": "Round 3 best", "win": 79.4, "note": "63 scalps, -$24/ct"}, {"label": "Champion", "win": 79.3, "note": "58 scalps, +$240/ct"}]};
-(function scalpTiles() {
-  const s = SCALP.summary;
-  document.getElementById("scalp-tiles").innerHTML = [
-    { k: "Win rate", v: s.win_rate + "%", d: s.wins + " of " + s.trades + " scalps", cls: "" },
-    { k: "Est. P/L per contract", v: (s.est_option_pl >= 0 ? "+$" : "-$") + Math.abs(s.est_option_pl).toFixed(0), d: "0.5-delta estimate", cls: s.est_option_pl >= 0 ? "up" : "down" },
-    { k: "Avg per scalp", v: (s.avg_r >= 0 ? "+" : "") + s.avg_r.toFixed(3) + "R", d: "R = one full stop", cls: s.avg_r >= 0 ? "up" : "down" },
-    { k: "Hold time", v: "\u226410 min", d: "hard time stop", cls: "" },
-  ].map(t => `<div class="tile"><div class="k">${t.k}</div><div class="v ${t.cls}">${t.v}</div><div class="d">${t.d}</div></div>`).join("");
-})();
-
-(function ladder() {
-  const panel = document.getElementById("ladder-panel");
-  const rows = SCALP.ladder;
-  const W = 880, H = 260, M = { t: 14, r: 24, b: 54, l: 56 };
-  const bw = Math.min(24, (W - M.l - M.r) / rows.length - 40);
-  const x = (i) => M.l + (W - M.l - M.r) * ((i + 0.5) / rows.length);
-  const y = (v) => M.t + (H - M.t - M.b) * (1 - v / 100);
+(function robustness() {
+  const panel = document.getElementById("grid-panel");
+  const rows = [...D.grid].sort((a, b) => a.hold_net - b.hold_net);
+  const chosen = JSON.stringify({ hold_days: D.chosen.hold_days, target_r: D.chosen.target_r, top_n: D.chosen.top_n });
+  const W = 880, H = 260, M = { t: 14, r: 16, b: 34, l: 62 };
+  const lo = Math.min(0, ...rows.map(r => r.hold_net)), hi = Math.max(...rows.map(r => r.hold_net));
+  const pad = (hi - lo) * 0.1;
+  const y = v => M.t + (H - M.t - M.b) * (1 - (v - (lo - pad)) / ((hi + pad) - (lo - pad)));
+  const band = (W - M.l - M.r) / rows.length, bw = Math.min(24, band - 8);
   let g = "";
-  for (const v of [0, 20, 40, 60, 80, 100])
-    g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>` +
-         `<text x="${M.l - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v}%</text>`;
-  g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(80)}" y2="${y(80)}" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>`;
+  for (const v of [-600, -300, 0, 300, 600].filter(v => v >= lo - pad && v <= hi + pad))
+    g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 0 ? "var(--ink-3)" : "var(--grid)"}" stroke-width="1"/>` +
+         `<text x="${M.l - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v === 0 ? "$0" : fmt0(v)}</text>`;
   let bars = "";
   rows.forEach((r, i) => {
-    const neg = r.note.includes("-$");
-    bars += `<rect x="${x(i) - bw / 2}" y="${y(r.win)}" width="${bw}" height="${y(0) - y(r.win)}"
-      rx="4" fill="${neg ? "var(--ink-3)" : "var(--accent)"}" opacity="${i === rows.length - 1 ? 1 : 0.65}" data-i="${i}" style="cursor:pointer"/>`;
-    bars += `<text x="${x(i)}" y="${y(r.win) - 7}" text-anchor="middle" font-size="12" font-weight="700" font-family="var(--mono)" fill="var(--ink)">${r.win}%</text>`;
-    bars += `<text x="${x(i)}" y="${H - M.b + 18}" text-anchor="middle" font-size="11" font-family="var(--sans)" fill="var(--ink-2)">${r.label}</text>`;
-    bars += `<text x="${x(i)}" y="${H - M.b + 34}" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="${neg ? "var(--bad)" : "var(--ink-3)"}">${r.note.split(", ")[1]}</text>`;
+    const cx = M.l + band * (i + 0.5), y0 = y(0), y1 = y(r.hold_net);
+    const isC = JSON.stringify({ hold_days: r.cfg.hold_days, target_r: r.cfg.target_r, top_n: r.cfg.top_n }) === chosen;
+    const top = Math.min(y0, y1), h = Math.max(1, Math.abs(y1 - y0));
+    bars += `<rect x="${cx - bw / 2}" y="${top}" width="${bw}" height="${h}" rx="3" fill="${r.hold_net >= 0 ? "var(--accent)" : "var(--ink-3)"}"
+      opacity="${isC ? 1 : 0.6}" ${isC ? 'stroke="var(--ink)" stroke-width="2"' : ""} data-i="${i}" style="cursor:pointer"/>`;
+    if (isC) bars += `<text x="${cx}" y="${y1 - 8}" text-anchor="middle" font-size="11" font-weight="700" font-family="var(--mono)" fill="var(--ink)">deployed</text>`;
   });
-  panel.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Win rate by tuning round: 54, 60, 73, 79.4, 79.3 percent; the two middle-high rounds had negative expectancy.">${g}${bars}</svg>`;
+  g += `<text x="${(M.l + W - M.r) / 2}" y="${H - 8}" text-anchor="middle" font-size="11" font-family="var(--sans)" fill="var(--ink-3)">18 configurations, sorted by hold-out result</text>`;
+  panel.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Hold-out net profit for 18 configurations: 11 positive, 7 negative; the deployed configuration is the highest.">${g}${bars}</svg>`;
+  const tip = attachTip(panel);
+  panel.querySelectorAll("rect[data-i]").forEach(el => {
+    el.addEventListener("mouseenter", e => {
+      const r0 = rows[+el.dataset.i], c = r0.cfg, r = panel.getBoundingClientRect();
+      tip.show(`<b>${fmt0(r0.hold_net)} hold-out</b> (${r0.hold_n} trades, PF ${r0.hold_pf})<br>hold ${c.hold_days} sessions &middot; target ${c.target_r}R &middot; ${c.top_n} new/day<br>training ${fmt0(r0.train_net)}`, e.clientX - r.left, e.clientY - r.top);
+    });
+    el.addEventListener("mouseleave", () => tip.hide());
+  });
 })();
 
-(function scalpEquity() {
-  const panel = document.getElementById("scalp-equity-panel");
-  const eq = [0, ...SCALP.equity];
-  const trades = SCALP.trades;
-  const W = 880, H = 280, M = { t: 16, r: 90, b: 28, l: 60 };
-  const lo = Math.min(...eq), hi = Math.max(...eq);
-  const pad = (hi - lo) * 0.1 || 10;
-  const y = (v) => M.t + (H - M.t - M.b) * (1 - (v - (lo - pad)) / ((hi + pad) - (lo - pad)));
-  const x = (i) => M.l + (W - M.l - M.r) * (i / (eq.length - 1));
-  let g = "";
-  for (const v of [-100, 0, 100, 200, 300].filter(v => v >= lo - pad && v <= hi + pad))
-    g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>` +
-         `<text x="${M.l - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v === 0 ? "$0" : (v > 0 ? "+$" : "-$") + Math.abs(v)}</text>`;
-  const pts = eq.map((v, i) => [x(i), y(v)]);
-  const path = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
-  let dots = "";
-  pts.forEach((p, i) => {
-    if (i === 0) return;
-    dots += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" data-i="${i-1}" style="cursor:pointer"/>`;
-  });
-  const endV = eq[eq.length - 1];
-  panel.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cumulative estimated scalp P/L per contract across 58 trades, ending near plus two hundred forty dollars.">
-    ${g}<path d="${path} L ${pts[pts.length-1][0]} ${y(lo-pad)} L ${pts[0][0]} ${y(lo-pad)} Z" fill="var(--accent)" opacity="0.10"/>
-    <path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>
-    ${dots}<text x="${pts[pts.length-1][0] + 8}" y="${pts[pts.length-1][1] + 4}" font-size="12" font-weight="700" font-family="var(--mono)" fill="var(--ink)">${(endV >= 0 ? "+$" : "-$") + Math.abs(endV).toFixed(0)}</text>
-  </svg>`;
-  const tip = attachTip(panel);
-  panel.querySelectorAll("circle").forEach(c => {
-    c.addEventListener("mouseenter", (e) => {
-      const t = trades[+c.dataset.i];
-      const r = panel.getBoundingClientRect();
-      tip.show(`<b>${t.symbol} ${t.side}</b> ${t.day}<br>${t.underlying_move >= 0 ? "+" : ""}${t.underlying_move} underlying (${t.r >= 0 ? "+" : ""}${t.r}R) &middot; ${t.reason}`,
-        e.clientX - r.left, e.clientY - r.top);
-    });
-    c.addEventListener("mouseleave", () => tip.hide());
-  });
+(function table() {
+  const label = { stop: "Stop", stop_gap: "Gap through stop", target: "2R target", target_gap: "Gap through target", time: "10-session exit" };
+  const rows = D.hold.map(t => `<tr>
+    <td class="num">${t.signal_day}</td><td class="num"><b>$${t.ticker}</b></td>
+    <td class="num">$${t.entry.toFixed(2)}</td><td class="num">$${t.exit.toFixed(2)}</td><td class="num">${t.shares}</td>
+    <td class="num ${t.net > 0 ? "up" : "down"}">${fmt$(t.net)}</td><td>${label[t.reason] || t.reason}</td><td class="num">${t.exit_day}</td></tr>`).join("");
+  document.getElementById("hold-tbl").innerHTML =
+    `<thead><tr><th>Signal day</th><th>Ticker</th><th>In</th><th>Out</th><th>Shares</th><th>Net</th><th>Exit</th><th>Exit day</th></tr></thead><tbody>${rows}</tbody>`;
 })();
 </script>

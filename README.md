@@ -1,4 +1,20 @@
-# KamdenAI-style Morning Execution Signal Engine
+# KamdenAI-style Signal Engine
+
+> **Validation status (Oct 15, 2026).** All lanes were re-tested with realistic
+> execution (data delay, slippage, commissions, Black-Scholes 0DTE pricing) and
+> judged on hold-out data no tuning had touched (`kamden_engine/validate.py`,
+> `kamden_engine/swing.py`).
+>
+> | Lane | Verdict | Hold-out result |
+> |---|---|---|
+> | **Swing** (research setups as multi-day trades) | **Deployed** | 50 trades in 2026, 38% win, +$602, PF 1.27 |
+> | 9:30 entry / 10:05 exit | Watch-only | no robust config on training data |
+> | 0DTE scalper | Failed | 0 of 80 configs profitable after costs |
+>
+> The earlier 85.7% / 79.3% figures assumed perfect fills and do not hold
+> under realistic execution. Daily use: `python -m kamden_engine.swing today`.
+> Full write-up: the results dashboard (`dashboard.html`).
+
 
 A working, real-data reconstruction of the signal system marketed at
 kamdenai.com — the actual mechanism, not the website. It runs the full

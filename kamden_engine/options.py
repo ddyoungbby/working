@@ -117,7 +117,8 @@ def _estimate_delta(calls: list[dict], strike: float) -> float:
 
 
 def suggest_play(
-    conf: Confirmation, account: float, risk_pct: float = 2.0, day: date | None = None
+    conf: Confirmation, account: float, risk_pct: float = 2.0, day: date | None = None,
+    min_dte: int = MIN_DTE, max_dte: int = MAX_DTE,
 ) -> OptionPlay:
     """Build the one option play for the day's top confirmed signal."""
     s = conf.locked.setup
@@ -128,7 +129,7 @@ def suggest_play(
         datetime.fromtimestamp(ts, tz=timezone.utc).date()
         for ts in base.get("expirationDates") or []
     ]
-    valid = [e for e in expiries if MIN_DTE <= (e - today).days <= MAX_DTE]
+    valid = [e for e in expiries if min_dte <= (e - today).days <= max_dte]
     if not valid:
         valid = [e for e in expiries if 1 <= (e - today).days <= 14]
     if not valid:

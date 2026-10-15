@@ -125,7 +125,8 @@ def daily_setups(hist: dict) -> dict[date, list]:
     return out
 
 
-def simulate(hist, setups_by_day, cfg, start: date, end: date) -> list[SwingTrade]:
+def simulate(hist, setups_by_day, cfg, start: date, end: date,
+             open_out: list | None = None) -> list[SwingTrade]:
     pos = {s: {b.ts.date(): i for i, b in enumerate(bars)} for s, bars in hist.items()}
     open_until: dict[str, date] = {}
     trades: list[SwingTrade] = []
@@ -174,8 +175,17 @@ def simulate(hist, setups_by_day, cfg, start: date, end: date) -> list[SwingTrad
                         exit_px, reason = x.close, "time"
                     if exit_px is not None:
                         break
-            if exit_px is None:
-                continue                      # still open at end of data
+            if exit_px is None:               # still open at end of data
+                if open_out is not None:
+                    open_out.append({
+                        "ticker": s.ticker, "signal_day": d.isoformat(),
+                        "entry": round(fill, 2), "stop": s.stop,
+                        "target": round(target, 2), "shares": shares,
+                        "sessions_held": len(bars) - 1 - i,
+                        "last_close": bars[-1].close,
+                    })
+                    open_until[s.ticker] = date.max
+                continue
             slip_in = max(0.01, 0.0001 * fill)
             slip_out = max(0.01, 0.0001 * exit_px)
             net = (exit_px - fill - slip_in - slip_out) * shares
@@ -211,7 +221,112 @@ def summarize(trades: list[SwingTrade]) -> dict:
     }
 
 
+# --------------------------------------------------------------------------
+# live: deterministic replay from the deployment date + today's order
+# --------------------------------------------------------------------------
+LIVE_START = date(2026, 10, 16)
+LIVE_CFG = {"max_open": 3, "hold_days": 10, "target_r": 2.0, "min_stars": 3, "top_n": 1}
+
+
+def setups_for_session(hist: dict, day: date) -> tuple[str, list]:
+    """Research setups for `day`, built exactly as in the backtest."""
+    before = {s: [b for b in bars if b.ts.date() < day] for s, bars in hist.items()}
+    status = _permission(before["SPY"][-WARMUP:], before["QQQ"][-WARMUP:])
+    if status == "BEARISH":
+        return status, []
+    spy_ret20 = pct_return([b.close for b in before["SPY"][-WARMUP:]], 20)
+    found = []
+    for t, name, sector in UNIVERSE:
+        bars = before.get(t, [])
+        if len(bars) < WARMUP:
+            continue
+        s = build_setup(t, name, sector, bars[-WARMUP:], spy_ret20)
+        if s:
+            found.append(s)
+    found.sort(key=lambda s: s.score, reverse=True)
+    return status, found
+
+
+def today_report(day: date | None = None, with_option: bool = True) -> dict:
+    from datetime import datetime
+    from .data import ET
+    day = day or datetime.now(tz=ET).date()
+    hist = {s: [b for b in bars if b.ts.date() < day] for s, bars in load_history().items()}
+    setups = daily_setups(hist)
+    open_pos: list = []
+    closed = simulate(hist, setups, LIVE_CFG, LIVE_START, day, open_out=open_pos)
+    status, todays = setups_for_session(hist, day)
+    held = {p["ticker"] for p in open_pos}
+    order = None
+    if len(open_pos) < LIVE_CFG["max_open"]:
+        pick = next((s for s in todays if s.star_rating >= LIVE_CFG["min_stars"]
+                     and s.ticker not in held), None)
+        if pick:
+            risk = pick.entry - pick.stop
+            shares = min(int(RISK_DOLLARS // risk),
+                         int(ACCOUNT / LIVE_CFG["max_open"] // pick.entry))
+            order = {
+                "ticker": pick.ticker, "name": pick.name, "stars": pick.star_rating,
+                "buy_stop": pick.entry, "stop": pick.stop,
+                "target": round(pick.entry + LIVE_CFG["target_r"] * risk, 2),
+                "max_hold_sessions": LIVE_CFG["hold_days"], "shares": shares,
+                "risk_dollars": round(shares * risk, 2),
+                "skip_if_opens_above": round(pick.entry + CHASE_R * risk, 2),
+            }
+            if with_option:
+                order["option"] = _swing_option(pick, day)
+    return {"day": day.isoformat(), "market": status, "order": order,
+            "open_positions": open_pos, "closed_since_live": [asdict(t) for t in closed],
+            "closed_summary": summarize(closed)}
+
+
+def _swing_option(setup, day):
+    """A 21-45 DTE call alternative to the stock order. NOT validated - the
+    backtest covers the stock plan only."""
+    from types import SimpleNamespace
+    from .options import OptionsError, suggest_play
+    try:
+        conf = SimpleNamespace(locked=SimpleNamespace(setup=setup))
+        p = suggest_play(conf, ACCOUNT, 2.0, day=day, min_dte=21, max_dte=45)
+        return {"contract": p.contract, "expiry": p.expiry, "strike": p.strike,
+                "mid": p.mid, "contracts": p.contracts, "outlay": p.outlay,
+                "delta_est": p.delta_est, "validated": False}
+    except OptionsError as exc:
+        return {"error": str(exc), "validated": False}
+
+
+def print_report(r: dict) -> None:
+    print(f"SWING LANE - {r['day']} - market filter {r['market']}")
+    o = r["order"]
+    if o:
+        print(f"\nTODAY'S ORDER: {o['ticker']} ({o['name']}, {o['stars']} stars)")
+        print(f"  Buy-stop {o['shares']} sh at ${o['buy_stop']:.2f}  "
+              f"(skip if it opens above ${o['skip_if_opens_above']:.2f})")
+        print(f"  Stop ${o['stop']:.2f}   Target ${o['target']:.2f} (2R)   "
+              f"risk ${o['risk_dollars']:.0f}   max hold {o['max_hold_sessions']} sessions")
+        opt = o.get("option")
+        if opt and "contract" in opt:
+            print(f"  Option alternative (not backtested): {opt['contract']} "
+                  f"x{opt['contracts']} @ ~${opt['mid']:.2f}, outlay ${opt['outlay']:.0f}")
+    else:
+        print("\nNo new order today (bearish tape, no setup, or 3 positions open).")
+    for p in r["open_positions"]:
+        print(f"  OPEN {p['ticker']}: in ${p['entry']:.2f}, stop ${p['stop']:.2f}, "
+              f"target ${p['target']:.2f}, {p['sessions_held']}/10 sessions, "
+              f"last ${p['last_close']:.2f}")
+    s = r["closed_summary"]
+    print(f"\nLive record since {LIVE_START}: {s['trades']} closed, "
+          f"{s['win_rate']}% win, net ${s['net']:+.2f}")
+
+
 def main() -> int:
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "today":
+        r = today_report()
+        print_report(r)
+        Path("ledger").mkdir(exist_ok=True)
+        Path(f"ledger/swing-{r['day']}.json").write_text(json.dumps(r, indent=2, default=str))
+        return 0
     hist = load_history()
     print(f"Loaded daily history for {len(hist)} symbols")
     setups = daily_setups(hist)
