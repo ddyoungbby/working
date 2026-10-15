@@ -1,0 +1,125 @@
+{
+  "date": "2026-08-06",
+  "market_status": "BULLISH",
+  "market_detail": "SPY/QQQ constructive above rising 20 EMA structure.",
+  "research": [
+    {
+      "ticker": "ABNB",
+      "name": "Airbnb Inc.",
+      "sector": "Consumer",
+      "entry": 155.26,
+      "stop": 146.69,
+      "target": 172.4,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 152.49,
+      "ema20": 147.77,
+      "rsi14": 60.3,
+      "atr14": 4.31
+    },
+    {
+      "ticker": "ETSY",
+      "name": "Etsy Inc.",
+      "sector": "E-commerce",
+      "entry": 87.98,
+      "stop": 81.57,
+      "target": 100.8,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 85.86,
+      "ema20": 82.33,
+      "rsi14": 61.2,
+      "atr14": 3.04
+    },
+    {
+      "ticker": "TGT",
+      "name": "Target Corp.",
+      "sector": "Consumer Leaders",
+      "entry": 148.96,
+      "stop": 140.19,
+      "target": 166.5,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 147.7,
+      "ema20": 141.2,
+      "rsi14": 65.6,
+      "atr14": 4.04
+    }
+  ],
+  "locked_field": [
+    {
+      "rank": 1,
+      "role": "front_runner",
+      "ticker": "ABNB",
+      "score": 45
+    },
+    {
+      "rank": 2,
+      "role": "runner_up",
+      "ticker": "ETSY",
+      "score": 45
+    },
+    {
+      "rank": 3,
+      "role": "field",
+      "ticker": "TGT",
+      "score": 45
+    }
+  ],
+  "confirmations": [
+    {
+      "ticker": "ABNB",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $155.26 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "ETSY",
+      "status": "failed_confirmation",
+      "official": false,
+      "path": "",
+      "detail": "Price touched or broke the $81.57 stop during the opening check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "TGT",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "930",
+      "detail": "Cleared entry, held above stop, inside the strict entry band.",
+      "execution_price": 148.99
+    }
+  ],
+  "results": [
+    {
+      "date": "2026-08-06",
+      "ticker": "TGT",
+      "name": "Target Corp.",
+      "confirmation_path": "930",
+      "entry": 148.96,
+      "stop": 140.19,
+      "target": 166.5,
+      "execution_price": 148.99,
+      "shares": 11,
+      "exit_price": 148.76,
+      "exit_time": "2026-08-06T10:05:00-04:00",
+      "status": "no_follow_through",
+      "pl": -2.53,
+      "r_multiple": -0.03,
+      "high_since_signal": 149.43,
+      "low_since_signal": 147.77,
+      "star_rating": 4
+    }
+  ]
+}
