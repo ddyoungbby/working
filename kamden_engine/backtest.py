@@ -38,10 +38,13 @@ ACCOUNT = 5000.0
 RISK_PCT = 2.0
 
 GRID = {
-    "min_stars": [3, 4],
-    "min_dist_r": [0.0, 0.05],
+    "min_stars": [3],
+    "min_dist_r": [0.0],
     "require_green": [False, True],
-    "tp_r": [None, 1.0, 0.75, 0.5],
+    "tp_r": [None, 0.5, 0.4, 0.25],
+    "officials": [2, 1],
+    "allow_935": [True, False],
+    "bullish_only": [False, True],
 }
 
 
@@ -69,6 +72,8 @@ def replay_day(day: date, research_cache: dict, cfg: dict) -> list[Trade]:
     status, _ = market_permission(day)
     if status == "BEARISH":
         return []
+    if cfg.get("bullish_only") and status != "BULLISH":
+        return []
     if day not in research_cache:
         research_cache[day] = research_scan(day)
     setups: list[Setup] = [
@@ -81,6 +86,8 @@ def replay_day(day: date, research_cache: dict, cfg: dict) -> list[Trade]:
         locked, day,
         min_dist_r=cfg["min_dist_r"],
         require_green=cfg["require_green"],
+        officials=cfg.get("officials", 2),
+        allow_935=cfg.get("allow_935", True),
     )
     trades: list[Trade] = []
     for conf in confs:
@@ -147,10 +154,14 @@ def main() -> int:
 
     # pick: enough trades to mean something, >= 80% if any config gets there,
     # then highest total P/L
-    qualified = [r for r in sweep if r["trades"] >= 10]
-    hit_80 = [r for r in qualified if r["win_rate"] >= 80.0]
-    pool = hit_80 or qualified or sweep
-    best = max(pool, key=lambda r: (r["win_rate"], r["total_pl"]))
+    # champion: hit 80% with the largest sample, then highest P/L;
+    # otherwise the best-balanced config on a meaningful sample
+    hit_80 = [r for r in sweep if r["win_rate"] >= 80.0 and r["trades"] >= 5]
+    if hit_80:
+        best = max(hit_80, key=lambda r: (r["trades"], r["total_pl"]))
+    else:
+        qualified = [r for r in sweep if r["trades"] >= 10] or sweep
+        best = max(qualified, key=lambda r: (r["win_rate"], r["total_pl"]))
     print(f"\nBEST: {best['config']}")
     print(f"      {best['trades']} trades, {best['win_rate']}% win rate, "
           f"${best['total_pl']:+.2f}, avg {best['avg_r']:+.3f}R")

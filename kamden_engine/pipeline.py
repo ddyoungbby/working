@@ -134,7 +134,8 @@ def _check_open(locked: LockedName, candle: Bar, spy_open_move: float,
 
 def confirm_signals(
     locked_field: list[LockedName], day: date,
-    min_dist_r: float = 0.0, require_green: bool = False
+    min_dist_r: float = 0.0, require_green: bool = False,
+    officials: int = OFFICIAL_COUNT, allow_935: bool = True
 ) -> list[Confirmation]:
     """9:30 confirmation with the 9:35 follow-up. Returns every locked name's
     outcome; the top-two confirmed carry official=True."""
@@ -172,7 +173,7 @@ def confirm_signals(
     confirmed = [c for c in results if c.status == "confirmed_buy"]
 
     # 9:35 follow-up only if the official slate is not yet full
-    if len(confirmed) < OFFICIAL_COUNT and reclaim_watch:
+    if allow_935 and len(confirmed) < officials and reclaim_watch:
         for locked in reclaim_watch:
             candle = _fetch_bar(locked.setup.ticker, day, dtime(9, 35))
             if candle is None:
@@ -187,10 +188,10 @@ def confirm_signals(
                         break
                 confirmed.append(conf)
 
-    # official top-two by confirmation strength
+    # official top-N by confirmation strength
     confirmed.sort(key=lambda c: c.strength, reverse=True)
     for i, conf in enumerate(confirmed):
-        if i < OFFICIAL_COUNT:
+        if i < officials:
             conf.official = True
         else:
             conf.status = "failed_confirmation"

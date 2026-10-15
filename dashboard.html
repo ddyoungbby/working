@@ -1,0 +1,308 @@
+<title>Morning Engine Backtest</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one centered column; summary tiles -> verdict -> equity curve -> sweep scatter -> trade table -> caveats */
+:root {
+  --bg: #f7f7f5;
+  --surface: #fcfcfb;
+  --border: #e3e2dd;
+  --grid: #ecece8;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-3: #8a8984;
+  --accent: #2a78d6;
+  --accent-wash: rgba(42,120,214,0.10);
+  --good: #0ca30c;
+  --bad: #d03b3b;
+  --warn: #fab219;
+  --sans: 'Archivo', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121211; --surface: #1a1a19; --border: #32312e; --grid: #262523;
+    --ink: #f0efec; --ink-2: #c3c2b7; --ink-3: #85847c;
+    --accent: #3987e5; --accent-wash: rgba(57,135,229,0.14);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121211; --surface: #1a1a19; --border: #32312e; --grid: #262523;
+  --ink: #f0efec; --ink-2: #c3c2b7; --ink-3: #85847c;
+  --accent: #3987e5; --accent-wash: rgba(57,135,229,0.14);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 920px; margin: 0 auto; }
+header.page { padding-block: 40px 8px; }
+.eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin-top: 6px; }
+.sub { color: var(--ink-2); max-width: 62ch; margin-top: 8px; }
+section { margin-top: 36px; }
+h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
+.sec-note { font-size: 0.85rem; color: var(--ink-3); margin-top: 2px; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+@media (max-width: 640px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+.tile { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.tile .k { font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.tile .v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.55rem; font-weight: 700; margin-top: 4px; }
+.tile .d { font-size: 0.78rem; color: var(--ink-2); margin-top: 2px; }
+.v.up { color: var(--good); } .v.down { color: var(--bad); }
+
+.verdict { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: 14px;
+  background: var(--accent-wash); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+.verdict .mark { font-family: var(--mono); font-weight: 700; color: var(--accent); white-space: nowrap; }
+.verdict p { font-size: 0.9rem; color: var(--ink-2); min-width: 0; flex: 1 1 260px; }
+
+.cfg { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+@media (max-width: 640px) { .cfg { grid-template-columns: 1fr; } }
+.cfg .rule { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+.cfg .rule b { font-family: var(--mono); font-size: 0.85rem; }
+.cfg .rule span { display: block; font-size: 0.82rem; color: var(--ink-2); margin-top: 2px; }
+
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-top: 14px; position: relative; min-width: 0; }
+svg { display: block; width: 100%; height: auto; }
+.tooltip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 7px 10px; font-family: var(--mono); font-size: 11.5px; line-height: 1.5;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18); white-space: nowrap; z-index: 5; max-width: 90vw; white-space: normal; }
+.tooltip[hidden] { display: none !important; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-size: 0.8rem; color: var(--ink-2); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+
+.tbl-wrap { overflow-x: auto; margin-top: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; min-width: 560px; }
+th { font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-3); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-family: var(--mono); }
+.chip { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 11px; font-weight: 600;
+  border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.chip.win { color: var(--good); } .chip.loss { color: var(--bad); }
+
+.caveats { border: 1px solid var(--border); border-left: 3px solid var(--warn); border-radius: 10px;
+  background: var(--surface); padding: 14px 16px; margin-top: 14px; }
+.caveats ul { padding-left: 18px; display: grid; gap: 6px; font-size: 0.88rem; color: var(--ink-2); }
+footer { margin-top: 40px; font-size: 0.78rem; color: var(--ink-3); }
+</style>
+
+<div class="wrap">
+  <header class="page">
+    <div class="eyebrow">KamdenAI-style morning engine &middot; 21 trading days &middot; Sep 16 - Oct 14, 2026</div>
+    <h1>Did the engine reach an 80% win rate?</h1>
+    <p class="sub">Yes, in-sample: one configuration won 6 of 7 trades (85.7%) over the test month.
+    It got there by being pickier - a green confirmation candle, a +0.4R take-profit, and no 9:35 reclaim entries -
+    which also cut the trade count from 19 to 7. Every number below comes from real market data replayed
+    through the engine's actual decision code.</p>
+  </header>
+
+  <section>
+    <div class="tiles" id="tiles"></div>
+    <div class="verdict">
+      <span class="mark">BASELINE 42.1% &rarr; TUNED 85.7%</span>
+      <p>The untuned engine took 19 trades and lost $231.20 over the same month.
+      The tuned rules refused 12 of those trades and turned the rest into +$98.90.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The winning rules</h2>
+    <p class="sec-note">What changed from the baseline configuration.</p>
+    <div class="cfg">
+      <div class="rule"><b>require_green = true</b><span>The 9:30 confirmation candle must close green. A red candle above entry is momentum fading into the alert - skip it.</span></div>
+      <div class="rule"><b>tp_r = 0.4</b><span>Take profit at +0.4R from the execution price instead of holding for the 2R plan target. Small wins, banked early.</span></div>
+      <div class="rule"><b>allow_935 = false</b><span>No 9:35 reclaim entries. A name below its trigger at the open stays unbought - late reclaims underperformed.</span></div>
+      <div class="rule"><b>officials = 2, min_stars = 3, any non-bearish tape</b><span>Unchanged from baseline: top two confirmations, 3-star research floor, bearish days stay in cash.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Equity curve - tuned configuration</h2>
+    <p class="sec-note">Cumulative model P/L across all 7 trades, $5,000 account, 2% risk per signal. Hover any point.</p>
+    <div class="panel" id="equity-panel"></div>
+  </section>
+
+  <section>
+    <h2>All 64 tested configurations</h2>
+    <p class="sec-note">Win rate vs. number of trades. The pattern is the honest story: every configuration above 80% took few trades.</p>
+    <div class="panel" id="sweep-panel"></div>
+    <div class="legend">
+      <span><i style="background:var(--accent)"></i>Reached 80%+</span>
+      <span><i style="background:var(--ink-3)"></i>Below 80%</span>
+      <span><i style="background:transparent;border:2px solid var(--accent);width:8px;height:8px"></i>Champion (85.7%)</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>The 7 trades</h2>
+    <div class="tbl-wrap"><table id="trades-tbl"></table></div>
+  </section>
+
+  <section>
+    <h2>Read this before believing the 85.7%</h2>
+    <div class="caveats"><ul>
+      <li><b>It is in-sample.</b> These rules were chosen <em>because</em> they won on this month. On 7 trades, the 95% confidence interval around 6 wins runs roughly from 49% to 97% - the true rate could be a coin flip.</li>
+      <li><b>High win rate was bought with small wins.</b> Taking profit at +0.4R means the average winner makes about $30 while the one loser gave back $55. The edge, if real, is thin: +0.144R per trade.</li>
+      <li><b>Fewer trades is the mechanism.</b> Most of the improvement came from refusing trades, not from picking better ones.</li>
+      <li><b>Fill model is optimistic.</b> Executions at the confirmation print, no slippage, no commissions, delayed free data.</li>
+      <li><b>The real test is forward.</b> The daily 9:05 ET routine keeps running live; its ledger is the out-of-sample record that will confirm or embarrass this page.</li>
+    </ul></div>
+  </section>
+
+  <footer>Educational analysis of a mechanical process - not financial advice. Generated from backtest/sweep.json and backtest/trades-best.json in the working repository.</footer>
+</div>
+
+<script>
+const DATA = {"days": ["2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09", "2026-10-12", "2026-10-13", "2026-10-14"], "sweep": [{"trades": 19, "win_rate": 42.1, "pl": -231.2, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 14, "win_rate": 42.9, "pl": -73.71, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 12, "win_rate": 58.3, "pl": -83.05, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 9, "win_rate": 66.7, "pl": 73.94, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 12, "win_rate": 41.7, "pl": -252.16, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 8, "win_rate": 50.0, "pl": -70.27, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 8, "win_rate": 50.0, "pl": -205.53, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -24.14, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 19, "win_rate": 42.1, "pl": -314.33, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 14, "win_rate": 42.9, "pl": -156.84, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 12, "win_rate": 58.3, "pl": -166.18, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 9, "win_rate": 66.7, "pl": -9.19, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 12, "win_rate": 41.7, "pl": -252.16, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 8, "win_rate": 50.0, "pl": -70.27, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 8, "win_rate": 50.0, "pl": -205.53, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -24.14, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.5, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 19, "win_rate": 47.4, "pl": -216.87, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 14, "win_rate": 42.9, "pl": -143.53, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 12, "win_rate": 66.7, "pl": -68.72, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 9, "win_rate": 66.7, "pl": 4.12, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 12, "win_rate": 50.0, "pl": -137.01, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 8, "win_rate": 50.0, "pl": -39.27, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 8, "win_rate": 62.5, "pl": -90.38, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": 6.86, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.4, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 19, "win_rate": 47.4, "pl": -259.99, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 14, "win_rate": 42.9, "pl": -176.26, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 12, "win_rate": 66.7, "pl": -117.17, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 9, "win_rate": 66.7, "pl": -28.61, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 12, "win_rate": 50.0, "pl": -151.84, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 8, "win_rate": 50.0, "pl": -45.46, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 8, "win_rate": 62.5, "pl": -110.54, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": 0.67, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": 0.25, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 13, "win_rate": 53.8, "pl": -96.24, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 9, "win_rate": 55.6, "pl": -73.39, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 7, "win_rate": 71.4, "pl": -16.25, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 6.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 9, "win_rate": 55.6, "pl": -72.43, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -25.18, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 6, "win_rate": 66.7, "pl": -40.65, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 6.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": null, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 13, "win_rate": 53.8, "pl": -51.33, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 9, "win_rate": 55.6, "pl": -28.48, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 7, "win_rate": 71.4, "pl": -16.25, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 6.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 9, "win_rate": 55.6, "pl": -72.43, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -25.18, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 6, "win_rate": 66.7, "pl": -40.65, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 6.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.5, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 13, "win_rate": 61.5, "pl": 54.28, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 9, "win_rate": 55.6, "pl": -7.02, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 7, "win_rate": 85.7, "pl": 98.9, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 37.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 9, "win_rate": 66.7, "pl": 42.72, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": 5.82, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 6, "win_rate": 83.3, "pl": 74.5, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 37.1, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 1, "allow_935": false, "bullish_only": true}}, {"trades": 13, "win_rate": 61.5, "pl": 23.3, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 2, "allow_935": true, "bullish_only": false}}, {"trades": 9, "win_rate": 55.6, "pl": -27.61, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 2, "allow_935": true, "bullish_only": true}}, {"trades": 7, "win_rate": 85.7, "pl": 76.99, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 2, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 30.91, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 2, "allow_935": false, "bullish_only": true}}, {"trades": 9, "win_rate": 66.7, "pl": 27.89, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 1, "allow_935": true, "bullish_only": false}}, {"trades": 6, "win_rate": 66.7, "pl": -0.37, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 1, "allow_935": true, "bullish_only": true}}, {"trades": 6, "win_rate": 83.3, "pl": 54.34, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 1, "allow_935": false, "bullish_only": false}}, {"trades": 5, "win_rate": 80.0, "pl": 30.91, "cfg": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.25, "officials": 1, "allow_935": false, "bullish_only": true}}], "best": {"config": {"min_stars": 3, "min_dist_r": 0.0, "require_green": true, "tp_r": 0.4, "officials": 2, "allow_935": false, "bullish_only": false}, "summary": {"trades": 7, "wins": 6, "win_rate": 85.7, "total_pl": 98.9, "avg_r": 0.144}, "trades": [{"day": "2026-09-25", "ticker": "TSLA", "path": "930", "stars": 4, "execution_price": 385.1, "exit_price": 371.47, "shares": 4, "pl": -54.52, "r": -0.63, "status": "no_follow_through"}, {"day": "2026-09-28", "ticker": "NVDA", "path": "930", "stars": 3, "execution_price": 230.76, "exit_price": 230.89, "shares": 14, "pl": 1.82, "r": 0.02, "status": "no_follow_through"}, {"day": "2026-10-02", "ticker": "COIN", "path": "930", "stars": 5, "execution_price": 196.75, "exit_price": 200.15, "shares": 11, "pl": 37.4, "r": 0.4, "status": "target_hit"}, {"day": "2026-10-02", "ticker": "ARM", "path": "930", "stars": 4, "execution_price": 307.49, "exit_price": 312.37, "shares": 5, "pl": 24.4, "r": 0.27, "status": "moved_in_favor"}, {"day": "2026-10-08", "ticker": "DOCU", "path": "930", "stars": 5, "execution_price": 69.48, "exit_price": 70.46, "shares": 40, "pl": 39.2, "r": 0.4, "status": "target_hit"}, {"day": "2026-10-09", "ticker": "SNOW", "path": "930", "stars": 4, "execution_price": 349.11, "exit_price": 354.35, "shares": 7, "pl": 36.68, "r": 0.4, "status": "target_hit"}, {"day": "2026-10-12", "ticker": "AAPL", "path": "930", "stars": 4, "execution_price": 340.8, "exit_price": 341.96, "shares": 12, "pl": 13.92, "r": 0.15, "status": "no_follow_through"}], "equity": [-54.52, -52.7, -15.3, 9.1, 48.3, 84.98, 98.9]}, "baseline": {"config": {"min_stars": 3, "min_dist_r": 0.0, "require_green": false, "tp_r": null, "officials": 2, "allow_935": true, "bullish_only": false}, "trades": 19, "wins": 8, "win_rate": 42.1, "total_pl": -231.2, "avg_r": -0.104}};
+
+const fmt$ = (v) => (v > 0 ? "+$" : v < 0 ? "-$" : "$") + Math.abs(v).toFixed(2);
+
+// ---- stat tiles -------------------------------------------------------------
+const s = DATA.best.summary;
+document.getElementById("tiles").innerHTML = [
+  { k: "Win rate", v: s.win_rate + "%", d: s.wins + " of " + s.trades + " trades", cls: "" },
+  { k: "Model P/L", v: fmt$(s.total_pl), d: "$5,000 account, 2% risk", cls: s.total_pl >= 0 ? "up" : "down" },
+  { k: "Avg per trade", v: (s.avg_r >= 0 ? "+" : "") + s.avg_r.toFixed(3) + "R", d: "R = planned risk unit", cls: s.avg_r >= 0 ? "up" : "down" },
+  { k: "Sample", v: DATA.days.length + " days", d: s.trades + " trades taken", cls: "" },
+].map(t => `<div class="tile"><div class="k">${t.k}</div><div class="v ${t.cls}">${t.v}</div><div class="d">${t.d}</div></div>`).join("");
+
+// ---- shared tooltip helper ---------------------------------------------------
+function attachTip(panel) {
+  const tip = document.createElement("div");
+  tip.className = "tooltip"; tip.hidden = true;
+  panel.appendChild(tip);
+  return {
+    show(html, x, y) {
+      tip.innerHTML = html; tip.hidden = false;
+      const r = panel.getBoundingClientRect(), tr = tip.getBoundingClientRect();
+      let left = x + 14, top = y - tr.height - 10;
+      if (left + tr.width > r.width - 4) left = x - tr.width - 14;
+      if (left < 4) left = 4;
+      if (top < 4) top = y + 14;
+      tip.style.left = left + "px"; tip.style.top = top + "px";
+    },
+    hide() { tip.hidden = true; },
+  };
+}
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+// ---- equity curve -----------------------------------------------------------
+(function equity() {
+  const panel = document.getElementById("equity-panel");
+  const eq = [0, ...DATA.best.equity];
+  const trades = DATA.best.trades;
+  const W = 880, H = 300, M = { t: 18, r: 86, b: 30, l: 56 };
+  const lo = Math.min(...eq), hi = Math.max(...eq);
+  const pad = (hi - lo) * 0.12 || 10;
+  const y = (v) => M.t + (H - M.t - M.b) * (1 - (v - (lo - pad)) / ((hi + pad) - (lo - pad)));
+  const x = (i) => M.l + (W - M.l - M.r) * (i / (eq.length - 1));
+  const ticks = [-50, 0, 50, 100].filter(v => v >= lo - pad && v <= hi + pad);
+  let g = "";
+  for (const v of ticks)
+    g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>` +
+         `<text x="${M.l - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v === 0 ? "$0" : (v > 0 ? "+$" : "-$") + Math.abs(v)}</text>`;
+  const pts = eq.map((v, i) => [x(i), y(v)]);
+  const path = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+  const area = path + ` L ${pts[pts.length-1][0].toFixed(1)} ${y(lo - pad)} L ${pts[0][0].toFixed(1)} ${y(lo - pad)} Z`;
+  let dots = "";
+  pts.forEach((p, i) => {
+    if (i === 0) return;
+    dots += `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" data-i="${i-1}" style="cursor:pointer"/>`;
+  });
+  const endLabel = `<text x="${pts[pts.length-1][0] + 10}" y="${pts[pts.length-1][1] + 4}" font-size="12" font-weight="700" font-family="var(--mono)" fill="var(--ink)">${fmt$(eq[eq.length-1])}</text>`;
+  panel.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cumulative profit and loss across seven trades, ending at plus ninety-eight dollars ninety">
+    ${g}
+    <path d="${area}" fill="var(--accent)" opacity="0.10"/>
+    <path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    ${dots}${endLabel}
+  </svg>`;
+  const tip = attachTip(panel);
+  panel.querySelectorAll("circle").forEach(c => {
+    c.addEventListener("mouseenter", (e) => {
+      const t = trades[+c.dataset.i];
+      const r = panel.getBoundingClientRect();
+      tip.show(`<b>$${t.ticker}</b> ${t.day}<br>${fmt$(t.pl)} (${t.r >= 0 ? "+" : ""}${t.r}R) &middot; cum ${fmt$(eq[+c.dataset.i + 1])}`,
+        e.clientX - r.left, e.clientY - r.top);
+    });
+    c.addEventListener("mouseleave", () => tip.hide());
+  });
+})();
+
+// ---- sweep scatter ----------------------------------------------------------
+(function sweepChart() {
+  const panel = document.getElementById("sweep-panel");
+  const rows = DATA.sweep;
+  const best = DATA.best.config;
+  const W = 880, H = 320, M = { t: 16, r: 24, b: 42, l: 56 };
+  const xMax = Math.max(...rows.map(r => r.trades)) + 1;
+  const x = (v) => M.l + (W - M.l - M.r) * (v / xMax);
+  const y = (v) => M.t + (H - M.t - M.b) * (1 - v / 100);
+  let g = "";
+  for (const v of [0, 20, 40, 60, 80, 100])
+    g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>` +
+         `<text x="${M.l - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v}%</text>`;
+  for (let v = 0; v <= xMax; v += 5)
+    g += `<text x="${x(v)}" y="${H - M.b + 18}" text-anchor="middle" font-size="11" font-family="var(--mono)" fill="var(--ink-3)">${v}</text>`;
+  g += `<text x="${(M.l + W - M.r) / 2}" y="${H - 4}" text-anchor="middle" font-size="11" font-family="var(--sans)" fill="var(--ink-3)">trades taken in the month</text>`;
+  g += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(80)}" y2="${y(80)}" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>`;
+  // jitter identical (trades, win_rate) pairs so coincident configs stay visible
+  const seen = {};
+  let dots = "";
+  rows.forEach((r, i) => {
+    const key = r.trades + ":" + r.win_rate;
+    const n = (seen[key] = (seen[key] || 0) + 1);
+    const dx = ((n - 1) % 5) * 5 - 10, dy = Math.floor((n - 1) / 5) * 5;
+    const isBest = JSON.stringify(r.cfg) === JSON.stringify(best);
+    const hot = r.win_rate >= 80;
+    dots += `<circle cx="${x(r.trades) + dx}" cy="${y(r.win_rate) + dy}" r="${isBest ? 7 : 5}"
+      fill="${hot ? "var(--accent)" : "var(--ink-3)"}" opacity="${hot ? 0.95 : 0.45}"
+      stroke="var(--surface)" stroke-width="2" data-i="${i}" style="cursor:pointer"/>`;
+    if (isBest)
+      dots += `<circle cx="${x(r.trades) + dx}" cy="${y(r.win_rate) + dy}" r="11" fill="none" stroke="var(--accent)" stroke-width="2"/>` +
+              `<text x="${x(r.trades) + dx + 16}" y="${y(r.win_rate) + dy - 10}" font-size="12" font-weight="700" font-family="var(--mono)" fill="var(--ink)">85.7% &middot; 7 trades</text>`;
+  });
+  panel.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Scatter of 64 configurations: win rate versus trades taken. Configurations above eighty percent all took seven or fewer trades.">${g}${dots}</svg>`;
+  const tip = attachTip(panel);
+  panel.querySelectorAll("circle[data-i]").forEach(c => {
+    c.addEventListener("mouseenter", (e) => {
+      const r0 = rows[+c.dataset.i], cfg = r0.cfg;
+      const r = panel.getBoundingClientRect();
+      tip.show(`<b>${r0.win_rate}% win &middot; ${r0.trades} trades &middot; ${fmt$(r0.pl)}</b><br>` +
+        `green candle: ${cfg.require_green ? "required" : "no"} &middot; TP: ${cfg.tp_r == null ? "2R plan" : "+" + cfg.tp_r + "R"}<br>` +
+        `officials: ${cfg.officials} &middot; 9:35 reclaim: ${cfg.allow_935 ? "yes" : "no"} &middot; ${cfg.bullish_only ? "bullish days only" : "any non-bearish day"}`,
+        e.clientX - r.left, e.clientY - r.top);
+    });
+    c.addEventListener("mouseleave", () => tip.hide());
+  });
+})();
+
+// ---- trades table -----------------------------------------------------------
+(function table() {
+  const label = { target_hit: "Target hit", moved_1r: "Moved 1R+", moved_in_favor: "Moved in favor",
+                  no_follow_through: "No follow-through", stop_hit: "Stop hit" };
+  const rows = DATA.best.trades.map(t => {
+    const win = t.pl > 0;
+    return `<tr>
+      <td class="num">${t.day}</td>
+      <td class="num"><b>$${t.ticker}</b> <span style="color:var(--ink-3)">${"\u2605".repeat(t.stars)}</span></td>
+      <td class="num">$${t.execution_price.toFixed(2)}</td>
+      <td class="num">$${t.exit_price.toFixed(2)}</td>
+      <td class="num">${t.shares}</td>
+      <td class="num" style="color:${win ? "var(--good)" : "var(--bad)"};font-weight:600">${fmt$(t.pl)}</td>
+      <td class="num">${t.r >= 0 ? "+" : ""}${t.r.toFixed(2)}R</td>
+      <td><span class="chip ${win ? "win" : "loss"}">${win ? "\u2713 win" : "\u2715 loss"}</span> <span style="color:var(--ink-3);font-size:0.78rem">${label[t.status]}</span></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("trades-tbl").innerHTML =
+    `<thead><tr><th>Date</th><th>Signal</th><th>In</th><th>Out</th><th>Shares</th><th>P/L</th><th>R</th><th>Result</th></tr></thead><tbody>${rows}</tbody>`;
+})();
+</script>
