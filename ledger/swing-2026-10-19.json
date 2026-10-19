@@ -25,5 +25,11 @@
     "pf": 0.0,
     "max_dd": 64.51,
     "avg_r": -0.645
+  },
+  "edge_check": {
+    "status": "OK",
+    "loss_streak": 1,
+    "drawdown": 64.51,
+    "reasons": []
   }
 }

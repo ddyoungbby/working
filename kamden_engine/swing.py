@@ -247,6 +247,34 @@ def setups_for_session(hist: dict, day: date) -> tuple[str, list]:
     return status, found
 
 
+# Measured on Apr 2024 - Oct 2026 with LIVE_CFG (replaces the 85%/70% labels
+# inherited from KamdenAI, which the data does not support).
+MEASURED_WIN_RATE = {5: (41, 143), 4: (71, 21)}   # stars -> (win %, trades)
+EDGE_MAX_LOSS_STREAK = 8
+EDGE_MAX_DRAWDOWN = 800.0
+
+
+def edge_check(closed: list) -> dict:
+    """Flag live results that fall outside what the backtest calls normal."""
+    streak = 0
+    for t in reversed(sorted(closed, key=lambda t: t.exit_day)):
+        if t.net > 0:
+            break
+        streak += 1
+    eq = peak = dd = 0.0
+    for t in sorted(closed, key=lambda t: t.exit_day):
+        eq += t.net
+        peak = max(peak, eq)
+        dd = max(dd, peak - eq)
+    reasons = []
+    if streak >= EDGE_MAX_LOSS_STREAK:
+        reasons.append(f"{streak} losses in a row (backtest worst-normal is {EDGE_MAX_LOSS_STREAK - 1})")
+    if dd > EDGE_MAX_DRAWDOWN:
+        reasons.append(f"drawdown ${dd:.0f} exceeds ${EDGE_MAX_DRAWDOWN:.0f}")
+    return {"status": "ALERT" if reasons else "OK", "loss_streak": streak,
+            "drawdown": round(dd, 2), "reasons": reasons}
+
+
 def today_report(day: date | None = None, with_option: bool = True) -> dict:
     from datetime import datetime
     from .data import ET
@@ -265,8 +293,10 @@ def today_report(day: date | None = None, with_option: bool = True) -> dict:
             risk = pick.entry - pick.stop
             shares = min(int(RISK_DOLLARS // risk),
                          int(ACCOUNT / LIVE_CFG["max_open"] // pick.entry))
+            wr, n = MEASURED_WIN_RATE.get(pick.star_rating, (None, 0))
             order = {
                 "ticker": pick.ticker, "name": pick.name, "stars": pick.star_rating,
+                "measured_win_rate": wr, "measured_trades": n,
                 "buy_stop": pick.entry, "stop": pick.stop,
                 "target": round(pick.entry + LIVE_CFG["target_r"] * risk, 2),
                 "max_hold_sessions": LIVE_CFG["hold_days"], "shares": shares,
@@ -277,7 +307,7 @@ def today_report(day: date | None = None, with_option: bool = True) -> dict:
                 order["option"] = _swing_option(pick, day)
     return {"day": day.isoformat(), "market": status, "order": order,
             "open_positions": open_pos, "closed_since_live": [asdict(t) for t in closed],
-            "closed_summary": summarize(closed)}
+            "closed_summary": summarize(closed), "edge_check": edge_check(closed)}
 
 
 def _swing_option(setup, day):
@@ -300,6 +330,9 @@ def print_report(r: dict) -> None:
     o = r["order"]
     if o:
         print(f"\nTODAY'S ORDER: {o['ticker']} ({o['name']}, {o['stars']} stars)")
+        if o.get("measured_win_rate") is not None:
+            print(f"  Measured win rate for {o['stars']}-star setups: {o['measured_win_rate']}% "
+                  f"over {o['measured_trades']} backtest trades")
         print(f"  Buy-stop {o['shares']} sh at ${o['buy_stop']:.2f}  "
               f"(skip if it opens above ${o['skip_if_opens_above']:.2f})")
         print(f"  Stop ${o['stop']:.2f}   Target ${o['target']:.2f} (2R)   "
@@ -317,6 +350,11 @@ def print_report(r: dict) -> None:
     s = r["closed_summary"]
     print(f"\nLive record since {LIVE_START}: {s['trades']} closed, "
           f"{s['win_rate']}% win, net ${s['net']:+.2f}")
+    e = r["edge_check"]
+    if e["status"] == "ALERT":
+        print("EDGE CHECK ALERT: " + "; ".join(e["reasons"]) + " - review before taking new trades")
+    else:
+        print(f"Edge check OK (loss streak {e['loss_streak']}, drawdown ${e['drawdown']:.0f})")
 
 
 def main() -> int:
