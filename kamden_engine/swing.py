@@ -44,6 +44,7 @@ ACCOUNT = 5000.0
 RISK_DOLLARS = 100.0
 LOOKBACK_DAYS = 1100
 WARMUP = 120
+SLIP_MULT = 1.0   # stress-test multiplier on per-side slippage
 CHASE_R = 0.75
 
 TRAIN = (date(2024, 4, 1), date(2025, 12, 31))
@@ -186,8 +187,8 @@ def simulate(hist, setups_by_day, cfg, start: date, end: date,
                     })
                     open_until[s.ticker] = date.max
                 continue
-            slip_in = max(0.01, 0.0001 * fill)
-            slip_out = max(0.01, 0.0001 * exit_px)
+            slip_in = max(0.01, 0.0001 * SLIP_MULT * fill)
+            slip_out = max(0.01, 0.0001 * SLIP_MULT * exit_px)
             net = (exit_px - fill - slip_in - slip_out) * shares
             open_until[s.ticker] = bars[exit_i].ts.date()
             trades.append(SwingTrade(
