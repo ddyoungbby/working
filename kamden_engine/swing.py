@@ -251,8 +251,11 @@ def setups_for_session(hist: dict, day: date) -> tuple[str, list]:
 # Measured on Apr 2024 - Oct 2026 with LIVE_CFG (replaces the 85%/70% labels
 # inherited from KamdenAI, which the data does not support).
 MEASURED_WIN_RATE = {5: (41, 143), 4: (71, 21)}   # stars -> (win %, trades)
-EDGE_MAX_LOSS_STREAK = 8
-EDGE_MAX_DRAWDOWN = 800.0
+# Calibrated from the 2015-2026 Monte Carlo (backtest/stress.json): beyond the
+# 95th percentile of a normal year - 10-loss streaks and a ~22% drawdown are
+# ordinary bad luck for this system, not a broken edge.
+EDGE_MAX_LOSS_STREAK = 11
+EDGE_MAX_DRAWDOWN_PCT = 0.22
 
 
 def edge_check(closed: list) -> dict:
@@ -270,8 +273,9 @@ def edge_check(closed: list) -> dict:
     reasons = []
     if streak >= EDGE_MAX_LOSS_STREAK:
         reasons.append(f"{streak} losses in a row (backtest worst-normal is {EDGE_MAX_LOSS_STREAK - 1})")
-    if dd > EDGE_MAX_DRAWDOWN:
-        reasons.append(f"drawdown ${dd:.0f} exceeds ${EDGE_MAX_DRAWDOWN:.0f}")
+    limit = EDGE_MAX_DRAWDOWN_PCT * ACCOUNT
+    if dd > limit:
+        reasons.append(f"drawdown ${dd:.0f} exceeds ${limit:.0f} ({EDGE_MAX_DRAWDOWN_PCT:.0%} of account)")
     return {"status": "ALERT" if reasons else "OK", "loss_streak": streak,
             "drawdown": round(dd, 2), "reasons": reasons}
 
