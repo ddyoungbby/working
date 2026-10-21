@@ -280,7 +280,24 @@ def edge_check(closed: list) -> dict:
             "drawdown": round(dd, 2), "reasons": reasons}
 
 
+# Live sizing chosen by the user on 2026-10-21: $5k account, $500 risk budget.
+# On this account the one-third notional cap usually binds first, so real
+# risk per trade stays far below $500 (a max-8%-wide stop on a $1,667
+# position is about $133). Backtests keep the $100 baseline for comparison.
+LIVE_RISK_DOLLARS = 500.0
+
+
 def today_report(day: date | None = None, with_option: bool = True) -> dict:
+    global RISK_DOLLARS
+    saved = RISK_DOLLARS
+    RISK_DOLLARS = LIVE_RISK_DOLLARS
+    try:
+        return _today_report(day, with_option)
+    finally:
+        RISK_DOLLARS = saved
+
+
+def _today_report(day: date | None = None, with_option: bool = True) -> dict:
     from datetime import datetime
     from .data import ET
     day = day or datetime.now(tz=ET).date()
