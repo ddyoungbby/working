@@ -1,0 +1,175 @@
+{
+  "date": "2026-08-04",
+  "market_status": "BULLISH",
+  "market_detail": "SPY/QQQ constructive above rising 20 EMA structure.",
+  "research": [
+    {
+      "ticker": "F",
+      "name": "Ford Motor",
+      "sector": "EV/Auto",
+      "entry": 15.07,
+      "stop": 14.28,
+      "target": 16.65,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": false,
+      "rel_strength_pass": true,
+      "prior_close": 14.43,
+      "ema20": 14.42,
+      "rsi14": 51.2,
+      "atr14": 0.55
+    },
+    {
+      "ticker": "ETSY",
+      "name": "Etsy Inc.",
+      "sector": "E-commerce",
+      "entry": 83.88,
+      "stop": 80.75,
+      "target": 90.14,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 83.17,
+      "ema20": 81.48,
+      "rsi14": 57.0,
+      "atr14": 2.92
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sector": "Financial Leaders",
+      "entry": 355.63,
+      "stop": 343.37,
+      "target": 380.15,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 352.64,
+      "ema20": 345.17,
+      "rsi14": 61.1,
+      "atr14": 7.23
+    },
+    {
+      "ticker": "ABNB",
+      "name": "Airbnb Inc.",
+      "sector": "Consumer",
+      "entry": 154.57,
+      "stop": 145.9,
+      "target": 171.91,
+      "star_rating": 3,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": false,
+      "rel_strength_pass": true,
+      "prior_close": 150.64,
+      "ema20": 146.99,
+      "rsi14": 58.1,
+      "atr14": 4.36
+    }
+  ],
+  "locked_field": [
+    {
+      "rank": 1,
+      "role": "front_runner",
+      "ticker": "F",
+      "score": 50
+    },
+    {
+      "rank": 2,
+      "role": "runner_up",
+      "ticker": "ETSY",
+      "score": 45
+    },
+    {
+      "rank": 3,
+      "role": "field",
+      "ticker": "JPM",
+      "score": 45
+    },
+    {
+      "rank": 4,
+      "role": "field",
+      "ticker": "ABNB",
+      "score": 33
+    }
+  ],
+  "confirmations": [
+    {
+      "ticker": "F",
+      "status": "failed_confirmation",
+      "official": false,
+      "path": "",
+      "detail": "Price touched or broke the $14.28 stop during the opening check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "ETSY",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "930",
+      "detail": "Cleared entry, held above stop, inside the strict entry band.",
+      "execution_price": 83.94
+    },
+    {
+      "ticker": "JPM",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "930",
+      "detail": "Cleared entry, held above stop, inside the strict entry band.",
+      "execution_price": 355.78
+    },
+    {
+      "ticker": "ABNB",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $154.57 entry at the check.",
+      "execution_price": 0.0
+    }
+  ],
+  "results": [
+    {
+      "date": "2026-08-04",
+      "ticker": "ETSY",
+      "name": "Etsy Inc.",
+      "confirmation_path": "930",
+      "entry": 83.88,
+      "stop": 80.75,
+      "target": 90.14,
+      "execution_price": 83.94,
+      "shares": 31,
+      "exit_price": 85.44,
+      "exit_time": "2026-08-04T10:05:00-04:00",
+      "status": "moved_in_favor",
+      "pl": 46.5,
+      "r_multiple": 0.48,
+      "high_since_signal": 86.1,
+      "low_since_signal": 83.89,
+      "star_rating": 4
+    },
+    {
+      "date": "2026-08-04",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "confirmation_path": "930",
+      "entry": 355.63,
+      "stop": 343.37,
+      "target": 380.15,
+      "execution_price": 355.78,
+      "shares": 8,
+      "exit_price": 359.03,
+      "exit_time": "2026-08-04T10:05:00-04:00",
+      "status": "moved_in_favor",
+      "pl": 26.0,
+      "r_multiple": 0.27,
+      "high_since_signal": 360.45,
+      "low_since_signal": 355.62,
+      "star_rating": 4
+    }
+  ]
+}

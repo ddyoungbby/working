@@ -1,0 +1,423 @@
+{
+  "date": "2026-08-07",
+  "market_status": "BULLISH",
+  "market_detail": "SPY/QQQ constructive above rising 20 EMA structure.",
+  "research": [
+    {
+      "ticker": "AFRM",
+      "name": "Affirm Holdings",
+      "sector": "Fintech",
+      "entry": 78.99,
+      "stop": 74.76,
+      "target": 87.45,
+      "star_rating": 5,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": false,
+      "prior_close": 76.58,
+      "ema20": 75.66,
+      "rsi14": 52.0,
+      "atr14": 3.6
+    },
+    {
+      "ticker": "ETSY",
+      "name": "Etsy Inc.",
+      "sector": "E-commerce",
+      "entry": 84.23,
+      "stop": 77.85,
+      "target": 96.99,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": false,
+      "rel_strength_pass": true,
+      "prior_close": 82.26,
+      "ema20": 82.32,
+      "rsi14": 52.5,
+      "atr14": 3.39
+    },
+    {
+      "ticker": "AAL",
+      "name": "American Airlines Group",
+      "sector": "Travel",
+      "entry": 16.58,
+      "stop": 15.53,
+      "target": 18.68,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": false,
+      "prior_close": 16.03,
+      "ema20": 15.71,
+      "rsi14": 53.2,
+      "atr14": 0.71
+    },
+    {
+      "ticker": "SOFI",
+      "name": "SoFi Technologies",
+      "sector": "Fintech",
+      "entry": 18.5,
+      "stop": 17.19,
+      "target": 21.12,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": false,
+      "prior_close": 18.1,
+      "ema20": 17.42,
+      "rsi14": 54.8,
+      "atr14": 0.91
+    },
+    {
+      "ticker": "DAL",
+      "name": "Delta Air Lines",
+      "sector": "Travel",
+      "entry": 93.31,
+      "stop": 87.75,
+      "target": 104.43,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 91.98,
+      "ema20": 88.42,
+      "rsi14": 60.2,
+      "atr14": 2.69
+    },
+    {
+      "ticker": "CCL",
+      "name": "Carnival Corp.",
+      "sector": "Travel",
+      "entry": 29.57,
+      "stop": 27.58,
+      "target": 33.55,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 28.79,
+      "ema20": 27.84,
+      "rsi14": 57.4,
+      "atr14": 1.04
+    },
+    {
+      "ticker": "CRM",
+      "name": "Salesforce Inc.",
+      "sector": "Software/Cloud",
+      "entry": 187.03,
+      "stop": 175.76,
+      "target": 209.57,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 186.77,
+      "ema20": 177.83,
+      "rsi14": 58.9,
+      "atr14": 8.3
+    },
+    {
+      "ticker": "CRWD",
+      "name": "CrowdStrike Holdings",
+      "sector": "Software/Cloud",
+      "entry": 207.64,
+      "stop": 191.83,
+      "target": 239.26,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 207.39,
+      "ema20": 194.22,
+      "rsi14": 62.8,
+      "atr14": 9.56
+    },
+    {
+      "ticker": "TGT",
+      "name": "Target Corp.",
+      "sector": "Consumer Leaders",
+      "entry": 149.75,
+      "stop": 140.76,
+      "target": 167.73,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 147.08,
+      "ema20": 141.76,
+      "rsi14": 64.1,
+      "atr14": 4.0
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sector": "Financial Leaders",
+      "entry": 362.82,
+      "stop": 346.58,
+      "target": 395.3,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 356.3,
+      "ema20": 348.41,
+      "rsi14": 62.0,
+      "atr14": 7.29
+    },
+    {
+      "ticker": "BAC",
+      "name": "Bank of America",
+      "sector": "Financial Leaders",
+      "entry": 63.98,
+      "stop": 61.14,
+      "target": 69.66,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 63.0,
+      "ema20": 61.42,
+      "rsi14": 65.8,
+      "atr14": 1.11
+    },
+    {
+      "ticker": "ABNB",
+      "name": "Airbnb Inc.",
+      "sector": "Consumer",
+      "entry": 153.8,
+      "stop": 147.04,
+      "target": 167.32,
+      "star_rating": 3,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": false,
+      "rel_strength_pass": true,
+      "prior_close": 151.64,
+      "ema20": 148.14,
+      "rsi14": 58.6,
+      "atr14": 4.36
+    }
+  ],
+  "locked_field": [
+    {
+      "rank": 1,
+      "role": "front_runner",
+      "ticker": "AFRM",
+      "score": 59
+    },
+    {
+      "rank": 2,
+      "role": "runner_up",
+      "ticker": "ETSY",
+      "score": 50
+    },
+    {
+      "rank": 3,
+      "role": "field",
+      "ticker": "AAL",
+      "score": 49
+    },
+    {
+      "rank": 4,
+      "role": "field",
+      "ticker": "SOFI",
+      "score": 45
+    },
+    {
+      "rank": 5,
+      "role": "field",
+      "ticker": "DAL",
+      "score": 45
+    },
+    {
+      "rank": 6,
+      "role": "field",
+      "ticker": "CCL",
+      "score": 45
+    },
+    {
+      "rank": 7,
+      "role": "field",
+      "ticker": "CRM",
+      "score": 45
+    },
+    {
+      "rank": 8,
+      "role": "field",
+      "ticker": "CRWD",
+      "score": 45
+    },
+    {
+      "rank": 9,
+      "role": "field",
+      "ticker": "TGT",
+      "score": 45
+    },
+    {
+      "rank": 10,
+      "role": "field",
+      "ticker": "JPM",
+      "score": 45
+    },
+    {
+      "rank": 11,
+      "role": "field",
+      "ticker": "BAC",
+      "score": 45
+    },
+    {
+      "rank": 12,
+      "role": "field",
+      "ticker": "ABNB",
+      "score": 33
+    }
+  ],
+  "confirmations": [
+    {
+      "ticker": "AFRM",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $78.99 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "ETSY",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $84.23 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "AAL",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $16.58 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "SOFI",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $18.50 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "DAL",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $93.31 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "CCL",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $29.57 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "CRM",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "930",
+      "detail": "Cleared entry, held above stop, inside the strict entry band.",
+      "execution_price": 191.23
+    },
+    {
+      "ticker": "CRWD",
+      "status": "confirmed_buy",
+      "official": true,
+      "path": "930",
+      "detail": "Cleared entry, held above stop, inside the strict entry band.",
+      "execution_price": 210.28
+    },
+    {
+      "ticker": "TGT",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $149.75 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "JPM",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $362.82 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "BAC",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $63.98 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "ABNB",
+      "status": "already_extended",
+      "official": false,
+      "path": "",
+      "detail": "Open traded 1.88R above entry - beyond the 0.75R max-chase band. Too late to chase.",
+      "execution_price": 0.0
+    }
+  ],
+  "results": [
+    {
+      "date": "2026-08-07",
+      "ticker": "CRM",
+      "name": "Salesforce Inc.",
+      "confirmation_path": "930",
+      "entry": 187.03,
+      "stop": 175.76,
+      "target": 209.57,
+      "execution_price": 191.23,
+      "shares": 8,
+      "exit_price": 192.45,
+      "exit_time": "2026-08-07T10:05:00-04:00",
+      "status": "no_follow_through",
+      "pl": 9.76,
+      "r_multiple": 0.11,
+      "high_since_signal": 193.2,
+      "low_since_signal": 190.63,
+      "star_rating": 4
+    },
+    {
+      "date": "2026-08-07",
+      "ticker": "CRWD",
+      "name": "CrowdStrike Holdings",
+      "confirmation_path": "930",
+      "entry": 207.64,
+      "stop": 191.83,
+      "target": 239.26,
+      "execution_price": 210.28,
+      "shares": 6,
+      "exit_price": 215.83,
+      "exit_time": "2026-08-07T10:05:00-04:00",
+      "status": "moved_in_favor",
+      "pl": 33.3,
+      "r_multiple": 0.35,
+      "high_since_signal": 216.57,
+      "low_since_signal": 208.2,
+      "star_rating": 4
+    }
+  ]
+}
