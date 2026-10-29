@@ -72,7 +72,7 @@ def _crumb_session() -> tuple[requests.Session, str]:
     crumb = s.get(
         "https://query1.finance.yahoo.com/v1/test/getcrumb", timeout=15
     ).text.strip()
-    if not crumb or "<" in crumb:
+    if not crumb or "<" in crumb or " " in crumb:   # e.g. "Too Many Requests"
         raise OptionsError("could not obtain a Yahoo API crumb")
     return s, crumb
 

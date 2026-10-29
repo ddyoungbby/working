@@ -343,8 +343,8 @@ def _swing_option(setup, day):
         return {"contract": p.contract, "expiry": p.expiry, "strike": p.strike,
                 "mid": p.mid, "contracts": p.contracts, "outlay": p.outlay,
                 "delta_est": p.delta_est, "validated": False}
-    except OptionsError as exc:
-        return {"error": str(exc), "validated": False}
+    except Exception as exc:  # option quote is optional; never block the order
+        return {"error": f"option quote unavailable: {exc}", "validated": False}
 
 
 def print_report(r: dict) -> None:
