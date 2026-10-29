@@ -10,7 +10,8 @@ first time today, so the caller can notify and re-launch it:
   TARGET  an open position touched its 2R target
 
 Crossings already reported are remembered in ledger/alerts-<day>.json, so a
-re-launch only reports new ones. Exits with "CLOSE ..." after 16:00 ET.
+re-launch only reports new ones. Exits with "CLOSE ..." after 16:00 ET, or with "CONTINUE ..."
+after 110 minutes so it never runs into the 2-hour background-task cap.
 Uses the session's high/low since the open, so a crossing between polls is
 never missed. Yahoo's feed runs 1-3 minutes behind.
 """
@@ -26,6 +27,7 @@ from pathlib import Path
 from .data import ET, DataError, minute_bars
 
 POLL_SECONDS = 120
+MAX_RUN_MINUTES = 110   # exit cleanly before the 2-hour background-task cap
 
 
 def levels_for(report: dict) -> list[dict]:
@@ -70,8 +72,12 @@ def main() -> int:
     state_path = Path(f"ledger/alerts-{day.isoformat()}.json")
     fired = set(json.loads(state_path.read_text())) if state_path.exists() else set()
 
+    started = datetime.now(tz=ET)
     while True:
         now = datetime.now(tz=ET)
+        if (now - started).total_seconds() >= MAX_RUN_MINUTES * 60 and now.time() < dtime(16, 0):
+            print(f"CONTINUE {day}: no new crossing in {MAX_RUN_MINUTES} min - relaunch to keep watching")
+            return 0
         if now.time() >= dtime(16, 0):
             print(f"CLOSE {day}: market closed, {len(fired)} alert(s) today")
             return 0
