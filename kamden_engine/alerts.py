@@ -36,6 +36,13 @@ def levels_for(report: dict) -> list[dict]:
                     "level": o["buy_stop"],
                     "msg": f"ENTRY {o['ticker']} crossed buy-stop ${o['buy_stop']:.2f} - "
                            f"if filled, set stop ${o['stop']:.2f} and target ${o['target']:.2f}"})
+        # armed only after the entry fires, so a same-day stop or target is caught
+        out.append({"key": f"STOP:{o['ticker']}", "ticker": o["ticker"], "side": "below",
+                    "level": o["stop"], "requires": f"ENTRY:{o['ticker']}",
+                    "msg": f"STOP {o['ticker']} touched stop ${o['stop']:.2f} after entry - planned loss"})
+        out.append({"key": f"TARGET:{o['ticker']}", "ticker": o["ticker"], "side": "above",
+                    "level": o["target"], "requires": f"ENTRY:{o['ticker']}",
+                    "msg": f"TARGET {o['ticker']} hit 2R target ${o['target']:.2f} - take profit"})
         out.append({"key": f"SKIP:{o['ticker']}", "ticker": o["ticker"], "side": "open_above",
                     "level": o["skip_if_opens_above"],
                     "msg": f"SKIP {o['ticker']} opened above ${o['skip_if_opens_above']:.2f} - "
@@ -70,7 +77,7 @@ def main() -> int:
             return 0
         if now.time() >= dtime(9, 30):
             for lv in levels:
-                if lv["key"] in fired:
+                if lv["key"] in fired or lv.get("requires", lv["key"]) not in fired | {lv["key"]}:
                     continue
                 try:
                     bars = [b for b in minute_bars(lv["ticker"], day)
