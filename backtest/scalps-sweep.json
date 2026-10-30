@@ -1,0 +1,99 @@
+{
+  "days": [
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24",
+    "2026-09-25",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-05",
+    "2026-10-06",
+    "2026-10-07",
+    "2026-10-08",
+    "2026-10-09",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14"
+  ],
+  "results": [
+    {
+      "config": {
+        "stop_x": 1.0,
+        "target_x": 0.12,
+        "max_ext": 0.25,
+        "hold_min": 10,
+        "new_extreme": true,
+        "min_body": 0.5,
+        "regime": false,
+        "morning_only": false,
+        "max_trades": 2
+      },
+      "trades": 41,
+      "wins": 31,
+      "win_rate": 75.6,
+      "avg_r": 0.029,
+      "est_option_pl": 44.98
+    },
+    {
+      "config": {
+        "stop_x": 1.0,
+        "target_x": 0.12,
+        "max_ext": 0.25,
+        "hold_min": 10,
+        "new_extreme": true,
+        "min_body": 0.5,
+        "regime": false,
+        "morning_only": false,
+        "max_trades": 3
+      },
+      "trades": 58,
+      "wins": 46,
+      "win_rate": 79.3,
+      "avg_r": 0.049,
+      "est_option_pl": 239.56
+    },
+    {
+      "config": {
+        "stop_x": 1.0,
+        "target_x": 0.14,
+        "max_ext": 0.25,
+        "hold_min": 10,
+        "new_extreme": true,
+        "min_body": 0.5,
+        "regime": false,
+        "morning_only": false,
+        "max_trades": 2
+      },
+      "trades": 41,
+      "wins": 28,
+      "win_rate": 68.3,
+      "avg_r": 0.007,
+      "est_option_pl": -3.09
+    },
+    {
+      "config": {
+        "stop_x": 1.0,
+        "target_x": 0.14,
+        "max_ext": 0.25,
+        "hold_min": 10,
+        "new_extreme": true,
+        "min_body": 0.5,
+        "regime": false,
+        "morning_only": false,
+        "max_trades": 3
+      },
+      "trades": 58,
+      "wins": 42,
+      "win_rate": 72.4,
+      "avg_r": 0.031,
+      "est_option_pl": 201.72
+    }
+  ]
+}

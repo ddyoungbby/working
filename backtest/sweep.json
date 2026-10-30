@@ -1,0 +1,1051 @@
+{
+  "days": [
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24",
+    "2026-09-25",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-05",
+    "2026-10-06",
+    "2026-10-07",
+    "2026-10-08",
+    "2026-10-09",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14"
+  ],
+  "results": [
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": null,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 19,
+      "wins": 8,
+      "win_rate": 42.1,
+      "total_pl": -231.2,
+      "avg_r": -0.104
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": null,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 14,
+      "wins": 6,
+      "win_rate": 42.9,
+      "total_pl": -73.71,
+      "avg_r": -0.026
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": null,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 12,
+      "wins": 7,
+      "win_rate": 58.3,
+      "total_pl": -83.05,
+      "avg_r": -0.042
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": null,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 9,
+      "wins": 6,
+      "win_rate": 66.7,
+      "total_pl": 73.94,
+      "avg_r": 0.124
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": null,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 12,
+      "wins": 5,
+      "win_rate": 41.7,
+      "total_pl": -252.16,
+      "avg_r": -0.219
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": null,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 8,
+      "wins": 4,
+      "win_rate": 50.0,
+      "total_pl": -70.27,
+      "avg_r": -0.092
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": null,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 8,
+      "wins": 4,
+      "win_rate": 50.0,
+      "total_pl": -205.53,
+      "avg_r": -0.271
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": null,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": -24.14,
+      "avg_r": -0.047
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.5,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 19,
+      "wins": 8,
+      "win_rate": 42.1,
+      "total_pl": -314.33,
+      "avg_r": -0.165
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.5,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 14,
+      "wins": 6,
+      "win_rate": 42.9,
+      "total_pl": -156.84,
+      "avg_r": -0.109
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.5,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 12,
+      "wins": 7,
+      "win_rate": 58.3,
+      "total_pl": -166.18,
+      "avg_r": -0.138
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.5,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 9,
+      "wins": 6,
+      "win_rate": 66.7,
+      "total_pl": -9.19,
+      "avg_r": -0.004
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.5,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 12,
+      "wins": 5,
+      "win_rate": 41.7,
+      "total_pl": -252.16,
+      "avg_r": -0.219
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.5,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 8,
+      "wins": 4,
+      "win_rate": 50.0,
+      "total_pl": -70.27,
+      "avg_r": -0.092
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.5,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 8,
+      "wins": 4,
+      "win_rate": 50.0,
+      "total_pl": -205.53,
+      "avg_r": -0.271
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.5,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": -24.14,
+      "avg_r": -0.047
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.4,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 19,
+      "wins": 9,
+      "win_rate": 47.4,
+      "total_pl": -216.87,
+      "avg_r": -0.112
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.4,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 14,
+      "wins": 6,
+      "win_rate": 42.9,
+      "total_pl": -143.53,
+      "avg_r": -0.1
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.4,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 12,
+      "wins": 8,
+      "win_rate": 66.7,
+      "total_pl": -68.72,
+      "avg_r": -0.053
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.4,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 9,
+      "wins": 6,
+      "win_rate": 66.7,
+      "total_pl": 4.12,
+      "avg_r": 0.009
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.4,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 12,
+      "wins": 6,
+      "win_rate": 50.0,
+      "total_pl": -137.01,
+      "avg_r": -0.118
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.4,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 8,
+      "wins": 4,
+      "win_rate": 50.0,
+      "total_pl": -39.27,
+      "avg_r": -0.052
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.4,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 8,
+      "wins": 5,
+      "win_rate": 62.5,
+      "total_pl": -90.38,
+      "avg_r": -0.119
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.4,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": 6.86,
+      "avg_r": 0.007
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.25,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 19,
+      "wins": 9,
+      "win_rate": 47.4,
+      "total_pl": -259.99,
+      "avg_r": -0.137
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.25,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 14,
+      "wins": 6,
+      "win_rate": 42.9,
+      "total_pl": -176.26,
+      "avg_r": -0.126
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.25,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 12,
+      "wins": 8,
+      "win_rate": 66.7,
+      "total_pl": -117.17,
+      "avg_r": -0.098
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.25,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 9,
+      "wins": 6,
+      "win_rate": 66.7,
+      "total_pl": -28.61,
+      "avg_r": -0.032
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.25,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 12,
+      "wins": 6,
+      "win_rate": 50.0,
+      "total_pl": -151.84,
+      "avg_r": -0.132
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.25,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 8,
+      "wins": 4,
+      "win_rate": 50.0,
+      "total_pl": -45.46,
+      "avg_r": -0.061
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.25,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 8,
+      "wins": 5,
+      "win_rate": 62.5,
+      "total_pl": -110.54,
+      "avg_r": -0.146
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": false,
+        "tp_r": 0.25,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": 0.67,
+      "avg_r": -0.005
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": null,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 13,
+      "wins": 7,
+      "win_rate": 53.8,
+      "total_pl": -96.24,
+      "avg_r": -0.078
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": null,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 9,
+      "wins": 5,
+      "win_rate": 55.6,
+      "total_pl": -73.39,
+      "avg_r": -0.087
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": null,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 7,
+      "wins": 5,
+      "win_rate": 71.4,
+      "total_pl": -16.25,
+      "avg_r": -0.03
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": null,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 5,
+      "wins": 4,
+      "win_rate": 80.0,
+      "total_pl": 6.1,
+      "avg_r": 0.004
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": null,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 9,
+      "wins": 5,
+      "win_rate": 55.6,
+      "total_pl": -72.43,
+      "avg_r": -0.088
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": null,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": -25.18,
+      "avg_r": -0.048
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": null,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": -40.65,
+      "avg_r": -0.08
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": null,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 5,
+      "wins": 4,
+      "win_rate": 80.0,
+      "total_pl": 6.1,
+      "avg_r": 0.004
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.5,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 13,
+      "wins": 7,
+      "win_rate": 53.8,
+      "total_pl": -51.33,
+      "avg_r": -0.042
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.5,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 9,
+      "wins": 5,
+      "win_rate": 55.6,
+      "total_pl": -28.48,
+      "avg_r": -0.034
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.5,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 7,
+      "wins": 5,
+      "win_rate": 71.4,
+      "total_pl": -16.25,
+      "avg_r": -0.03
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.5,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 5,
+      "wins": 4,
+      "win_rate": 80.0,
+      "total_pl": 6.1,
+      "avg_r": 0.004
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.5,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 9,
+      "wins": 5,
+      "win_rate": 55.6,
+      "total_pl": -72.43,
+      "avg_r": -0.088
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.5,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": -25.18,
+      "avg_r": -0.048
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.5,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": -40.65,
+      "avg_r": -0.08
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.5,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 5,
+      "wins": 4,
+      "win_rate": 80.0,
+      "total_pl": 6.1,
+      "avg_r": 0.004
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.4,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 13,
+      "wins": 8,
+      "win_rate": 61.5,
+      "total_pl": 54.28,
+      "avg_r": 0.045
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.4,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 9,
+      "wins": 5,
+      "win_rate": 55.6,
+      "total_pl": -7.02,
+      "avg_r": -0.01
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.4,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 7,
+      "wins": 6,
+      "win_rate": 85.7,
+      "total_pl": 98.9,
+      "avg_r": 0.144
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.4,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 5,
+      "wins": 4,
+      "win_rate": 80.0,
+      "total_pl": 37.1,
+      "avg_r": 0.068
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.4,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 9,
+      "wins": 6,
+      "win_rate": 66.7,
+      "total_pl": 42.72,
+      "avg_r": 0.048
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.4,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": 5.82,
+      "avg_r": 0.005
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.4,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 6,
+      "wins": 5,
+      "win_rate": 83.3,
+      "total_pl": 74.5,
+      "avg_r": 0.123
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.4,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 5,
+      "wins": 4,
+      "win_rate": 80.0,
+      "total_pl": 37.1,
+      "avg_r": 0.068
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.25,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 13,
+      "wins": 8,
+      "win_rate": 61.5,
+      "total_pl": 23.3,
+      "avg_r": 0.018
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.25,
+        "officials": 2,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 9,
+      "wins": 5,
+      "win_rate": 55.6,
+      "total_pl": -27.61,
+      "avg_r": -0.034
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.25,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 7,
+      "wins": 6,
+      "win_rate": 85.7,
+      "total_pl": 76.99,
+      "avg_r": 0.11
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.25,
+        "officials": 2,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 5,
+      "wins": 4,
+      "win_rate": 80.0,
+      "total_pl": 30.91,
+      "avg_r": 0.054
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.25,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": false
+      },
+      "trades": 9,
+      "wins": 6,
+      "win_rate": 66.7,
+      "total_pl": 27.89,
+      "avg_r": 0.029
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.25,
+        "officials": 1,
+        "allow_935": true,
+        "bullish_only": true
+      },
+      "trades": 6,
+      "wins": 4,
+      "win_rate": 66.7,
+      "total_pl": -0.37,
+      "avg_r": -0.007
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.25,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": false
+      },
+      "trades": 6,
+      "wins": 5,
+      "win_rate": 83.3,
+      "total_pl": 54.34,
+      "avg_r": 0.087
+    },
+    {
+      "config": {
+        "min_stars": 3,
+        "min_dist_r": 0.0,
+        "require_green": true,
+        "tp_r": 0.25,
+        "officials": 1,
+        "allow_935": false,
+        "bullish_only": true
+      },
+      "trades": 5,
+      "wins": 4,
+      "win_rate": 80.0,
+      "total_pl": 30.91,
+      "avg_r": 0.054
+    }
+  ]
+}

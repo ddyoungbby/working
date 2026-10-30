@@ -1,0 +1,319 @@
+{
+  "deep_2015_2024": {
+    "trades": 518,
+    "wins": 228,
+    "win_rate": 44.0,
+    "net": 3349.02,
+    "avg": 6.47,
+    "pf": 1.2,
+    "max_dd": 1709.7,
+    "avg_r": 0.065
+  },
+  "train_2024_2025": {
+    "trades": 116,
+    "wins": 54,
+    "win_rate": 46.6,
+    "net": 2187.85,
+    "avg": 18.86,
+    "pf": 1.57,
+    "max_dd": 701.55,
+    "avg_r": 0.189
+  },
+  "holdout_2026": {
+    "trades": 50,
+    "wins": 19,
+    "win_rate": 38.0,
+    "net": 604.55,
+    "avg": 12.09,
+    "pf": 1.27,
+    "max_dd": 780.65,
+    "avg_r": 0.121
+  },
+  "full": {
+    "trades": 684,
+    "wins": 301,
+    "win_rate": 44.0,
+    "net": 6141.42,
+    "avg": 8.98,
+    "pf": 1.27,
+    "max_dd": 1709.7,
+    "avg_r": 0.09
+  },
+  "deep_verdict": "PASS",
+  "by_year": [
+    {
+      "year": 2015,
+      "trades": 11,
+      "wins": 5,
+      "win_rate": 45.5,
+      "net": 72.01,
+      "avg": 6.55,
+      "pf": 1.19,
+      "max_dd": 281.16,
+      "avg_r": 0.065,
+      "pct_of_account": 1.4,
+      "spy_pct": -3.2
+    },
+    {
+      "year": 2016,
+      "trades": 50,
+      "wins": 24,
+      "win_rate": 48.0,
+      "net": 5.69,
+      "avg": 0.11,
+      "pf": 1.0,
+      "max_dd": 809.86,
+      "avg_r": 0.001,
+      "pct_of_account": 0.1,
+      "spy_pct": 11.2
+    },
+    {
+      "year": 2017,
+      "trades": 70,
+      "wins": 28,
+      "win_rate": 40.0,
+      "net": -232.02,
+      "avg": -3.31,
+      "pf": 0.89,
+      "max_dd": 385.7,
+      "avg_r": -0.033,
+      "pct_of_account": -4.6,
+      "spy_pct": 18.5
+    },
+    {
+      "year": 2018,
+      "trades": 62,
+      "wins": 20,
+      "win_rate": 32.3,
+      "net": -1135.2,
+      "avg": -18.31,
+      "pf": 0.55,
+      "max_dd": 1523.67,
+      "avg_r": -0.183,
+      "pct_of_account": -22.7,
+      "spy_pct": -7.0
+    },
+    {
+      "year": 2019,
+      "trades": 65,
+      "wins": 34,
+      "win_rate": 52.3,
+      "net": 1416.17,
+      "avg": 21.79,
+      "pf": 1.96,
+      "max_dd": 419.74,
+      "avg_r": 0.218,
+      "pct_of_account": 28.3,
+      "spy_pct": 28.7
+    },
+    {
+      "year": 2020,
+      "trades": 73,
+      "wins": 39,
+      "win_rate": 53.4,
+      "net": 1859.66,
+      "avg": 25.47,
+      "pf": 1.95,
+      "max_dd": 329.68,
+      "avg_r": 0.255,
+      "pct_of_account": 37.2,
+      "spy_pct": 15.1
+    },
+    {
+      "year": 2021,
+      "trades": 66,
+      "wins": 29,
+      "win_rate": 43.9,
+      "net": 911.64,
+      "avg": 13.81,
+      "pf": 1.45,
+      "max_dd": 399.27,
+      "avg_r": 0.138,
+      "pct_of_account": 18.2,
+      "spy_pct": 28.8
+    },
+    {
+      "year": 2022,
+      "trades": 30,
+      "wins": 12,
+      "win_rate": 40.0,
+      "net": -117.79,
+      "avg": -3.93,
+      "pf": 0.91,
+      "max_dd": 382.17,
+      "avg_r": -0.039,
+      "pct_of_account": -2.4,
+      "spy_pct": -19.9
+    },
+    {
+      "year": 2023,
+      "trades": 68,
+      "wins": 28,
+      "win_rate": 41.2,
+      "net": 514.35,
+      "avg": 7.56,
+      "pf": 1.18,
+      "max_dd": 499.44,
+      "avg_r": 0.076,
+      "pct_of_account": 10.3,
+      "spy_pct": 24.8
+    },
+    {
+      "year": 2024,
+      "trades": 77,
+      "wins": 32,
+      "win_rate": 41.6,
+      "net": 848.91,
+      "avg": 11.02,
+      "pf": 1.3,
+      "max_dd": 332.76,
+      "avg_r": 0.11,
+      "pct_of_account": 17.0,
+      "spy_pct": 24.0
+    },
+    {
+      "year": 2025,
+      "trades": 62,
+      "wins": 31,
+      "win_rate": 50.0,
+      "net": 1393.45,
+      "avg": 22.48,
+      "pf": 1.72,
+      "max_dd": 701.55,
+      "avg_r": 0.225,
+      "pct_of_account": 27.9,
+      "spy_pct": 16.6
+    },
+    {
+      "year": 2026,
+      "trades": 50,
+      "wins": 19,
+      "win_rate": 38.0,
+      "net": 604.55,
+      "avg": 12.09,
+      "pf": 1.27,
+      "max_dd": 780.65,
+      "avg_r": 0.121,
+      "pct_of_account": 12.1,
+      "spy_pct": 13.2
+    }
+  ],
+  "by_regime": {
+    "BULLISH": {
+      "trades": 583,
+      "wins": 248,
+      "win_rate": 42.5,
+      "net": 3906.11,
+      "avg": 6.7,
+      "pf": 1.19,
+      "max_dd": 2173.8,
+      "avg_r": 0.067
+    },
+    "NEUTRAL": {
+      "trades": 101,
+      "wins": 53,
+      "win_rate": 52.5,
+      "net": 2235.31,
+      "avg": 22.13,
+      "pf": 1.74,
+      "max_dd": 427.55,
+      "avg_r": 0.221
+    }
+  },
+  "slippage_x3_full": {
+    "trades": 684,
+    "wins": 301,
+    "win_rate": 44.0,
+    "net": 5927.76,
+    "avg": 8.67,
+    "pf": 1.26,
+    "max_dd": 1747.34,
+    "avg_r": 0.087
+  },
+  "sizing": [
+    {
+      "label": "$5k acct / $100 risk (current)",
+      "account": 5000.0,
+      "risk": 100.0,
+      "summary": {
+        "trades": 684,
+        "wins": 301,
+        "win_rate": 44.0,
+        "net": 6141.42,
+        "avg": 8.98,
+        "pf": 1.27,
+        "max_dd": 1709.7,
+        "avg_r": 0.09
+      },
+      "trades_per_year": 61,
+      "avg_stop_loss": 62.98,
+      "max_dd_pct_of_account": 34.2,
+      "monte_carlo_1y": {
+        "year_end_p5": -608.0,
+        "year_end_p50": 539.0,
+        "year_end_p95": 1750.0,
+        "losing_years_pct": 23.1,
+        "max_dd_p50": 528.0,
+        "max_dd_p95": 1085.0,
+        "loss_streak_p50": 6,
+        "loss_streak_p95": 10
+      }
+    },
+    {
+      "label": "$5k acct / $500 risk",
+      "account": 5000.0,
+      "risk": 500.0,
+      "summary": {
+        "trades": 684,
+        "wins": 301,
+        "win_rate": 44.0,
+        "net": 6416.37,
+        "avg": 9.38,
+        "pf": 1.27,
+        "max_dd": 1658.27,
+        "avg_r": 0.019
+      },
+      "trades_per_year": 61,
+      "avg_stop_loss": 64.43,
+      "max_dd_pct_of_account": 33.2,
+      "monte_carlo_1y": {
+        "year_end_p5": -629.0,
+        "year_end_p50": 567.0,
+        "year_end_p95": 1824.0,
+        "losing_years_pct": 22.9,
+        "max_dd_p50": 543.0,
+        "max_dd_p95": 1121.0,
+        "loss_streak_p50": 6,
+        "loss_streak_p95": 10
+      }
+    },
+    {
+      "label": "$25k acct / $500 risk (2%)",
+      "account": 25000.0,
+      "risk": 500.0,
+      "summary": {
+        "trades": 684,
+        "wins": 301,
+        "win_rate": 44.0,
+        "net": 32008.25,
+        "avg": 46.8,
+        "pf": 1.27,
+        "max_dd": 8629.2,
+        "avg_r": 0.094
+      },
+      "trades_per_year": 61,
+      "avg_stop_loss": 320.59,
+      "max_dd_pct_of_account": 34.5,
+      "monte_carlo_1y": {
+        "year_end_p5": -3045.0,
+        "year_end_p50": 2810.0,
+        "year_end_p95": 8999.0,
+        "losing_years_pct": 22.5,
+        "max_dd_p50": 2679.0,
+        "max_dd_p95": 5493.0,
+        "loss_streak_p50": 6,
+        "loss_streak_p95": 10
+      }
+    }
+  ]
+}

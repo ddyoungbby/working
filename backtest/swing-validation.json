@@ -1,0 +1,1282 @@
+{
+  "rows": [
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 1.5,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 135,
+        "wins": 66,
+        "win_rate": 48.9,
+        "net": 983.05,
+        "avg": 7.28,
+        "pf": 1.26,
+        "max_dd": 637.61,
+        "avg_r": 0.073
+      },
+      "plateau": 1243.68
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 1.5,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 217,
+        "wins": 108,
+        "win_rate": 49.8,
+        "net": 1528.05,
+        "avg": 7.04,
+        "pf": 1.29,
+        "max_dd": 585.97,
+        "avg_r": 0.07
+      },
+      "plateau": 1376.41
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 1.5,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 135,
+        "wins": 66,
+        "win_rate": 48.9,
+        "net": 983.05,
+        "avg": 7.28,
+        "pf": 1.26,
+        "max_dd": 637.61,
+        "avg_r": 0.073
+      },
+      "plateau": 1243.68
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 1.5,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 217,
+        "wins": 108,
+        "win_rate": 49.8,
+        "net": 1528.05,
+        "avg": 7.04,
+        "pf": 1.29,
+        "max_dd": 585.97,
+        "avg_r": 0.07
+      },
+      "plateau": 1376.41
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 2.0,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 133,
+        "wins": 63,
+        "win_rate": 47.4,
+        "net": 888.73,
+        "avg": 6.68,
+        "pf": 1.24,
+        "max_dd": 733.52,
+        "avg_r": 0.067
+      },
+      "plateau": 1281.77
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 2.0,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 211,
+        "wins": 105,
+        "win_rate": 49.8,
+        "net": 2076.7,
+        "avg": 9.84,
+        "pf": 1.4,
+        "max_dd": 649.32,
+        "avg_r": 0.098
+      },
+      "plateau": 1347.78
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 2.0,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 133,
+        "wins": 63,
+        "win_rate": 47.4,
+        "net": 888.73,
+        "avg": 6.68,
+        "pf": 1.24,
+        "max_dd": 733.52,
+        "avg_r": 0.067
+      },
+      "plateau": 1281.77
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 2.0,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 211,
+        "wins": 105,
+        "win_rate": 49.8,
+        "net": 2076.7,
+        "avg": 9.84,
+        "pf": 1.4,
+        "max_dd": 649.32,
+        "avg_r": 0.098
+      },
+      "plateau": 1347.78
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 3.0,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 133,
+        "wins": 59,
+        "win_rate": 44.4,
+        "net": 391.34,
+        "avg": 2.94,
+        "pf": 1.1,
+        "max_dd": 902.94,
+        "avg_r": 0.029
+      },
+      "plateau": 903.76
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 3.0,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 209,
+        "wins": 95,
+        "win_rate": 45.5,
+        "net": 1750.49,
+        "avg": 8.38,
+        "pf": 1.32,
+        "max_dd": 592.32,
+        "avg_r": 0.084
+      },
+      "plateau": 1156.23
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 3.0,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 133,
+        "wins": 59,
+        "win_rate": 44.4,
+        "net": 391.34,
+        "avg": 2.94,
+        "pf": 1.1,
+        "max_dd": 902.94,
+        "avg_r": 0.029
+      },
+      "plateau": 903.76
+    },
+    {
+      "cand": {
+        "hold_days": 3,
+        "target_r": 3.0,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 209,
+        "wins": 95,
+        "win_rate": 45.5,
+        "net": 1750.49,
+        "avg": 8.38,
+        "pf": 1.32,
+        "max_dd": 592.32,
+        "avg_r": 0.084
+      },
+      "plateau": 1156.23
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 1.5,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 128,
+        "wins": 64,
+        "win_rate": 50.0,
+        "net": 1526.05,
+        "avg": 11.92,
+        "pf": 1.41,
+        "max_dd": 668.21,
+        "avg_r": 0.119
+      },
+      "plateau": 1145.81
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 1.5,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 200,
+        "wins": 93,
+        "win_rate": 46.5,
+        "net": 857.49,
+        "avg": 4.29,
+        "pf": 1.14,
+        "max_dd": 1443.67,
+        "avg_r": 0.043
+      },
+      "plateau": 1055.22
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 1.5,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 128,
+        "wins": 64,
+        "win_rate": 50.0,
+        "net": 1526.05,
+        "avg": 11.92,
+        "pf": 1.41,
+        "max_dd": 668.21,
+        "avg_r": 0.119
+      },
+      "plateau": 1145.81
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 1.5,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 200,
+        "wins": 93,
+        "win_rate": 46.5,
+        "net": 857.49,
+        "avg": 4.29,
+        "pf": 1.14,
+        "max_dd": 1443.67,
+        "avg_r": 0.043
+      },
+      "plateau": 1055.22
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 2.0,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 124,
+        "wins": 58,
+        "win_rate": 46.8,
+        "net": 1089.75,
+        "avg": 8.79,
+        "pf": 1.29,
+        "max_dd": 673.19,
+        "avg_r": 0.088
+      },
+      "plateau": 1139.66
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 2.0,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 189,
+        "wins": 84,
+        "win_rate": 44.4,
+        "net": 798.77,
+        "avg": 4.23,
+        "pf": 1.14,
+        "max_dd": 1292.24,
+        "avg_r": 0.042
+      },
+      "plateau": 1070.82
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 2.0,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 124,
+        "wins": 58,
+        "win_rate": 46.8,
+        "net": 1089.75,
+        "avg": 8.79,
+        "pf": 1.29,
+        "max_dd": 673.19,
+        "avg_r": 0.088
+      },
+      "plateau": 1139.66
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 2.0,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 189,
+        "wins": 84,
+        "win_rate": 44.4,
+        "net": 798.77,
+        "avg": 4.23,
+        "pf": 1.14,
+        "max_dd": 1292.24,
+        "avg_r": 0.042
+      },
+      "plateau": 1070.82
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 3.0,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 122,
+        "wins": 50,
+        "win_rate": 41.0,
+        "net": 273.63,
+        "avg": 2.24,
+        "pf": 1.07,
+        "max_dd": 863.22,
+        "avg_r": 0.022
+      }
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 3.0,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 176,
+        "wins": 71,
+        "win_rate": 40.3,
+        "net": 558.28,
+        "avg": 3.17,
+        "pf": 1.1,
+        "max_dd": 1181.21,
+        "avg_r": 0.032
+      },
+      "plateau": 811.87
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 3.0,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 122,
+        "wins": 50,
+        "win_rate": 41.0,
+        "net": 273.63,
+        "avg": 2.24,
+        "pf": 1.07,
+        "max_dd": 863.22,
+        "avg_r": 0.022
+      }
+    },
+    {
+      "cand": {
+        "hold_days": 5,
+        "target_r": 3.0,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 176,
+        "wins": 71,
+        "win_rate": 40.3,
+        "net": 558.28,
+        "avg": 3.17,
+        "pf": 1.1,
+        "max_dd": 1181.21,
+        "avg_r": 0.032
+      },
+      "plateau": 811.87
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 1.5,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 124,
+        "wins": 63,
+        "win_rate": 50.8,
+        "net": 2144.88,
+        "avg": 17.3,
+        "pf": 1.55,
+        "max_dd": 543.04,
+        "avg_r": 0.173
+      },
+      "plateau": 1518.83
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 1.5,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 177,
+        "wins": 82,
+        "win_rate": 46.3,
+        "net": 1062.67,
+        "avg": 6.0,
+        "pf": 1.18,
+        "max_dd": 1158.67,
+        "avg_r": 0.06
+      },
+      "plateau": 1211.6
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 1.5,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 124,
+        "wins": 63,
+        "win_rate": 50.8,
+        "net": 2144.88,
+        "avg": 17.3,
+        "pf": 1.55,
+        "max_dd": 543.04,
+        "avg_r": 0.173
+      },
+      "plateau": 1518.83
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 1.5,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 177,
+        "wins": 82,
+        "win_rate": 46.3,
+        "net": 1062.67,
+        "avg": 6.0,
+        "pf": 1.18,
+        "max_dd": 1158.67,
+        "avg_r": 0.06
+      },
+      "plateau": 1211.6
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 2.0,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 115,
+        "wins": 54,
+        "win_rate": 47.0,
+        "net": 2261.04,
+        "avg": 19.66,
+        "pf": 1.6,
+        "max_dd": 701.55,
+        "avg_r": 0.197
+      },
+      "plateau": 1427.28
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 2.0,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 163,
+        "wins": 72,
+        "win_rate": 44.2,
+        "net": 1043.96,
+        "avg": 6.4,
+        "pf": 1.18,
+        "max_dd": 1433.36,
+        "avg_r": 0.064
+      },
+      "plateau": 1312.61
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 2.0,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 115,
+        "wins": 54,
+        "win_rate": 47.0,
+        "net": 2261.04,
+        "avg": 19.66,
+        "pf": 1.6,
+        "max_dd": 701.55,
+        "avg_r": 0.197
+      },
+      "plateau": 1427.28
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 2.0,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 163,
+        "wins": 72,
+        "win_rate": 44.2,
+        "net": 1043.96,
+        "avg": 6.4,
+        "pf": 1.18,
+        "max_dd": 1433.36,
+        "avg_r": 0.064
+      },
+      "plateau": 1312.61
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 3.0,
+        "min_stars": 3,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 103,
+        "wins": 40,
+        "win_rate": 38.8,
+        "net": 1135.31,
+        "avg": 11.02,
+        "pf": 1.29,
+        "max_dd": 908.95,
+        "avg_r": 0.11
+      },
+      "plateau": 1139.79
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 3.0,
+        "min_stars": 3,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 140,
+        "wins": 54,
+        "win_rate": 38.6,
+        "net": 632.53,
+        "avg": 4.52,
+        "pf": 1.11,
+        "max_dd": 1186.75,
+        "avg_r": 0.045
+      },
+      "plateau": 1030.54
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 3.0,
+        "min_stars": 4,
+        "top_n": 1
+      },
+      "train": {
+        "trades": 103,
+        "wins": 40,
+        "win_rate": 38.8,
+        "net": 1135.31,
+        "avg": 11.02,
+        "pf": 1.29,
+        "max_dd": 908.95,
+        "avg_r": 0.11
+      },
+      "plateau": 1139.79
+    },
+    {
+      "cand": {
+        "hold_days": 10,
+        "target_r": 3.0,
+        "min_stars": 4,
+        "top_n": 2
+      },
+      "train": {
+        "trades": 140,
+        "wins": 54,
+        "win_rate": 38.6,
+        "net": 632.53,
+        "avg": 4.52,
+        "pf": 1.11,
+        "max_dd": 1186.75,
+        "avg_r": 0.045
+      },
+      "plateau": 1030.54
+    }
+  ],
+  "train_window": [
+    "2024-04-01",
+    "2025-12-31"
+  ],
+  "holdout_window": [
+    "2026-01-02",
+    "2026-10-14"
+  ],
+  "chosen": {
+    "hold_days": 10,
+    "target_r": 2.0,
+    "min_stars": 3,
+    "top_n": 1
+  },
+  "config": {
+    "max_open": 3,
+    "hold_days": 10,
+    "target_r": 2.0,
+    "min_stars": 3,
+    "top_n": 1
+  },
+  "train": {
+    "trades": 115,
+    "wins": 54,
+    "win_rate": 47.0,
+    "net": 2261.04,
+    "avg": 19.66,
+    "pf": 1.6,
+    "max_dd": 701.55,
+    "avg_r": 0.197
+  },
+  "plateau": 1427.28,
+  "holdout": {
+    "trades": 50,
+    "wins": 19,
+    "win_rate": 38.0,
+    "net": 601.83,
+    "avg": 12.04,
+    "pf": 1.27,
+    "max_dd": 780.65,
+    "avg_r": 0.12
+  },
+  "holdout_trades": [
+    {
+      "ticker": "AFRM",
+      "signal_day": "2026-01-05",
+      "exit_day": "2026-01-06",
+      "entry": 75.47,
+      "exit": 81.63,
+      "shares": 22,
+      "reason": "target_gap",
+      "net": 135.08,
+      "r": 1.351
+    },
+    {
+      "ticker": "CRM",
+      "signal_day": "2026-01-06",
+      "exit_day": "2026-01-13",
+      "entry": 259.6,
+      "exit": 252.31,
+      "shares": 6,
+      "reason": "stop",
+      "net": -44.05,
+      "r": -0.44
+    },
+    {
+      "ticker": "RIVN",
+      "signal_day": "2026-01-07",
+      "exit_day": "2026-01-07",
+      "entry": 20.11,
+      "exit": 18.88,
+      "shares": 81,
+      "reason": "stop",
+      "net": -101.25,
+      "r": -1.013
+    },
+    {
+      "ticker": "ROKU",
+      "signal_day": "2026-01-09",
+      "exit_day": "2026-01-12",
+      "entry": 113.64,
+      "exit": 107.71,
+      "shares": 14,
+      "reason": "stop",
+      "net": -83.33,
+      "r": -0.833
+    },
+    {
+      "ticker": "NVDA",
+      "signal_day": "2026-01-12",
+      "exit_day": "2026-01-12",
+      "entry": 186.35,
+      "exit": 183.67,
+      "shares": 8,
+      "reason": "stop",
+      "net": -21.74,
+      "r": -0.217
+    },
+    {
+      "ticker": "NVDA",
+      "signal_day": "2026-01-13",
+      "exit_day": "2026-01-14",
+      "entry": 187.13,
+      "exit": 183.02,
+      "shares": 8,
+      "reason": "stop",
+      "net": -33.18,
+      "r": -0.332
+    },
+    {
+      "ticker": "WMT",
+      "signal_day": "2026-01-29",
+      "exit_day": "2026-02-02",
+      "entry": 117.47,
+      "exit": 121.45,
+      "shares": 14,
+      "reason": "target",
+      "net": 55.39,
+      "r": 0.554
+    },
+    {
+      "ticker": "ENPH",
+      "signal_day": "2026-02-03",
+      "exit_day": "2026-02-04",
+      "entry": 36.98,
+      "exit": 48.0,
+      "shares": 45,
+      "reason": "target_gap",
+      "net": 495.0,
+      "r": 4.95
+    },
+    {
+      "ticker": "PENN",
+      "signal_day": "2026-04-07",
+      "exit_day": "2026-04-15",
+      "entry": 14.77,
+      "exit": 15.99,
+      "shares": 112,
+      "reason": "target",
+      "net": 134.4,
+      "r": 1.344
+    },
+    {
+      "ticker": "TGT",
+      "signal_day": "2026-04-08",
+      "exit_day": "2026-04-13",
+      "entry": 122.92,
+      "exit": 117.48,
+      "shares": 13,
+      "reason": "stop",
+      "net": -71.03,
+      "r": -0.71
+    },
+    {
+      "ticker": "NFLX",
+      "signal_day": "2026-04-09",
+      "exit_day": "2026-04-20",
+      "entry": 100.41,
+      "exit": 94.3,
+      "shares": 16,
+      "reason": "stop",
+      "net": -98.08,
+      "r": -0.981
+    },
+    {
+      "ticker": "TGT",
+      "signal_day": "2026-04-15",
+      "exit_day": "2026-04-17",
+      "entry": 119.73,
+      "exit": 125.23,
+      "shares": 13,
+      "reason": "target",
+      "net": 71.18,
+      "r": 0.712
+    },
+    {
+      "ticker": "WMT",
+      "signal_day": "2026-04-16",
+      "exit_day": "2026-04-22",
+      "entry": 125.08,
+      "exit": 130.14,
+      "shares": 13,
+      "reason": "target",
+      "net": 65.45,
+      "r": 0.654
+    },
+    {
+      "ticker": "NET",
+      "signal_day": "2026-04-21",
+      "exit_day": "2026-05-05",
+      "entry": 206.33,
+      "exit": 232.81,
+      "shares": 7,
+      "reason": "target",
+      "net": 185.05,
+      "r": 1.851
+    },
+    {
+      "ticker": "GOOGL",
+      "signal_day": "2026-04-22",
+      "exit_day": "2026-04-30",
+      "entry": 339.35,
+      "exit": 384.57,
+      "shares": 4,
+      "reason": "target",
+      "net": 180.59,
+      "r": 1.806
+    },
+    {
+      "ticker": "NIO",
+      "signal_day": "2026-04-27",
+      "exit_day": "2026-04-28",
+      "entry": 6.34,
+      "exit": 6.11,
+      "shares": 262,
+      "reason": "stop",
+      "net": -65.5,
+      "r": -0.655
+    },
+    {
+      "ticker": "CLSK",
+      "signal_day": "2026-04-30",
+      "exit_day": "2026-05-05",
+      "entry": 11.73,
+      "exit": 13.17,
+      "shares": 138,
+      "reason": "target",
+      "net": 195.96,
+      "r": 1.96
+    },
+    {
+      "ticker": "OPEN",
+      "signal_day": "2026-05-06",
+      "exit_day": "2026-05-08",
+      "entry": 5.28,
+      "exit": 4.96,
+      "shares": 312,
+      "reason": "stop",
+      "net": -106.08,
+      "r": -1.061
+    },
+    {
+      "ticker": "COIN",
+      "signal_day": "2026-05-08",
+      "exit_day": "2026-05-08",
+      "entry": 198.16,
+      "exit": 190.2,
+      "shares": 8,
+      "reason": "stop",
+      "net": -63.99,
+      "r": -0.64
+    },
+    {
+      "ticker": "MSFT",
+      "signal_day": "2026-05-12",
+      "exit_day": "2026-05-13",
+      "entry": 414.48,
+      "exit": 403.2,
+      "shares": 4,
+      "reason": "stop_gap",
+      "net": -45.45,
+      "r": -0.454
+    },
+    {
+      "ticker": "DAL",
+      "signal_day": "2026-05-13",
+      "exit_day": "2026-05-19",
+      "entry": 71.01,
+      "exit": 69.22,
+      "shares": 23,
+      "reason": "stop_gap",
+      "net": -41.63,
+      "r": -0.416
+    },
+    {
+      "ticker": "COIN",
+      "signal_day": "2026-05-14",
+      "exit_day": "2026-05-15",
+      "entry": 204.21,
+      "exit": 192.81,
+      "shares": 8,
+      "reason": "stop",
+      "net": -91.52,
+      "r": -0.915
+    },
+    {
+      "ticker": "MARA",
+      "signal_day": "2026-05-19",
+      "exit_day": "2026-05-19",
+      "entry": 12.27,
+      "exit": 11.62,
+      "shares": 135,
+      "reason": "stop",
+      "net": -90.45,
+      "r": -0.905
+    },
+    {
+      "ticker": "ROKU",
+      "signal_day": "2026-05-20",
+      "exit_day": "2026-06-03",
+      "entry": 124.41,
+      "exit": 119.59,
+      "shares": 13,
+      "reason": "stop",
+      "net": -62.98,
+      "r": -0.63
+    },
+    {
+      "ticker": "TSLA",
+      "signal_day": "2026-05-22",
+      "exit_day": "2026-06-05",
+      "entry": 426.96,
+      "exit": 393.63,
+      "shares": 3,
+      "reason": "stop",
+      "net": -100.24,
+      "r": -1.002
+    },
+    {
+      "ticker": "NVO",
+      "signal_day": "2026-05-27",
+      "exit_day": "2026-06-02",
+      "entry": 45.0,
+      "exit": 43.49,
+      "shares": 37,
+      "reason": "stop_gap",
+      "net": -56.61,
+      "r": -0.566
+    },
+    {
+      "ticker": "SNAP",
+      "signal_day": "2026-06-04",
+      "exit_day": "2026-06-05",
+      "entry": 5.78,
+      "exit": 6.15,
+      "shares": 288,
+      "reason": "target",
+      "net": 99.36,
+      "r": 0.994
+    },
+    {
+      "ticker": "TSM",
+      "signal_day": "2026-06-15",
+      "exit_day": "2026-06-22",
+      "entry": 438.68,
+      "exit": 476.09,
+      "shares": 3,
+      "reason": "target_gap",
+      "net": 111.96,
+      "r": 1.12
+    },
+    {
+      "ticker": "RIVN",
+      "signal_day": "2026-06-17",
+      "exit_day": "2026-06-22",
+      "entry": 16.57,
+      "exit": 15.44,
+      "shares": 88,
+      "reason": "stop",
+      "net": -101.2,
+      "r": -1.012
+    },
+    {
+      "ticker": "TGT",
+      "signal_day": "2026-06-23",
+      "exit_day": "2026-07-01",
+      "entry": 134.03,
+      "exit": 127.36,
+      "shares": 12,
+      "reason": "stop",
+      "net": -80.35,
+      "r": -0.804
+    },
+    {
+      "ticker": "CCL",
+      "signal_day": "2026-07-01",
+      "exit_day": "2026-07-02",
+      "entry": 29.13,
+      "exit": 28.13,
+      "shares": 57,
+      "reason": "stop",
+      "net": -58.14,
+      "r": -0.581
+    },
+    {
+      "ticker": "ETSY",
+      "signal_day": "2026-07-02",
+      "exit_day": "2026-07-15",
+      "entry": 76.58,
+      "exit": 85.78,
+      "shares": 21,
+      "reason": "target",
+      "net": 192.78,
+      "r": 1.928
+    },
+    {
+      "ticker": "UPST",
+      "signal_day": "2026-07-09",
+      "exit_day": "2026-07-16",
+      "entry": 32.46,
+      "exit": 30.99,
+      "shares": 51,
+      "reason": "stop",
+      "net": -75.99,
+      "r": -0.76
+    },
+    {
+      "ticker": "DKNG",
+      "signal_day": "2026-07-13",
+      "exit_day": "2026-07-14",
+      "entry": 27.32,
+      "exit": 25.81,
+      "shares": 61,
+      "reason": "stop",
+      "net": -93.33,
+      "r": -0.933
+    },
+    {
+      "ticker": "CHWY",
+      "signal_day": "2026-08-13",
+      "exit_day": "2026-08-13",
+      "entry": 22.59,
+      "exit": 22.06,
+      "shares": 73,
+      "reason": "stop",
+      "net": -40.15,
+      "r": -0.402
+    },
+    {
+      "ticker": "CHWY",
+      "signal_day": "2026-08-17",
+      "exit_day": "2026-08-19",
+      "entry": 22.56,
+      "exit": 23.84,
+      "shares": 73,
+      "reason": "target",
+      "net": 91.98,
+      "r": 0.92
+    },
+    {
+      "ticker": "UBER",
+      "signal_day": "2026-08-19",
+      "exit_day": "2026-09-02",
+      "entry": 77.29,
+      "exit": 76.45,
+      "shares": 21,
+      "reason": "time",
+      "net": -18.06,
+      "r": -0.181
+    },
+    {
+      "ticker": "SNAP",
+      "signal_day": "2026-08-20",
+      "exit_day": "2026-08-25",
+      "entry": 5.29,
+      "exit": 5.81,
+      "shares": 315,
+      "reason": "target",
+      "net": 157.5,
+      "r": 1.575
+    },
+    {
+      "ticker": "SOUN",
+      "signal_day": "2026-08-26",
+      "exit_day": "2026-08-26",
+      "entry": 7.11,
+      "exit": 6.9,
+      "shares": 234,
+      "reason": "stop",
+      "net": -53.82,
+      "r": -0.538
+    },
+    {
+      "ticker": "AFRM",
+      "signal_day": "2026-08-27",
+      "exit_day": "2026-08-28",
+      "entry": 77.44,
+      "exit": 86.0,
+      "shares": 21,
+      "reason": "target_gap",
+      "net": 179.34,
+      "r": 1.793
+    },
+    {
+      "ticker": "FUBO",
+      "signal_day": "2026-08-28",
+      "exit_day": "2026-09-03",
+      "entry": 10.49,
+      "exit": 12.09,
+      "shares": 151,
+      "reason": "target_gap",
+      "net": 238.58,
+      "r": 2.386
+    },
+    {
+      "ticker": "CELH",
+      "signal_day": "2026-09-03",
+      "exit_day": "2026-09-04",
+      "entry": 31.68,
+      "exit": 30.5,
+      "shares": 52,
+      "reason": "stop",
+      "net": -62.4,
+      "r": -0.624
+    },
+    {
+      "ticker": "RXRX",
+      "signal_day": "2026-09-04",
+      "exit_day": "2026-09-09",
+      "entry": 3.46,
+      "exit": 3.28,
+      "shares": 481,
+      "reason": "stop",
+      "net": -96.2,
+      "r": -0.962
+    },
+    {
+      "ticker": "FUBO",
+      "signal_day": "2026-09-10",
+      "exit_day": "2026-09-17",
+      "entry": 11.2,
+      "exit": 10.37,
+      "shares": 120,
+      "reason": "stop",
+      "net": -102.0,
+      "r": -1.02
+    },
+    {
+      "ticker": "COIN",
+      "signal_day": "2026-09-14",
+      "exit_day": "2026-09-15",
+      "entry": 182.09,
+      "exit": 170.39,
+      "shares": 8,
+      "reason": "stop",
+      "net": -93.88,
+      "r": -0.939
+    },
+    {
+      "ticker": "MSFT",
+      "signal_day": "2026-09-25",
+      "exit_day": "2026-09-30",
+      "entry": 499.04,
+      "exit": 514.29,
+      "shares": 3,
+      "reason": "target",
+      "net": 45.45,
+      "r": 0.454
+    },
+    {
+      "ticker": "DOCU",
+      "signal_day": "2026-09-30",
+      "exit_day": "2026-10-14",
+      "entry": 67.44,
+      "exit": 74.48,
+      "shares": 24,
+      "reason": "target",
+      "net": 168.48,
+      "r": 1.685
+    },
+    {
+      "ticker": "COIN",
+      "signal_day": "2026-10-02",
+      "exit_day": "2026-10-02",
+      "entry": 194.64,
+      "exit": 183.82,
+      "shares": 8,
+      "reason": "stop",
+      "net": -86.86,
+      "r": -0.869
+    },
+    {
+      "ticker": "COIN",
+      "signal_day": "2026-10-06",
+      "exit_day": "2026-10-07",
+      "entry": 191.79,
+      "exit": 180.23,
+      "shares": 8,
+      "reason": "stop_gap",
+      "net": -92.78,
+      "r": -0.928
+    },
+    {
+      "ticker": "AAPL",
+      "signal_day": "2026-10-07",
+      "exit_day": "2026-10-13",
+      "entry": 336.96,
+      "exit": 344.67,
+      "shares": 4,
+      "reason": "target_gap",
+      "net": 30.57,
+      "r": 0.306
+    }
+  ],
+  "spy_holdout_pct": 12.65,
+  "verdict": "DEPLOY"
+}
