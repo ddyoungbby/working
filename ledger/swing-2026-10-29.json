@@ -1,0 +1,52 @@
+{
+  "day": "2026-10-29",
+  "market": "NEUTRAL",
+  "order": {
+    "ticker": "PYPL",
+    "name": "PayPal Holdings",
+    "stars": 5,
+    "measured_win_rate": 41,
+    "measured_trades": 143,
+    "buy_stop": 56.7,
+    "stop": 54.34,
+    "target": 61.42,
+    "max_hold_sessions": 10,
+    "shares": 29,
+    "risk_dollars": 68.44,
+    "skip_if_opens_above": 58.47,
+    "option": {
+      "error": "option quote unavailable: could not obtain a Yahoo API crumb",
+      "validated": false
+    }
+  },
+  "open_positions": [],
+  "closed_since_live": [
+    {
+      "ticker": "DDOG",
+      "signal_day": "2026-10-16",
+      "exit_day": "2026-10-16",
+      "entry": 266.92,
+      "exit": 256.22,
+      "shares": 6,
+      "reason": "stop",
+      "net": -64.51,
+      "r": -0.129
+    }
+  ],
+  "closed_summary": {
+    "trades": 1,
+    "wins": 0,
+    "win_rate": 0.0,
+    "net": -64.51,
+    "avg": -64.51,
+    "pf": 0.0,
+    "max_dd": 64.51,
+    "avg_r": -0.129
+  },
+  "edge_check": {
+    "status": "OK",
+    "loss_streak": 1,
+    "drawdown": 64.51,
+    "reasons": []
+  }
+}

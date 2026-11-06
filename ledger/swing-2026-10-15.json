@@ -1,0 +1,17 @@
+{
+  "day": "2026-10-15",
+  "market": "BEARISH",
+  "order": null,
+  "open_positions": [],
+  "closed_since_live": [],
+  "closed_summary": {
+    "trades": 0,
+    "wins": 0,
+    "win_rate": 0.0,
+    "net": 0.0,
+    "avg": 0.0,
+    "pf": 0.0,
+    "max_dd": 0.0,
+    "avg_r": 0.0
+  }
+}

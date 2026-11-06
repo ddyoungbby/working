@@ -1,0 +1,2694 @@
+{
+  "morning": {
+    "lane": "morning",
+    "grid_size": 48,
+    "rows": [
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": null,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 8,
+          "wins": 2,
+          "win_rate": 25.0,
+          "net": -170.62,
+          "avg": -21.33,
+          "pf": 0.18,
+          "max_dd": 202.07,
+          "avg_r": -0.213
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": null,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 11,
+          "wins": 4,
+          "win_rate": 36.4,
+          "net": -69.53,
+          "avg": -6.32,
+          "pf": 0.71,
+          "max_dd": 177.61,
+          "avg_r": -0.063
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": null,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 3,
+          "win_rate": 50.0,
+          "net": 48.72,
+          "avg": 8.12,
+          "pf": 1.6,
+          "max_dd": 67.52,
+          "avg_r": 0.081
+        },
+        "plateau": -27.48
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": null,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 9,
+          "wins": 3,
+          "win_rate": 33.3,
+          "net": -3.73,
+          "avg": -0.41,
+          "pf": 0.97,
+          "max_dd": 109.96,
+          "avg_r": -0.004
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": null,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 1,
+          "win_rate": 16.7,
+          "net": -161.33,
+          "avg": -26.89,
+          "pf": 0.18,
+          "max_dd": 192.18,
+          "avg_r": -0.269
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": null,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 9,
+          "wins": 3,
+          "win_rate": 33.3,
+          "net": -60.24,
+          "avg": -6.69,
+          "pf": 0.74,
+          "max_dd": 167.72,
+          "avg_r": -0.067
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": null,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": 48.12,
+          "avg": 9.62,
+          "pf": 1.59,
+          "max_dd": 67.52,
+          "avg_r": 0.096
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": null,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 8,
+          "wins": 2,
+          "win_rate": 25.0,
+          "net": -4.33,
+          "avg": -0.54,
+          "pf": 0.97,
+          "max_dd": 109.96,
+          "avg_r": -0.006
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.4,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 8,
+          "wins": 2,
+          "win_rate": 25.0,
+          "net": -170.27,
+          "avg": -21.28,
+          "pf": 0.18,
+          "max_dd": 202.07,
+          "avg_r": -0.213
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.4,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 11,
+          "wins": 4,
+          "win_rate": 36.4,
+          "net": -135.68,
+          "avg": -12.33,
+          "pf": 0.43,
+          "max_dd": 203.41,
+          "avg_r": -0.123
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.4,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 3,
+          "win_rate": 50.0,
+          "net": -14.57,
+          "avg": -2.43,
+          "pf": 0.82,
+          "max_dd": 67.52,
+          "avg_r": -0.024
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.4,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 9,
+          "wins": 3,
+          "win_rate": 33.3,
+          "net": -67.02,
+          "avg": -7.45,
+          "pf": 0.5,
+          "max_dd": 109.96,
+          "avg_r": -0.074
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.4,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 1,
+          "win_rate": 16.7,
+          "net": -160.98,
+          "avg": -26.83,
+          "pf": 0.18,
+          "max_dd": 192.18,
+          "avg_r": -0.268
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.4,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 9,
+          "wins": 3,
+          "win_rate": 33.3,
+          "net": -126.39,
+          "avg": -14.04,
+          "pf": 0.45,
+          "max_dd": 193.52,
+          "avg_r": -0.14
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.4,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": -15.17,
+          "avg": -3.03,
+          "pf": 0.81,
+          "max_dd": 67.52,
+          "avg_r": -0.03
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.4,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 8,
+          "wins": 2,
+          "win_rate": 25.0,
+          "net": -67.62,
+          "avg": -8.45,
+          "pf": 0.49,
+          "max_dd": 109.96,
+          "avg_r": -0.085
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.75,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 8,
+          "wins": 2,
+          "win_rate": 25.0,
+          "net": -170.62,
+          "avg": -21.33,
+          "pf": 0.18,
+          "max_dd": 202.07,
+          "avg_r": -0.213
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.75,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 11,
+          "wins": 4,
+          "win_rate": 36.4,
+          "net": -106.25,
+          "avg": -9.66,
+          "pf": 0.55,
+          "max_dd": 177.61,
+          "avg_r": -0.097
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.75,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 3,
+          "win_rate": 50.0,
+          "net": 12.0,
+          "avg": 2.0,
+          "pf": 1.15,
+          "max_dd": 67.52,
+          "avg_r": 0.02
+        },
+        "plateau": -33.6
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.75,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 9,
+          "wins": 3,
+          "win_rate": 33.3,
+          "net": -40.45,
+          "avg": -4.49,
+          "pf": 0.7,
+          "max_dd": 109.96,
+          "avg_r": -0.045
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.75,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 1,
+          "win_rate": 16.7,
+          "net": -161.33,
+          "avg": -26.89,
+          "pf": 0.18,
+          "max_dd": 192.18,
+          "avg_r": -0.269
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.75,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 9,
+          "wins": 3,
+          "win_rate": 33.3,
+          "net": -96.96,
+          "avg": -10.77,
+          "pf": 0.58,
+          "max_dd": 167.72,
+          "avg_r": -0.108
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.75,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": 11.4,
+          "avg": 2.28,
+          "pf": 1.14,
+          "max_dd": 67.52,
+          "avg_r": 0.023
+        }
+      },
+      {
+        "cand": {
+          "require_green": false,
+          "tp_r": 0.75,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 8,
+          "wins": 2,
+          "win_rate": 25.0,
+          "net": -41.05,
+          "avg": -5.13,
+          "pf": 0.69,
+          "max_dd": 109.96,
+          "avg_r": -0.051
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": null,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 2,
+          "win_rate": 33.3,
+          "net": -61.82,
+          "avg": -10.3,
+          "pf": 0.37,
+          "max_dd": 93.27,
+          "avg_r": -0.103
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": null,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 7,
+          "wins": 3,
+          "win_rate": 42.9,
+          "net": -23.03,
+          "avg": -3.29,
+          "pf": 0.77,
+          "max_dd": 93.27,
+          "avg_r": -0.033
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": null,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 4,
+          "wins": 2,
+          "win_rate": 50.0,
+          "net": -36.07,
+          "avg": -9.02,
+          "pf": 0.5,
+          "max_dd": 67.52,
+          "avg_r": -0.09
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": null,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": -47.46,
+          "avg": -9.49,
+          "pf": 0.43,
+          "max_dd": 78.91,
+          "avg_r": -0.095
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": null,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 4,
+          "wins": 1,
+          "win_rate": 25.0,
+          "net": -52.53,
+          "avg": -13.13,
+          "pf": 0.41,
+          "max_dd": 83.38,
+          "avg_r": -0.132
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": null,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": -13.74,
+          "avg": -2.75,
+          "pf": 0.84,
+          "max_dd": 83.38,
+          "avg_r": -0.028
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": null,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 3,
+          "wins": 1,
+          "win_rate": 33.3,
+          "net": -36.67,
+          "avg": -12.22,
+          "pf": 0.49,
+          "max_dd": 67.52,
+          "avg_r": -0.122
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": null,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 4,
+          "wins": 1,
+          "win_rate": 25.0,
+          "net": -48.06,
+          "avg": -12.01,
+          "pf": 0.43,
+          "max_dd": 78.91,
+          "avg_r": -0.12
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.4,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 2,
+          "win_rate": 33.3,
+          "net": -61.47,
+          "avg": -10.25,
+          "pf": 0.37,
+          "max_dd": 93.27,
+          "avg_r": -0.103
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.4,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 7,
+          "wins": 3,
+          "win_rate": 42.9,
+          "net": -25.54,
+          "avg": -3.65,
+          "pf": 0.74,
+          "max_dd": 93.27,
+          "avg_r": -0.037
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.4,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 4,
+          "wins": 2,
+          "win_rate": 50.0,
+          "net": -35.72,
+          "avg": -8.93,
+          "pf": 0.51,
+          "max_dd": 67.52,
+          "avg_r": -0.089
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.4,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": -47.11,
+          "avg": -9.42,
+          "pf": 0.44,
+          "max_dd": 78.91,
+          "avg_r": -0.094
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.4,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 4,
+          "wins": 1,
+          "win_rate": 25.0,
+          "net": -52.18,
+          "avg": -13.04,
+          "pf": 0.41,
+          "max_dd": 83.38,
+          "avg_r": -0.131
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.4,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": -16.25,
+          "avg": -3.25,
+          "pf": 0.82,
+          "max_dd": 83.38,
+          "avg_r": -0.033
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.4,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 3,
+          "wins": 1,
+          "win_rate": 33.3,
+          "net": -36.32,
+          "avg": -12.11,
+          "pf": 0.5,
+          "max_dd": 67.52,
+          "avg_r": -0.121
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.4,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 4,
+          "wins": 1,
+          "win_rate": 25.0,
+          "net": -47.71,
+          "avg": -11.93,
+          "pf": 0.43,
+          "max_dd": 78.91,
+          "avg_r": -0.119
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.75,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 6,
+          "wins": 2,
+          "win_rate": 33.3,
+          "net": -61.82,
+          "avg": -10.3,
+          "pf": 0.37,
+          "max_dd": 93.27,
+          "avg_r": -0.103
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.75,
+          "spy_tailwind": false,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 7,
+          "wins": 3,
+          "win_rate": 42.9,
+          "net": -23.03,
+          "avg": -3.29,
+          "pf": 0.77,
+          "max_dd": 93.27,
+          "avg_r": -0.033
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.75,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 4,
+          "wins": 2,
+          "win_rate": 50.0,
+          "net": -36.07,
+          "avg": -9.02,
+          "pf": 0.5,
+          "max_dd": 67.52,
+          "avg_r": -0.09
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.75,
+          "spy_tailwind": false,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": -47.46,
+          "avg": -9.49,
+          "pf": 0.43,
+          "max_dd": 78.91,
+          "avg_r": -0.095
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.75,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 1
+        },
+        "train": {
+          "trades": 4,
+          "wins": 1,
+          "win_rate": 25.0,
+          "net": -52.53,
+          "avg": -13.13,
+          "pf": 0.41,
+          "max_dd": 83.38,
+          "avg_r": -0.132
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.75,
+          "spy_tailwind": true,
+          "max_gap_atr": null,
+          "officials": 2
+        },
+        "train": {
+          "trades": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "net": -13.74,
+          "avg": -2.75,
+          "pf": 0.84,
+          "max_dd": 83.38,
+          "avg_r": -0.028
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.75,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 1
+        },
+        "train": {
+          "trades": 3,
+          "wins": 1,
+          "win_rate": 33.3,
+          "net": -36.67,
+          "avg": -12.22,
+          "pf": 0.49,
+          "max_dd": 67.52,
+          "avg_r": -0.122
+        }
+      },
+      {
+        "cand": {
+          "require_green": true,
+          "tp_r": 0.75,
+          "spy_tailwind": true,
+          "max_gap_atr": 0.5,
+          "officials": 2
+        },
+        "train": {
+          "trades": 4,
+          "wins": 1,
+          "win_rate": 25.0,
+          "net": -48.06,
+          "avg": -12.01,
+          "pf": 0.43,
+          "max_dd": 78.91,
+          "avg_r": -0.12
+        }
+      }
+    ],
+    "chosen": null,
+    "verdict": "WATCH-ONLY",
+    "reason": "no train configuration was net-positive with PF >= 1.1, enough trades and a positive plateau"
+  },
+  "scalper": {
+    "lane": "scalper",
+    "grid_size": 80,
+    "rows": [
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 39,
+          "wins": 20,
+          "win_rate": 51.3,
+          "net": -170.03,
+          "avg": -4.36,
+          "pf": 0.51,
+          "max_dd": 202.12,
+          "avg_r": -0.044
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 39,
+          "wins": 18,
+          "win_rate": 46.2,
+          "net": -264.47,
+          "avg": -6.78,
+          "pf": 0.39,
+          "max_dd": 296.56,
+          "avg_r": -0.068
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 36,
+          "wins": 18,
+          "win_rate": 50.0,
+          "net": -177.48,
+          "avg": -4.93,
+          "pf": 0.5,
+          "max_dd": 233.73,
+          "avg_r": -0.049
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 35,
+          "wins": 19,
+          "win_rate": 54.3,
+          "net": -246.61,
+          "avg": -7.05,
+          "pf": 0.44,
+          "max_dd": 310.88,
+          "avg_r": -0.07
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 39,
+          "wins": 18,
+          "win_rate": 46.2,
+          "net": -266.38,
+          "avg": -6.83,
+          "pf": 0.36,
+          "max_dd": 298.47,
+          "avg_r": -0.068
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 39,
+          "wins": 18,
+          "win_rate": 46.2,
+          "net": -373.8,
+          "avg": -9.58,
+          "pf": 0.29,
+          "max_dd": 405.89,
+          "avg_r": -0.096
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 35,
+          "wins": 17,
+          "win_rate": 48.6,
+          "net": -208.29,
+          "avg": -5.95,
+          "pf": 0.43,
+          "max_dd": 293.71,
+          "avg_r": -0.06
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 34,
+          "wins": 18,
+          "win_rate": 52.9,
+          "net": -278.65,
+          "avg": -8.2,
+          "pf": 0.37,
+          "max_dd": 385.48,
+          "avg_r": -0.082
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 32,
+          "wins": 13,
+          "win_rate": 40.6,
+          "net": -269.04,
+          "avg": -8.41,
+          "pf": 0.29,
+          "max_dd": 298.65,
+          "avg_r": -0.084
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 31,
+          "wins": 14,
+          "win_rate": 45.2,
+          "net": -376.36,
+          "avg": -12.14,
+          "pf": 0.24,
+          "max_dd": 405.97,
+          "avg_r": -0.121
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 24,
+          "wins": 10,
+          "win_rate": 41.7,
+          "net": -157.09,
+          "avg": -6.55,
+          "pf": 0.37,
+          "max_dd": 186.7,
+          "avg_r": -0.066
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 22,
+          "wins": 11,
+          "win_rate": 50.0,
+          "net": -204.15,
+          "avg": -9.28,
+          "pf": 0.32,
+          "max_dd": 236.3,
+          "avg_r": -0.093
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 31,
+          "wins": 12,
+          "win_rate": 38.7,
+          "net": -286.44,
+          "avg": -9.24,
+          "pf": 0.24,
+          "max_dd": 316.05,
+          "avg_r": -0.092
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 29,
+          "wins": 13,
+          "win_rate": 44.8,
+          "net": -383.77,
+          "avg": -13.23,
+          "pf": 0.2,
+          "max_dd": 413.38,
+          "avg_r": -0.132
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 23,
+          "wins": 10,
+          "win_rate": 43.5,
+          "net": -151.56,
+          "avg": -6.59,
+          "pf": 0.34,
+          "max_dd": 195.63,
+          "avg_r": -0.066
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            1.0,
+            0.12
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 21,
+          "wins": 11,
+          "win_rate": 52.4,
+          "net": -188.75,
+          "avg": -8.99,
+          "pf": 0.3,
+          "max_dd": 237.63,
+          "avg_r": -0.09
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 52,
+          "wins": 24,
+          "win_rate": 46.2,
+          "net": -438.59,
+          "avg": -8.43,
+          "pf": 0.59,
+          "max_dd": 561.3,
+          "avg_r": -0.084
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 52,
+          "wins": 23,
+          "win_rate": 44.2,
+          "net": -535.13,
+          "avg": -10.29,
+          "pf": 0.53,
+          "max_dd": 623.9,
+          "avg_r": -0.103
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 50,
+          "wins": 24,
+          "win_rate": 48.0,
+          "net": -364.79,
+          "avg": -7.3,
+          "pf": 0.64,
+          "max_dd": 467.6,
+          "avg_r": -0.073
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 50,
+          "wins": 22,
+          "win_rate": 44.0,
+          "net": -519.51,
+          "avg": -10.39,
+          "pf": 0.53,
+          "max_dd": 638.99,
+          "avg_r": -0.104
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 52,
+          "wins": 23,
+          "win_rate": 44.2,
+          "net": -574.92,
+          "avg": -11.06,
+          "pf": 0.48,
+          "max_dd": 677.73,
+          "avg_r": -0.111
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 52,
+          "wins": 23,
+          "win_rate": 44.2,
+          "net": -628.48,
+          "avg": -12.09,
+          "pf": 0.48,
+          "max_dd": 717.25,
+          "avg_r": -0.121
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 49,
+          "wins": 23,
+          "win_rate": 46.9,
+          "net": -446.78,
+          "avg": -9.12,
+          "pf": 0.54,
+          "max_dd": 551.33,
+          "avg_r": -0.091
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 49,
+          "wins": 22,
+          "win_rate": 44.9,
+          "net": -480.65,
+          "avg": -9.81,
+          "pf": 0.54,
+          "max_dd": 689.24,
+          "avg_r": -0.098
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 46,
+          "wins": 18,
+          "win_rate": 39.1,
+          "net": -596.17,
+          "avg": -12.96,
+          "pf": 0.47,
+          "max_dd": 712.36,
+          "avg_r": -0.13
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 46,
+          "wins": 19,
+          "win_rate": 41.3,
+          "net": -698.04,
+          "avg": -15.17,
+          "pf": 0.43,
+          "max_dd": 839.79,
+          "avg_r": -0.152
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 40,
+          "wins": 20,
+          "win_rate": 50.0,
+          "net": -165.25,
+          "avg": -4.13,
+          "pf": 0.79,
+          "max_dd": 337.23,
+          "avg_r": -0.041
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 40,
+          "wins": 20,
+          "win_rate": 50.0,
+          "net": -269.21,
+          "avg": -6.73,
+          "pf": 0.68,
+          "max_dd": 417.62,
+          "avg_r": -0.067
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 45,
+          "wins": 17,
+          "win_rate": 37.8,
+          "net": -656.68,
+          "avg": -14.59,
+          "pf": 0.38,
+          "max_dd": 759.49,
+          "avg_r": -0.146
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 45,
+          "wins": 19,
+          "win_rate": 42.2,
+          "net": -636.98,
+          "avg": -14.16,
+          "pf": 0.45,
+          "max_dd": 778.73,
+          "avg_r": -0.142
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 39,
+          "wins": 19,
+          "win_rate": 48.7,
+          "net": -242.43,
+          "avg": -6.22,
+          "pf": 0.67,
+          "max_dd": 387.74,
+          "avg_r": -0.062
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.35
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 39,
+          "wins": 20,
+          "win_rate": 51.3,
+          "net": -202.52,
+          "avg": -5.19,
+          "pf": 0.73,
+          "max_dd": 440.04,
+          "avg_r": -0.052
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 53,
+          "wins": 22,
+          "win_rate": 41.5,
+          "net": -559.28,
+          "avg": -10.55,
+          "pf": 0.54,
+          "max_dd": 647.14,
+          "avg_r": -0.106
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 53,
+          "wins": 21,
+          "win_rate": 39.6,
+          "net": -549.49,
+          "avg": -10.37,
+          "pf": 0.56,
+          "max_dd": 710.27,
+          "avg_r": -0.104
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 51,
+          "wins": 22,
+          "win_rate": 43.1,
+          "net": -480.92,
+          "avg": -9.43,
+          "pf": 0.58,
+          "max_dd": 579.97,
+          "avg_r": -0.094
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 50,
+          "wins": 18,
+          "win_rate": 36.0,
+          "net": -529.59,
+          "avg": -10.59,
+          "pf": 0.55,
+          "max_dd": 718.57,
+          "avg_r": -0.106
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 53,
+          "wins": 20,
+          "win_rate": 37.7,
+          "net": -810.72,
+          "avg": -15.3,
+          "pf": 0.38,
+          "max_dd": 898.58,
+          "avg_r": -0.153
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 53,
+          "wins": 20,
+          "win_rate": 37.7,
+          "net": -711.71,
+          "avg": -13.43,
+          "pf": 0.48,
+          "max_dd": 872.49,
+          "avg_r": -0.134
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 50,
+          "wins": 20,
+          "win_rate": 40.0,
+          "net": -678.02,
+          "avg": -13.56,
+          "pf": 0.42,
+          "max_dd": 778.64,
+          "avg_r": -0.136
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 50,
+          "wins": 17,
+          "win_rate": 34.0,
+          "net": -664.27,
+          "avg": -13.29,
+          "pf": 0.48,
+          "max_dd": 853.25,
+          "avg_r": -0.133
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 46,
+          "wins": 17,
+          "win_rate": 37.0,
+          "net": -762.12,
+          "avg": -16.57,
+          "pf": 0.41,
+          "max_dd": 853.4,
+          "avg_r": -0.166
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 46,
+          "wins": 17,
+          "win_rate": 37.0,
+          "net": -734.92,
+          "avg": -15.98,
+          "pf": 0.47,
+          "max_dd": 943.39,
+          "avg_r": -0.16
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 40,
+          "wins": 18,
+          "win_rate": 45.0,
+          "net": -335.55,
+          "avg": -8.39,
+          "pf": 0.63,
+          "max_dd": 484.89,
+          "avg_r": -0.084
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 39,
+          "wins": 16,
+          "win_rate": 41.0,
+          "net": -276.26,
+          "avg": -7.08,
+          "pf": 0.69,
+          "max_dd": 485.72,
+          "avg_r": -0.071
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 45,
+          "wins": 15,
+          "win_rate": 33.3,
+          "net": -937.74,
+          "avg": -20.84,
+          "pf": 0.29,
+          "max_dd": 1025.6,
+          "avg_r": -0.208
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 45,
+          "wins": 16,
+          "win_rate": 35.6,
+          "net": -742.73,
+          "avg": -16.51,
+          "pf": 0.45,
+          "max_dd": 951.2,
+          "avg_r": -0.165
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 39,
+          "wins": 16,
+          "win_rate": 41.0,
+          "net": -527.84,
+          "avg": -13.53,
+          "pf": 0.44,
+          "max_dd": 658.2,
+          "avg_r": -0.135
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.5
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 39,
+          "wins": 15,
+          "win_rate": 38.5,
+          "net": -383.11,
+          "avg": -9.82,
+          "pf": 0.6,
+          "max_dd": 592.57,
+          "avg_r": -0.098
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 53,
+          "wins": 22,
+          "win_rate": 41.5,
+          "net": -534.89,
+          "avg": -10.09,
+          "pf": 0.58,
+          "max_dd": 734.23,
+          "avg_r": -0.101
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 52,
+          "wins": 18,
+          "win_rate": 34.6,
+          "net": -646.78,
+          "avg": -12.44,
+          "pf": 0.53,
+          "max_dd": 914.55,
+          "avg_r": -0.124
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 51,
+          "wins": 22,
+          "win_rate": 43.1,
+          "net": -408.46,
+          "avg": -8.01,
+          "pf": 0.66,
+          "max_dd": 591.47,
+          "avg_r": -0.08
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 49,
+          "wins": 16,
+          "win_rate": 32.7,
+          "net": -487.78,
+          "avg": -9.95,
+          "pf": 0.61,
+          "max_dd": 756.54,
+          "avg_r": -0.1
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 53,
+          "wins": 20,
+          "win_rate": 37.7,
+          "net": -809.83,
+          "avg": -15.28,
+          "pf": 0.41,
+          "max_dd": 925.14,
+          "avg_r": -0.153
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 52,
+          "wins": 17,
+          "win_rate": 32.7,
+          "net": -791.64,
+          "avg": -15.22,
+          "pf": 0.47,
+          "max_dd": 1059.41,
+          "avg_r": -0.152
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 50,
+          "wins": 20,
+          "win_rate": 40.0,
+          "net": -629.06,
+          "avg": -12.58,
+          "pf": 0.49,
+          "max_dd": 772.23,
+          "avg_r": -0.126
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 49,
+          "wins": 15,
+          "win_rate": 30.6,
+          "net": -645.96,
+          "avg": -13.18,
+          "pf": 0.51,
+          "max_dd": 914.72,
+          "avg_r": -0.132
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 46,
+          "wins": 17,
+          "win_rate": 37.0,
+          "net": -666.79,
+          "avg": -14.5,
+          "pf": 0.48,
+          "max_dd": 881.41,
+          "avg_r": -0.145
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 44,
+          "wins": 15,
+          "win_rate": 34.1,
+          "net": -599.25,
+          "avg": -13.62,
+          "pf": 0.54,
+          "max_dd": 898.04,
+          "avg_r": -0.136
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 40,
+          "wins": 18,
+          "win_rate": 45.0,
+          "net": -208.82,
+          "avg": -5.22,
+          "pf": 0.77,
+          "max_dd": 484.89,
+          "avg_r": -0.052
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 38,
+          "wins": 15,
+          "win_rate": 39.5,
+          "net": -128.07,
+          "avg": -3.37,
+          "pf": 0.85,
+          "max_dd": 427.85,
+          "avg_r": -0.034
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 45,
+          "wins": 15,
+          "win_rate": 33.3,
+          "net": -865.91,
+          "avg": -19.24,
+          "pf": 0.34,
+          "max_dd": 981.22,
+          "avg_r": -0.192
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 44,
+          "wins": 14,
+          "win_rate": 31.8,
+          "net": -716.28,
+          "avg": -16.28,
+          "pf": 0.48,
+          "max_dd": 1015.07,
+          "avg_r": -0.163
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 39,
+          "wins": 16,
+          "win_rate": 41.0,
+          "net": -424.61,
+          "avg": -10.89,
+          "pf": 0.55,
+          "max_dd": 582.42,
+          "avg_r": -0.109
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.5,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 38,
+          "wins": 14,
+          "win_rate": 36.8,
+          "net": -258.42,
+          "avg": -6.8,
+          "pf": 0.72,
+          "max_dd": 558.2,
+          "avg_r": -0.068
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 56,
+          "wins": 23,
+          "win_rate": 41.1,
+          "net": -980.71,
+          "avg": -17.51,
+          "pf": 0.45,
+          "max_dd": 1164.99,
+          "avg_r": -0.175
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 54,
+          "wins": 18,
+          "win_rate": 33.3,
+          "net": -965.55,
+          "avg": -17.88,
+          "pf": 0.45,
+          "max_dd": 1223.41,
+          "avg_r": -0.179
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 53,
+          "wins": 23,
+          "win_rate": 43.4,
+          "net": -777.01,
+          "avg": -14.66,
+          "pf": 0.53,
+          "max_dd": 967.32,
+          "avg_r": -0.147
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 50,
+          "wins": 16,
+          "win_rate": 32.0,
+          "net": -822.1,
+          "avg": -16.44,
+          "pf": 0.5,
+          "max_dd": 1079.96,
+          "avg_r": -0.164
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 54,
+          "wins": 21,
+          "win_rate": 38.9,
+          "net": -1265.38,
+          "avg": -23.43,
+          "pf": 0.33,
+          "max_dd": 1392.62,
+          "avg_r": -0.234
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 53,
+          "wins": 17,
+          "win_rate": 32.1,
+          "net": -1058.88,
+          "avg": -19.98,
+          "pf": 0.42,
+          "max_dd": 1316.74,
+          "avg_r": -0.2
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 50,
+          "wins": 21,
+          "win_rate": 42.0,
+          "net": -934.94,
+          "avg": -18.7,
+          "pf": 0.42,
+          "max_dd": 1090.04,
+          "avg_r": -0.187
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": false,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 49,
+          "wins": 15,
+          "win_rate": 30.6,
+          "net": -919.21,
+          "avg": -18.76,
+          "pf": 0.45,
+          "max_dd": 1177.07,
+          "avg_r": -0.188
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 49,
+          "wins": 18,
+          "win_rate": 36.7,
+          "net": -1032.12,
+          "avg": -21.06,
+          "pf": 0.41,
+          "max_dd": 1259.25,
+          "avg_r": -0.211
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 46,
+          "wins": 14,
+          "win_rate": 30.4,
+          "net": -905.27,
+          "avg": -19.68,
+          "pf": 0.46,
+          "max_dd": 1223.6,
+          "avg_r": -0.197
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 42,
+          "wins": 19,
+          "win_rate": 45.2,
+          "net": -383.71,
+          "avg": -9.14,
+          "pf": 0.69,
+          "max_dd": 712.5,
+          "avg_r": -0.091
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": false,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 39,
+          "wins": 14,
+          "win_rate": 35.9,
+          "net": -378.11,
+          "avg": -9.7,
+          "pf": 0.68,
+          "max_dd": 696.44,
+          "avg_r": -0.097
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 46,
+          "wins": 16,
+          "win_rate": 34.8,
+          "net": -1209.43,
+          "avg": -26.29,
+          "pf": 0.3,
+          "max_dd": 1336.67,
+          "avg_r": -0.263
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 45,
+          "wins": 13,
+          "win_rate": 28.9,
+          "net": -987.33,
+          "avg": -21.94,
+          "pf": 0.43,
+          "max_dd": 1305.66,
+          "avg_r": -0.219
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 10
+        },
+        "train": {
+          "trades": 39,
+          "wins": 17,
+          "win_rate": 43.6,
+          "net": -543.19,
+          "avg": -13.93,
+          "pf": 0.54,
+          "max_dd": 734.18,
+          "avg_r": -0.139
+        }
+      },
+      {
+        "cand": {
+          "shape": [
+            0.35,
+            0.7
+          ],
+          "prime_hours": true,
+          "breadth": true,
+          "min_range_pct": 0.0015,
+          "hold_min": 15
+        },
+        "train": {
+          "trades": 38,
+          "wins": 13,
+          "win_rate": 34.2,
+          "net": -463.95,
+          "avg": -12.21,
+          "pf": 0.62,
+          "max_dd": 782.28,
+          "avg_r": -0.122
+        }
+      }
+    ],
+    "chosen": null,
+    "verdict": "WATCH-ONLY",
+    "reason": "no train configuration was net-positive with PF >= 1.1, enough trades and a positive plateau"
+  }
+}

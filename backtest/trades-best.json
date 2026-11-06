@@ -1,0 +1,104 @@
+{
+  "config": {
+    "min_stars": 3,
+    "min_dist_r": 0.0,
+    "require_green": true,
+    "tp_r": 0.4,
+    "officials": 2,
+    "allow_935": false,
+    "bullish_only": false
+  },
+  "summary": {
+    "trades": 7,
+    "wins": 6,
+    "win_rate": 85.7,
+    "total_pl": 98.9,
+    "avg_r": 0.144
+  },
+  "trades": [
+    {
+      "day": "2026-09-25",
+      "ticker": "TSLA",
+      "path": "930",
+      "stars": 4,
+      "execution_price": 385.1,
+      "exit_price": 371.47,
+      "shares": 4,
+      "pl": -54.52,
+      "r": -0.63,
+      "status": "no_follow_through"
+    },
+    {
+      "day": "2026-09-28",
+      "ticker": "NVDA",
+      "path": "930",
+      "stars": 3,
+      "execution_price": 230.76,
+      "exit_price": 230.89,
+      "shares": 14,
+      "pl": 1.82,
+      "r": 0.02,
+      "status": "no_follow_through"
+    },
+    {
+      "day": "2026-10-02",
+      "ticker": "COIN",
+      "path": "930",
+      "stars": 5,
+      "execution_price": 196.75,
+      "exit_price": 200.15,
+      "shares": 11,
+      "pl": 37.4,
+      "r": 0.4,
+      "status": "target_hit"
+    },
+    {
+      "day": "2026-10-02",
+      "ticker": "ARM",
+      "path": "930",
+      "stars": 4,
+      "execution_price": 307.49,
+      "exit_price": 312.37,
+      "shares": 5,
+      "pl": 24.4,
+      "r": 0.27,
+      "status": "moved_in_favor"
+    },
+    {
+      "day": "2026-10-08",
+      "ticker": "DOCU",
+      "path": "930",
+      "stars": 5,
+      "execution_price": 69.48,
+      "exit_price": 70.46,
+      "shares": 40,
+      "pl": 39.2,
+      "r": 0.4,
+      "status": "target_hit"
+    },
+    {
+      "day": "2026-10-09",
+      "ticker": "SNOW",
+      "path": "930",
+      "stars": 4,
+      "execution_price": 349.11,
+      "exit_price": 354.35,
+      "shares": 7,
+      "pl": 36.68,
+      "r": 0.4,
+      "status": "target_hit"
+    },
+    {
+      "day": "2026-10-12",
+      "ticker": "AAPL",
+      "path": "930",
+      "stars": 4,
+      "execution_price": 340.8,
+      "exit_price": 341.96,
+      "shares": 12,
+      "pl": 13.92,
+      "r": 0.15,
+      "status": "no_follow_through"
+    }
+  ]
+}

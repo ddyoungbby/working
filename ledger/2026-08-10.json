@@ -1,0 +1,260 @@
+{
+  "date": "2026-08-10",
+  "market_status": "BULLISH",
+  "market_detail": "SPY/QQQ constructive above rising 20 EMA structure.",
+  "research": [
+    {
+      "ticker": "AFRM",
+      "name": "Affirm Holdings",
+      "sector": "Fintech",
+      "entry": 78.53,
+      "stop": 74.43,
+      "target": 86.73,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": false,
+      "prior_close": 75.25,
+      "ema20": 75.62,
+      "rsi14": 49.4,
+      "atr14": 3.63
+    },
+    {
+      "ticker": "AAL",
+      "name": "American Airlines Group",
+      "sector": "Travel",
+      "entry": 16.29,
+      "stop": 15.56,
+      "target": 17.75,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": false,
+      "prior_close": 15.94,
+      "ema20": 15.73,
+      "rsi14": 52.3,
+      "atr14": 0.7
+    },
+    {
+      "ticker": "HIMS",
+      "name": "Hims & Hers Health",
+      "sector": "Healthcare",
+      "entry": 31.73,
+      "stop": 29.53,
+      "target": 36.13,
+      "star_rating": 4,
+      "near_ema": true,
+      "rsi_cool": true,
+      "vol_dry": true,
+      "rel_strength_pass": false,
+      "prior_close": 31.59,
+      "ema20": 31.01,
+      "rsi14": 51.0,
+      "atr14": 2.64
+    },
+    {
+      "ticker": "PYPL",
+      "name": "PayPal Holdings",
+      "sector": "Fintech",
+      "entry": 60.0,
+      "stop": 55.2,
+      "target": 69.6,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 59.07,
+      "ema20": 55.61,
+      "rsi14": 71.0,
+      "atr14": 1.63
+    },
+    {
+      "ticker": "CCL",
+      "name": "Carnival Corp.",
+      "sector": "Travel",
+      "entry": 29.28,
+      "stop": 27.69,
+      "target": 32.46,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 28.99,
+      "ema20": 27.95,
+      "rsi14": 58.6,
+      "atr14": 1.04
+    },
+    {
+      "ticker": "DAL",
+      "name": "Delta Air Lines",
+      "sector": "Travel",
+      "entry": 92.45,
+      "stop": 88.05,
+      "target": 101.25,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 91.34,
+      "ema20": 88.7,
+      "rsi14": 58.4,
+      "atr14": 2.61
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sector": "Financial Leaders",
+      "entry": 358.86,
+      "stop": 347.48,
+      "target": 381.62,
+      "star_rating": 4,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": true,
+      "prior_close": 357.52,
+      "ema20": 349.27,
+      "rsi14": 63.0,
+      "atr14": 7.17
+    },
+    {
+      "ticker": "SOFI",
+      "name": "SoFi Technologies",
+      "sector": "Fintech",
+      "entry": 18.54,
+      "stop": 17.29,
+      "target": 21.04,
+      "star_rating": 3,
+      "near_ema": false,
+      "rsi_cool": false,
+      "vol_dry": true,
+      "rel_strength_pass": false,
+      "prior_close": 18.38,
+      "ema20": 17.51,
+      "rsi14": 56.5,
+      "atr14": 0.88
+    }
+  ],
+  "locked_field": [
+    {
+      "rank": 1,
+      "role": "front_runner",
+      "ticker": "AFRM",
+      "score": 49
+    },
+    {
+      "rank": 2,
+      "role": "runner_up",
+      "ticker": "AAL",
+      "score": 49
+    },
+    {
+      "rank": 3,
+      "role": "field",
+      "ticker": "HIMS",
+      "score": 49
+    },
+    {
+      "rank": 4,
+      "role": "field",
+      "ticker": "PYPL",
+      "score": 45
+    },
+    {
+      "rank": 5,
+      "role": "field",
+      "ticker": "CCL",
+      "score": 45
+    },
+    {
+      "rank": 6,
+      "role": "field",
+      "ticker": "DAL",
+      "score": 45
+    },
+    {
+      "rank": 7,
+      "role": "field",
+      "ticker": "JPM",
+      "score": 45
+    },
+    {
+      "rank": 8,
+      "role": "field",
+      "ticker": "SOFI",
+      "score": 32
+    }
+  ],
+  "confirmations": [
+    {
+      "ticker": "AFRM",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $78.53 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "AAL",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $16.29 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "HIMS",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $31.73 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "PYPL",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $60.00 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "CCL",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $29.28 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "DAL",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $92.45 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "JPM",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $358.86 entry at the check.",
+      "execution_price": 0.0
+    },
+    {
+      "ticker": "SOFI",
+      "status": "wait_for_reclaim",
+      "official": false,
+      "path": "",
+      "detail": "Price was below the planned $18.54 entry at the check.",
+      "execution_price": 0.0
+    }
+  ],
+  "results": []
+}

@@ -1,0 +1,32 @@
+{
+  "day": "2026-10-16",
+  "market": "NEUTRAL",
+  "order": {
+    "ticker": "DDOG",
+    "name": "Datadog Inc.",
+    "stars": 5,
+    "buy_stop": 266.92,
+    "stop": 256.22,
+    "target": 288.32,
+    "max_hold_sessions": 10,
+    "shares": 6,
+    "risk_dollars": 64.2,
+    "skip_if_opens_above": 274.94,
+    "option": {
+      "error": "DDOG: no strike fits a $100 risk budget (underlying too expensive for this account size)",
+      "validated": false
+    }
+  },
+  "open_positions": [],
+  "closed_since_live": [],
+  "closed_summary": {
+    "trades": 0,
+    "wins": 0,
+    "win_rate": 0.0,
+    "net": 0.0,
+    "avg": 0.0,
+    "pf": 0.0,
+    "max_dd": 0.0,
+    "avg_r": 0.0
+  }
+}

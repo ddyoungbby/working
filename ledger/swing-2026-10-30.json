@@ -1,0 +1,63 @@
+{
+  "day": "2026-10-30",
+  "market": "NEUTRAL",
+  "order": {
+    "ticker": "PLTR",
+    "name": "Palantir Technologies",
+    "stars": 5,
+    "measured_win_rate": 41,
+    "measured_trades": 143,
+    "buy_stop": 198.52,
+    "stop": 190.36,
+    "target": 214.84,
+    "max_hold_sessions": 10,
+    "shares": 8,
+    "risk_dollars": 65.28,
+    "skip_if_opens_above": 204.64,
+    "option": {
+      "error": "option quote unavailable: could not obtain a Yahoo API crumb",
+      "validated": false
+    }
+  },
+  "open_positions": [
+    {
+      "ticker": "PYPL",
+      "signal_day": "2026-10-29",
+      "entry": 56.7,
+      "stop": 54.34,
+      "target": 61.42,
+      "shares": 29,
+      "sessions_held": 0,
+      "last_close": 56.95000076293945
+    }
+  ],
+  "closed_since_live": [
+    {
+      "ticker": "DDOG",
+      "signal_day": "2026-10-16",
+      "exit_day": "2026-10-16",
+      "entry": 266.92,
+      "exit": 256.22,
+      "shares": 6,
+      "reason": "stop",
+      "net": -64.51,
+      "r": -0.129
+    }
+  ],
+  "closed_summary": {
+    "trades": 1,
+    "wins": 0,
+    "win_rate": 0.0,
+    "net": -64.51,
+    "avg": -64.51,
+    "pf": 0.0,
+    "max_dd": 64.51,
+    "avg_r": -0.129
+  },
+  "edge_check": {
+    "status": "OK",
+    "loss_streak": 1,
+    "drawdown": 64.51,
+    "reasons": []
+  }
+}
